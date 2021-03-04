@@ -1,11 +1,11 @@
 package ru.hse.java.repetinder;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         al.add("Саша");
         al.add("Герман");
 
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.helloText, al );
+        arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.helloText, al);
 
 
         SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
