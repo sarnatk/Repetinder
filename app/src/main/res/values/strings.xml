@@ -1,8 +1,13 @@
 <resources>
     <string name="app_name">Repetinder</string>
     <string name="email">email</string>
-    <string name="login">login</string>
+    <string name="login">Login</string>
     <string name="register">register</string>
     <string name="password">password</string>
     <string name="or">or</string>
+    <string name="username">username</string>
+    <string name="Register">Register</string>
+    <string name="repetinder">Repetinder</string>
+    <string name="name">fullname</string>
+    <string name="sing_up">sing up</string>
 </resources>
