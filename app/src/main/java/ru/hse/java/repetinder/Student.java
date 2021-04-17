@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class Student extends User {
-    public Student(int id, String username, String password) {
-        super(id, username, password);
+    public Student(String username, String password) {
+        super(username, password);
     }
 
     public void setMaxPrice(int maxPrice) {

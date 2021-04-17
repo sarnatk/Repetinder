@@ -9,7 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,8 +24,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        Bundle extras = getIntent().getExtras();
+        String username = extras.getString("username");
         al = new ArrayList<>();
+        al.add(username);
         al.add("Таня");
         al.add("Саша");
         al.add("Герман");

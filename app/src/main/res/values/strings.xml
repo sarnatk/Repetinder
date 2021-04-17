@@ -10,4 +10,8 @@
     <string name="repetinder">Repetinder</string>
     <string name="name">fullname</string>
     <string name="sing_up">sing up</string>
+    <string-array name="user_type">
+        <item>Student</item>
+        <item>Tutor</item>
+    </string-array>
 </resources>

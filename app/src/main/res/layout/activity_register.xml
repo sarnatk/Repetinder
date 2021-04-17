@@ -117,6 +117,18 @@
                 tools:targetApi="jelly_bean" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@color/light_white"
+            android:entries="@array/user_type"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword"
+            tools:ignore="MissingConstraints"
+            />
+
         <ProgressBar
             android:id="@+id/progress"
             android:layout_width="wrap_content"
@@ -130,12 +142,13 @@
             android:id="@+id/signUp"
             android:layout_width="100dp"
             android:layout_height="49dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="60dp"
             android:background="@drawable/default_button"
             android:backgroundTintMode="multiply"
             android:text="@string/sing_up"
             app:iconTint="#FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/progress" />
 
@@ -143,13 +156,14 @@
             android:id="@+id/backToLogin"
             android:layout_width="200dp"
             android:layout_height="39dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="4dp"
             android:background="@color/transparent"
             android:fontFamily="@font/poppinsmedium"
             android:text="@string/login"
             android:textColor="@color/purple_500"
             android:textSize="17sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/signUp" />
 
