@@ -5,18 +5,10 @@ import java.util.Date;
 
 public class User {
 
-    public User(int id, String username, String password, UserRole userRole, GroupType groupType, ArrayList<Subject> subjects) {
+    public User(int id, String username, String password) {
                 this.id = id;
                 this.username = username;
                 this.password = password;
-                this.userRole = userRole;
-                this.groupType = groupType;
-                this.subjects.addAll(subjects);
-    }
-
-    public enum UserRole {
-        STUDENT,
-        TUTOR
     }
 
     public enum GroupType {
@@ -34,13 +26,6 @@ public class User {
         public int getQuantity() {
             return quantity;
         }
-    }
-
-    public enum OnlineStatus {
-        ONLINE,
-        OFFLINE;
-
-        private final Date lastOnlineTime = new Date(System.currentTimeMillis());
     }
 
     public enum Subject {
@@ -63,27 +48,49 @@ public class User {
         HISTORY
     }
 
-    public UserRole getUserRole() {
-        return userRole;
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
+
+    public void setGroupType(GroupType groupType) {
+        this.groupType = groupType;
+    }
+
 
     public GroupType getGroupType() {
         return groupType;
     }
 
-    public ArrayList<Subject> getSubjects() {
-        return subjects;
+    public Subject getSubject() {
+        return subject;
     }
 
     public int getId() {
         return id;
     }
 
-    private int id;
-    private String username;
-    private String password;
-    private UserRole userRole;
+    private String getUsername() {
+        return username;
+    }
+
+    private String getPassword() {
+        return password;
+    }
+
+    public boolean isOnline() {
+        return isOnline;
+    }
+
+    public void changeOnlineStatus() {
+        isOnline = !isOnline;
+    }
+
+    private final int id;
+    private final String username;
+    private final String password;
     private GroupType groupType;
-    private OnlineStatus typeOnline;
-    private ArrayList<Subject> subjects;
+    private boolean isOnline;
+    private Subject subject;
+
+    private final Date lastOnlineTime = new Date(System.currentTimeMillis());
 }
