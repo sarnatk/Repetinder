@@ -14,13 +14,24 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 
+import io.realm.Realm;
+import io.realm.mongodb.App;
+import io.realm.mongodb.AppConfiguration;
+
 public class RegisterActivity extends AppCompatActivity {
     private User user;
+    Realm uiThreadRealm;
+    App app;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Realm.init(this);
+
+        app = new App(new AppConfiguration.Builder("repetinder-njojh").build());
+
         setContentView(R.layout.activity_register);
 
         Button buttonRegister = (Button) findViewById(R.id.signUp);

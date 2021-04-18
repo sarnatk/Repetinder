@@ -5,14 +5,23 @@ import android.os.Parcelable;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
 
-public class User {
+import org.bson.types.ObjectId;
+
+public class User { // extends RealmObject {
 
     public User(/*int id*/ String username, String password) {
                // this.id = id;
                // TODO: counting id?
                 this.username = username;
                 this.password = password;
+    }
+
+    public User() {
+        this("name", "uiop");
     }
 
     public enum GroupType {
@@ -70,10 +79,9 @@ public class User {
     }
 
 
-  /*  public int getId() {
-        return id;
+    public ObjectId getId() {
+        return _id;
     }
-*/
     public String getUsername() {
         return username;
     }
@@ -90,11 +98,16 @@ public class User {
         isOnline = !isOnline;
     }
 
- //   private final int id;
+    @PrimaryKey
+    private final ObjectId _id = new ObjectId();
+    @Required
     private final String username;
+    @Required
     private final String password;
+    @Required
     private GroupType groupType;
     private boolean isOnline;
+    @Required
     private Subject subject;
 
     private final Date lastOnlineTime = new Date(System.currentTimeMillis());

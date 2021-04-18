@@ -1,12 +1,24 @@
 package ru.hse.java.repetinder;
 
+import org.bson.types.ObjectId;
+
 import java.util.List;
 
-public class Chat {
-    private int chatID;
-    private int tutorID;
-    private List<Integer> studentsID;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
+
+public class Chat { // extends RealmObject {
+    @PrimaryKey
+    private final ObjectId chatId = new ObjectId();
+    @Required
+    private ObjectId tutorId;
+    @Required
+    private List<ObjectId> studentsId;
+    @Required
     private boolean tutorOnline;
+    @Required
     private List<Boolean> studentsOnline;
+    @Required
     private List<ChatMessage> messages;
 }
