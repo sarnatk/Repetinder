@@ -10,6 +10,10 @@
     <string name="repetinder">Repetinder</string>
     <string name="name">fullname</string>
     <string name="sing_up">sing up</string>
+    <string name="icon_profile">PROFILE</string>
+    <string name="profile_name">fullname</string>
+    <string name="user_type">Status: Student</string>
+    <string name="profile_email">xyz@mail.ru</string>
     <string-array name="user_type">
         <item>Student</item>
         <item>Tutor</item>
