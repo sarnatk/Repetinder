@@ -2,6 +2,7 @@ package ru.hse.java.repetinder;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,11 +18,13 @@ import java.util.ArrayList;
 import io.realm.Realm;
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
+import io.realm.mongodb.Credentials;
 
 public class RegisterActivity extends AppCompatActivity {
     private User user;
-    Realm uiThreadRealm;
-    App app;
+    //Realm uiThreadRealm;
+    private final String appId = "repetinder-xlfqn";
+    private final Object register = new Object();
 
 
     @Override
@@ -30,7 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         Realm.init(this);
 
-        app = new App(new AppConfiguration.Builder("repetinder-njojh").build());
+        App app = new App(new AppConfiguration.Builder(appId).build());
 
         setContentView(R.layout.activity_register);
 
@@ -66,6 +69,36 @@ public class RegisterActivity extends AppCompatActivity {
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // Add user to database
+                synchronized (register) {
+                    app.getEmailPassword().registerUserAsync(editEmail.getText().toString(), editPassword.getText().toString(), it -> {
+                        if (it.isSuccess()) {
+                            Log.v("User", "User is successfully registered");
+                        } else {
+                            Log.v("User", "Failed to register user");
+                            Log.v("User", it.getError().toString());
+                        }
+                    });
+                }
+
+                // Login user
+                synchronized (register) {
+                    Credentials credentials = Credentials.emailPassword(editEmail.getText().toString(), editPassword.getText().toString());
+
+                    app.loginAsync(credentials, new App.Callback<io.realm.mongodb.User>() {
+                        @Override
+                        public void onResult(App.Result<io.realm.mongodb.User> result) {
+                            if (result.isSuccess()) {
+                                Log.v("User", "Logged in Successfully");
+                            } else {
+                                Log.v("User", "Failed to login");
+                                Log.v("User", result.getError().toString());
+                            }
+                        }
+                    });
+                }
+
                 Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                 intent.putExtra("username", user.getUsername());
                 startActivity(intent);
