@@ -46,12 +46,12 @@ public class RegisterActivity extends AppCompatActivity {
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                               public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                                                  String text = parent.getItemAtPosition(pos).toString();
+                                                  /*String text = parent.getItemAtPosition(pos).toString();
                                                   if (text.equals("Tutor")) {
                                                       user = new Tutor(editFullname.getText().toString(), editPassword.getText().toString());
                                                   } else {
                                                       user = new Student(editFullname.getText().toString(), editPassword.getText().toString());
-                                                  }
+                                                  }*/
                                               }
 
                                               @Override

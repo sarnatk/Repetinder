@@ -8,7 +8,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
-public class User { //} extends RealmObject {
+public class User extends RealmObject {
 
     public User(/*int id*/ String username, String password) {
                // this.id = id;
@@ -58,7 +58,7 @@ public class User { //} extends RealmObject {
         HISTORY
     }
 
-    public void setSubject(Subject subject) {
+ /*   public void setSubject(Subject subject) {
         this.subject = subject;
     }
 
@@ -73,7 +73,7 @@ public class User { //} extends RealmObject {
 
     public Subject getSubject() {
         return subject;
-    }
+    }*/
 
 
     public ObjectId getId() {
@@ -83,7 +83,7 @@ public class User { //} extends RealmObject {
         return username;
     }
 
-    private String getPassword() {
+    public String getPassword() {
         return password;
     }
 
@@ -96,16 +96,16 @@ public class User { //} extends RealmObject {
     }
 
     @PrimaryKey
-    private final ObjectId _id = new ObjectId();
+    private ObjectId _id = new ObjectId();
     @Required
-    private final String username;
+    private String username;
     @Required
-    private final String password;
-    @Required
-    private GroupType groupType;
+    private String password;
+  //  @Required
+   // private GroupType groupType;
     private boolean isOnline;
-    @Required
-    private Subject subject;
+ //   @Required
+ //   private Subject subject;
 
-    private final Date lastOnlineTime = new Date(System.currentTimeMillis());
+    private Date lastOnlineTime = new Date(System.currentTimeMillis());
 }
