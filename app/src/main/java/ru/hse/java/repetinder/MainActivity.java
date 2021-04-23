@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
@@ -42,7 +41,9 @@ public class MainActivity extends AppCompatActivity {
             actionBar.setBackgroundDrawable(colorDrawable);
         }
 
-        //Bundle extras = getIntent().getExtras();
+        Bundle extras = getIntent().getExtras();
+        String email = extras.getString("email");
+        String password = extras.getString("password");
       //  String username = extras.getString("username");
         al = new ArrayList<>();
         //al.add(username);

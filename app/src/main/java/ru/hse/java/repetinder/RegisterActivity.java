@@ -13,28 +13,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.util.ArrayList;
-
-import io.realm.Realm;
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
-import io.realm.mongodb.Credentials;
 
 public class RegisterActivity extends AppCompatActivity {
     private User user;
     //Realm uiThreadRealm;
-    private final String appId = "repetinder-xlfqn";
-    private final Object register = new Object();
+   // private final String appId = "repetinder-xlfqn";
+   // private final Object register = new Object();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Realm.init(this);
-
-        App app = new App(new AppConfiguration.Builder(appId).build());
-
+        Init init = (Init)getIntent().getSerializableExtra("Init");
+        App app = new App(new AppConfiguration.Builder(init.appId).build());
         setContentView(R.layout.activity_register);
 
         Button buttonRegister = (Button) findViewById(R.id.signUp);
@@ -71,7 +64,6 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 // Add user to database
-                synchronized (register) {
                     app.getEmailPassword().registerUserAsync(editEmail.getText().toString(), editPassword.getText().toString(), it -> {
                         if (it.isSuccess()) {
                             Log.v("User", "User is successfully registered");
@@ -80,10 +72,9 @@ public class RegisterActivity extends AppCompatActivity {
                             Log.v("User", it.getError().toString());
                         }
                     });
-                }
 
                 // Login user
-                synchronized (register) {
+           /*     synchronized (register) {
                     Credentials credentials = Credentials.emailPassword(editEmail.getText().toString(), editPassword.getText().toString());
 
                     app.loginAsync(credentials, new App.Callback<io.realm.mongodb.User>() {
@@ -97,10 +88,10 @@ public class RegisterActivity extends AppCompatActivity {
                             }
                         }
                     });
-                }
+                }*/
 
-                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                intent.putExtra("username", user.getUsername());
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+               // intent.putExtra("username", user.getUsername());
                 startActivity(intent);
                 finish();
             }
