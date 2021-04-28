@@ -10,21 +10,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-import org.bson.Document;
-
 import io.realm.Realm;
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
 import io.realm.mongodb.Credentials;
-import io.realm.mongodb.mongo.MongoClient;
-import io.realm.mongodb.mongo.MongoCollection;
-import io.realm.mongodb.mongo.MongoDatabase;
 
 public class LoginActivity extends AppCompatActivity {
     private final String appId = "repetinder-xlfqn";
-    private MongoDatabase mongoDatabase;
-    private MongoClient mongoClient;
-    //private final Object register = new Object();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,18 +48,6 @@ public class LoginActivity extends AppCompatActivity {
                             Log.v("User", "Failed to login");
                             Log.v("User", result.getError().toString());
                         }
-                    }
-                });
-
-                io.realm.mongodb.User user = app.currentUser();
-                mongoClient = user.getMongoClient("mongodb-atlas");
-                mongoDatabase = mongoClient.getDatabase("RepetinderData");
-                MongoCollection<Document> mongoCollection = mongoDatabase.getCollection("UserData");
-                mongoCollection.insertOne(new Document("userId", user.getId()).append("data", editEmail.getText().toString())).getAsync(result -> {
-                    if (result.isSuccess()) {
-                        Log.v("Data","Data Inserted Successfully");
-                    } else {
-                        Log.v("Data","Error:"+result.getError().toString());
                     }
                 });
 

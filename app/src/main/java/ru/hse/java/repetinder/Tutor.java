@@ -1,6 +1,6 @@
 package ru.hse.java.repetinder;
 
-public class Tutor { /*extends User {
+public class Tutor extends User {
     public Tutor(String username, String password) {
         super(username, password);
     }
@@ -13,5 +13,5 @@ public class Tutor { /*extends User {
         return minPrice;
     }
 
-    private int minPrice;*/
+    private int minPrice;
 }

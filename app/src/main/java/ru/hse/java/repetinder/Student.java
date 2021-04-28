@@ -1,6 +1,9 @@
 package ru.hse.java.repetinder;
 
-public class Student { /*extends User implements RealmModel {
+import java.util.ArrayList;
+import java.util.Collection;
+
+public class Student extends User {
     public Student(String username, String password) {
         super(username, password);
     }
@@ -30,6 +33,6 @@ public class Student { /*extends User implements RealmModel {
     }
 
     private int maxPrice;
-    private ArrayList<Integer> approvedTutors; */
+    private ArrayList<Integer> approvedTutors;
 }
 

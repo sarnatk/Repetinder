@@ -4,11 +4,7 @@ import org.bson.types.ObjectId;
 
 import java.util.Date;
 
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.Required;
-
-public class User extends RealmObject {
+public class User { //extends RealmObject {
 
     public User(/*int id*/ String username, String password) {
                // this.id = id;
@@ -58,7 +54,7 @@ public class User extends RealmObject {
         HISTORY
     }
 
- /*   public void setSubject(Subject subject) {
+    public void setSubject(Subject subject) {
         this.subject = subject;
     }
 
@@ -73,7 +69,7 @@ public class User extends RealmObject {
 
     public Subject getSubject() {
         return subject;
-    }*/
+    }
 
 
     public ObjectId getId() {
@@ -95,17 +91,12 @@ public class User extends RealmObject {
         isOnline = !isOnline;
     }
 
-    @PrimaryKey
     private ObjectId _id = new ObjectId();
-    @Required
     private String username;
-    @Required
     private String password;
-  //  @Required
-   // private GroupType groupType;
+    private GroupType groupType;
     private boolean isOnline;
- //   @Required
- //   private Subject subject;
+    private Subject subject;
 
     private Date lastOnlineTime = new Date(System.currentTimeMillis());
 }

@@ -13,15 +13,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import org.bson.Document;
+
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
+import io.realm.mongodb.mongo.MongoClient;
+import io.realm.mongodb.mongo.MongoCollection;
+import io.realm.mongodb.mongo.MongoDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
     private User user;
-    //Realm uiThreadRealm;
-   // private final String appId = "repetinder-xlfqn";
-   // private final Object register = new Object();
-
+    private MongoDatabase mongoDatabase;
+    private MongoClient mongoClient;
+    private String userRole;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                               public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                                                  /*String text = parent.getItemAtPosition(pos).toString();
-                                                  if (text.equals("Tutor")) {
-                                                      user = new Tutor(editFullname.getText().toString(), editPassword.getText().toString());
-                                                  } else {
-                                                      user = new Student(editFullname.getText().toString(), editPassword.getText().toString());
-                                                  }*/
+                                                  userRole = parent.getItemAtPosition(pos).toString();
                                               }
 
                                               @Override
@@ -67,29 +66,43 @@ public class RegisterActivity extends AppCompatActivity {
                     app.getEmailPassword().registerUserAsync(editEmail.getText().toString(), editPassword.getText().toString(), it -> {
                         if (it.isSuccess()) {
                             Log.v("User", "User is successfully registered");
+                            io.realm.mongodb.User user = app.currentUser();
+                            mongoClient = user.getMongoClient("mongodb-atlas");
+                            mongoDatabase = mongoClient.getDatabase("RepetinderData");
+                            MongoCollection<Document> mongoCollection = mongoDatabase.getCollection("UserData");
+
+                            /* TODO: (написано, чтобы не забыть, а еще выговориться хочется)
+                            1. убрать username, ибо он не нужен, видимо
+                            2. вместо него добавить выбор предмета (сейчас по стандарту математика), но список предметов какой-то длинный, поэтому возможно для него нужна отдельная страница?
+                            но тогда вопрос в том: можно ли связать два ***.xml файла с одним ***Activity.java.
+                            3. Сейчас по стандарту выбирается группа из 1 человека, но потом в настройках эту оптию можно будет поменять. Так точно удобнее
+                            и вроде правильно
+                            4. Наверное, стоит тут создать все же класс user, но с этим json он как-то и не нужен особо ы
+                            5. Я вот сделала Init класс, предполагая, что в нем можно хранить важные штуки, которые нужны всем. Видимо, текущего юзера, например
+                            пока непонятно, можно ли это как-то улучшить, а еще его передавать между activity разными больно, если в нем хранить свои кастомные классы,
+                            а не библиотечные
+
+                            вроде выговорилась
+                             */
+                            mongoCollection.insertOne(new Document("userId", user.getId())
+                                    .append("email", editEmail.getText().toString())
+                                    .append("userRole", userRole)
+                                    .append("fullname", editFullname.getText().toString())
+                                    .append("username", editUsername.getText().toString())
+                                    .append("subject", "Math")
+                                    .append("groupSize", 1))
+                                    .getAsync(result -> {
+                                if (result.isSuccess()) {
+                                    Log.v("Data","Data Inserted Successfully");
+                                } else {
+                                    Log.v("Data","Error:"+result.getError().toString());
+                                }
+                            });
                         } else {
                             Log.v("User", "Failed to register user");
                             Log.v("User", it.getError().toString());
                         }
                     });
-
-                // Login user
-           /*     synchronized (register) {
-                    Credentials credentials = Credentials.emailPassword(editEmail.getText().toString(), editPassword.getText().toString());
-
-                    app.loginAsync(credentials, new App.Callback<io.realm.mongodb.User>() {
-                        @Override
-                        public void onResult(App.Result<io.realm.mongodb.User> result) {
-                            if (result.isSuccess()) {
-                                Log.v("User", "Logged in Successfully");
-                            } else {
-                                Log.v("User", "Failed to login");
-                                Log.v("User", result.getError().toString());
-                            }
-                        }
-                    });
-                }*/
-
                 Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                // intent.putExtra("username", user.getUsername());
                 startActivity(intent);
