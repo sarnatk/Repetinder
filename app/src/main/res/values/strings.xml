@@ -11,9 +11,12 @@
     <string name="name">fullname</string>
     <string name="sing_up">sing up</string>
     <string name="icon_profile">PROFILE</string>
+    <string name="icon_matches">MATCHES</string>
+    <string name="icon_home">HOME</string>
     <string name="profile_name">fullname</string>
     <string name="user_type">Status: Student</string>
     <string name="profile_email">xyz@mail.ru</string>
+    <string name="waiting_text">Wait until you are chosen</string>
     <string-array name="user_type">
         <item>Student</item>
         <item>Tutor</item>

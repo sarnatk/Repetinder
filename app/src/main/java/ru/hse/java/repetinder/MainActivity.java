@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
@@ -53,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
 
         arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.helloText, al);
 
-
         SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
         flingContainer.setAdapter(arrayAdapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
@@ -93,6 +94,27 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
                 Toast.makeText(MainActivity.this, "click", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Button buttonToProfileFromHome = findViewById(R.id.toProfileFromHome);
+        Button buttonToMatchesFromHome = findViewById(R.id.toMatchesFromHome);
+
+        buttonToProfileFromHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        buttonToMatchesFromHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MatchesActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
