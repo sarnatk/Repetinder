@@ -83,6 +83,10 @@ public class RegisterActivity extends AppCompatActivity {
                             а не библиотечные
 
                             вроде выговорилась
+
+                            Саша, надо выговариваться в гуглдоке
+                            https://docs.google.com/document/d/1RdkUbMPiBuivK4qnpHG56w1fy9gCEodbRnx8VBJtqLo/edit
+                            *стикос кота*
                              */
                             mongoCollection.insertOne(new Document("userId", user.getId())
                                     .append("email", editEmail.getText().toString())

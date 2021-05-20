@@ -1,5 +1,6 @@
 package ru.hse.java.repetinder;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -36,18 +37,16 @@ public class ProfileActivity extends AppCompatActivity {
         buttonToHomeFromProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-          //      Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
-          //      startActivity(intent);
-                finish();
+                Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 
         buttonToMatchesFromProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            //    Intent intent = new Intent(ProfileActivity.this, MatchesActivity.class);
-             //   startActivity(intent);
-                finish();
+                Intent intent = new Intent(ProfileActivity.this, MatchesActivity.class);
+                startActivity(intent);
             }
         });
     }
