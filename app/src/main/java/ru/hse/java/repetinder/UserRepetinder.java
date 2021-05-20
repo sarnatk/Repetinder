@@ -6,15 +6,15 @@ import java.util.Date;
 
 public class UserRepetinder { //extends RealmObject {
 
-    public UserRepetinder(/*int id*/ String username, String password) {
-               // this.id = id;
+    public UserRepetinder(int id, String username, String password) {
+                this.id = id;
                // TODO: counting id?
                 this.username = username;
                 this.password = password;
     }
 
     public UserRepetinder() {
-        this("name", "uiop");
+        this(1, "name", "uiop");
     }
 
     public enum GroupType {
@@ -72,8 +72,8 @@ public class UserRepetinder { //extends RealmObject {
     }
 
 
-    public ObjectId getId() {
-        return _id;
+    public Integer getId() {
+        return id;
     }
     public String getUsername() {
         return username;
@@ -91,7 +91,7 @@ public class UserRepetinder { //extends RealmObject {
         isOnline = !isOnline;
     }
 
-    private ObjectId _id = new ObjectId();
+    private final Integer id;
     private String username;
     private String password;
     private GroupType groupType;

@@ -1,8 +1,13 @@
 package ru.hse.java.repetinder;
 
-public class Tutor extends User {
-    public Tutor(String username, String password) {
-        super(username, password);
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+
+public class Tutor extends UserRepetinder {
+    public Tutor(int id, String username, String password) {
+        super(id, username, password);
+        approvedStudents = new LinkedList<>();
     }
 
     public void setMinPrice(int minPrice) {
@@ -13,5 +18,27 @@ public class Tutor extends User {
         return minPrice;
     }
 
+    public int getRang() {
+        return rang;
+    }
+
+    public void increaseRang() {
+        rang++;
+    }
+
+    public void decreaseRang() {
+        rang--;
+    }
+
+    public void addStudentToList(Student student) {
+        approvedStudents.add(student);
+    }
+
+    public void addAll(Collection<? extends Student> students) {
+        approvedStudents.addAll(students);
+    }
+
     private int minPrice;
+    private int rang;
+    private final List<Student> approvedStudents;
 }
