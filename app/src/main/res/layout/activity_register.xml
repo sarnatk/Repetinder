@@ -14,7 +14,7 @@
         app:layout_constraintVertical_bias="0.4">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/fullnameProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppinsbold"
@@ -39,7 +39,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView">
+            app:layout_constraintTop_toBottomOf="@+id/fullnameProfile">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/fullname"

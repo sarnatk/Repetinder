@@ -4,16 +4,16 @@ import org.bson.types.ObjectId;
 
 import java.util.Date;
 
-public class User { //extends RealmObject {
+public class UserRepetinder { //extends RealmObject {
 
-    public User(/*int id*/ String username, String password) {
+    public UserRepetinder(/*int id*/ String username, String password) {
                // this.id = id;
                // TODO: counting id?
                 this.username = username;
                 this.password = password;
     }
 
-    public User() {
+    public UserRepetinder() {
         this("name", "uiop");
     }
 

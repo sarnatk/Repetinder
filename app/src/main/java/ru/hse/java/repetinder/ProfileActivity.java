@@ -8,9 +8,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import io.realm.mongodb.User;
+import io.realm.mongodb.mongo.MongoDatabase;
 
 public class ProfileActivity extends AppCompatActivity {
     @Override
