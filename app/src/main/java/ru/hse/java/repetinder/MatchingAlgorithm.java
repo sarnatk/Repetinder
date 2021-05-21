@@ -7,6 +7,8 @@ import androidx.annotation.RequiresApi;
 import java.util.Comparator;
 import java.util.List;
 
+import ru.hse.java.repetinder.exception.MatchingAlgorithmException;
+
 /**
  * This is a class which find tutors for students
  */
@@ -42,12 +44,17 @@ public class MatchingAlgorithm {
 
     /**
      * Function that increases tutor's rang, because student
-     * choose this tutor and swipe this tutor right
+     * choose this tutor and swipe this tutor right.
+     *
+     * Throws MatchingAlgorithmException if tutor was swiped by student.
      *
      * @param student who swipe
      * @param tutor who was chosen by student
      */
-    public void swipeRight(Student student, Tutor tutor) {
+    public void swipeRight(Student student, Tutor tutor) throws MatchingAlgorithmException {
+        if (student.isTutorSkipped(tutor) || student.isTutorApproved(tutor)) {
+            throw new MatchingAlgorithmException("Tutor was swiped by student");
+        }
         student.addTutorToApproved(tutor);
         tutor.addStudentToList(student);
         tutor.increaseRang();
@@ -57,10 +64,15 @@ public class MatchingAlgorithm {
      * Function that decreases tutor's rang, because student
      * doesn't choose this tutor and swipe this tutor left
      *
+     * Throws MatchingAlgorithmException if tutor was swiped by student.
+     *
      * @param student who swipe
      * @param tutor who wasn't chosen by student
      */
-    public void swipeLeft(Student student, Tutor tutor) {
+    public void swipeLeft(Student student, Tutor tutor) throws MatchingAlgorithmException {
+        if (student.isTutorSkipped(tutor) || student.isTutorApproved(tutor)) {
+            throw new MatchingAlgorithmException("Tutor was swiped by student");
+        }
         student.addTutorToSkipped(tutor);
         tutor.decreaseRang();
     }
