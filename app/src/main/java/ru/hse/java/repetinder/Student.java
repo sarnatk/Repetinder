@@ -2,37 +2,58 @@ package ru.hse.java.repetinder;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
-public class Student extends User {
-    public Student(String username, String password) {
-        super(username, password);
+public class Student extends UserRepetinder {
+    public Student(int id, String username, String password) {
+        super(id, username, password);
+        approvedTutors = new LinkedList<>();
+        skippedTutors = new LinkedList<>();
     }
 
     public void setMaxPrice(int maxPrice) {
         this.maxPrice = maxPrice;
     }
 
-    public int getMinPrice() {
+    public int getMaxPrice() {
         return maxPrice;
     }
 
-    public void addTutorToList(int id) {
-        approvedTutors.add(id);
+    public void addTutorToApproved(Tutor tutor) {
+        approvedTutors.add(tutor);
     }
 
-    public void addAll(Collection<? extends Integer> ids) {
-        approvedTutors.addAll(ids);
+    public void addAllToApproved(Collection<? extends Tutor> tutors) {
+        approvedTutors.addAll(tutors);
     }
 
-    public boolean isTutorApproved(int id) {
-        return approvedTutors.contains(id);
+    public boolean isTutorApproved(Tutor tutor) {
+        return approvedTutors.contains(tutor);
     }
 
-    public ArrayList<Integer> getApprovedTutors() {
+    public List<Tutor> getApprovedTutors() {
         return approvedTutors;
     }
 
+    public void addTutorToSkipped(Tutor tutor) {
+        skippedTutors.add(tutor);
+    }
+
+    public void addAllToSkipped(Collection<? extends Tutor> tutors) {
+        skippedTutors.addAll(tutors);
+    }
+
+    public boolean isTutorSkipped(Tutor tutor) {
+        return skippedTutors.contains(tutor);
+    }
+
+    public List<Tutor> getSkippedTutors() {
+        return skippedTutors;
+    }
+
     private int maxPrice;
-    private ArrayList<Integer> approvedTutors;
+    private final List<Tutor> approvedTutors;
+    private final List<Tutor> skippedTutors;
 }
 

@@ -38,8 +38,7 @@ public class MatchesActivity extends AppCompatActivity {
         buttonToHomeFromMatches.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MatchesActivity.this, MainActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
     }

@@ -41,8 +41,7 @@ public class ProfileActivity extends AppCompatActivity {
         buttonToHomeFromProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
 

@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.Objects;
 
 import io.realm.Realm;
 import io.realm.mongodb.App;
@@ -37,26 +40,32 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Credentials credentials = Credentials.emailPassword(editEmail.getText().toString(), editPassword.getText().toString());
+                String emailToLogin = Objects.requireNonNull(editEmail.getText()).toString();
+                String passwordToLogin = Objects.requireNonNull(editPassword.getText()).toString();
+                if (!emailToLogin.isEmpty() && !passwordToLogin.isEmpty()) {
+                    Credentials credentials = Credentials.emailPassword(emailToLogin, passwordToLogin);
 
-                app.loginAsync(credentials, new App.Callback<io.realm.mongodb.User>() {
-                    @Override
-                    public void onResult(App.Result<io.realm.mongodb.User> result) {
-                        if (result.isSuccess()) {
-                            Log.v("User", "Logged in Successfully");
-                        } else {
-                            Log.v("User", "Failed to login");
-                            Log.v("User", result.getError().toString());
+                    app.loginAsync(credentials, new App.Callback<io.realm.mongodb.User>() {
+                        @Override
+                        public void onResult(App.Result<io.realm.mongodb.User> result) {
+                            if (result.isSuccess()) {
+                                Log.v("User", "Logged in Successfully");
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                intent.putExtra("email", editEmail.getText().toString());
+                                intent.putExtra("password", editPassword.getText().toString());
+                                intent.putExtra("Init", init);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Log.v("User", "Failed to login");
+                                Log.v("User", result.getError().toString());
+                                Toast.makeText(LoginActivity.this, "Incorrect login or password", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
-
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                intent.putExtra("email", editEmail.getText().toString());
-                intent.putExtra("password", editPassword.getText().toString());
-                intent.putExtra("Init", init);
-                startActivity(intent);
-                finish();
+                    });
+                } else {
+                    Toast.makeText(LoginActivity.this, "Write email and password first", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

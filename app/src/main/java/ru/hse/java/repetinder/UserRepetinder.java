@@ -4,17 +4,16 @@ import org.bson.types.ObjectId;
 
 import java.util.Date;
 
-public class User { //extends RealmObject {
+public class UserRepetinder { //extends RealmObject {
 
-    public User(/*int id*/ String username, String password) {
-               // this.id = id;
-               // TODO: counting id?
+    public UserRepetinder(int id, String username, String password) {
+                this.id = id;
                 this.username = username;
                 this.password = password;
     }
 
-    public User() {
-        this("name", "uiop");
+    public UserRepetinder() {
+        this(1, "name", "uiop");
     }
 
     public enum GroupType {
@@ -72,8 +71,8 @@ public class User { //extends RealmObject {
     }
 
 
-    public ObjectId getId() {
-        return _id;
+    public Integer getId() {
+        return id;
     }
     public String getUsername() {
         return username;
@@ -91,7 +90,7 @@ public class User { //extends RealmObject {
         isOnline = !isOnline;
     }
 
-    private ObjectId _id = new ObjectId();
+    private final Integer id;
     private String username;
     private String password;
     private GroupType groupType;
