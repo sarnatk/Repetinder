@@ -22,7 +22,7 @@ import io.realm.mongodb.mongo.MongoCollection;
 import io.realm.mongodb.mongo.MongoDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
-    private User user;
+  //  private User user;
     private MongoDatabase mongoDatabase;
     private MongoClient mongoClient;
     private String userRole;
