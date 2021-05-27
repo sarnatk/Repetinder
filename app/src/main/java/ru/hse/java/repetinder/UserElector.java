@@ -1,8 +1,5 @@
 package ru.hse.java.repetinder;
 
-import io.realm.mongodb.mongo.MongoClient;
-import io.realm.mongodb.mongo.MongoDatabase;
-
 public class UserElector {
 
     private static final String MONGO_ID = "";
@@ -17,7 +14,7 @@ public class UserElector {
     public void chooseUser() {
     }
 
-    public UserRepetinder findUser() {
+    public User findUser() {
         return null;
     }
 

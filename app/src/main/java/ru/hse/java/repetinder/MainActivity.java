@@ -17,7 +17,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
+import org.bson.Document;
+
 import java.util.ArrayList;
+
+import io.realm.mongodb.mongo.MongoCollection;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         al.add("Таня");
         al.add("Саша");
         al.add("Герман");
-
         arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.helloText, al);
 
         SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
