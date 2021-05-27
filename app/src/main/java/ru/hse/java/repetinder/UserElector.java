@@ -14,10 +14,6 @@ public class UserElector {
     public void chooseUser() {
     }
 
-    public User findUser() {
-        return null;
-    }
-
     public void changeParams() {
     }
 }
