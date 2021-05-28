@@ -17,7 +17,6 @@ import org.bson.Document;
 
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
-import io.realm.mongodb.User;
 import io.realm.mongodb.mongo.MongoClient;
 import io.realm.mongodb.mongo.MongoCollection;
 import io.realm.mongodb.mongo.MongoDatabase;
@@ -31,8 +30,8 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Init init = (Init)getIntent().getSerializableExtra("Init");
-        App app = new App(new AppConfiguration.Builder(init.appId).build());
+        Storage storage = (Storage)getIntent().getSerializableExtra("Init");
+        App app = new App(new AppConfiguration.Builder(storage.appId).build());
         setContentView(R.layout.activity_register);
 
         Button buttonRegister = (Button) findViewById(R.id.signUp);

@@ -30,8 +30,6 @@ import io.realm.mongodb.mongo.MongoDatabase;
 import io.realm.mongodb.mongo.iterable.MongoCursor;
 
 public class MainActivity extends AppCompatActivity {
- //   Map<String, String> boo = new HashMap<>();
- //Document boo;
     private ArrayList<String> al;
     private ArrayAdapter<String> arrayAdapter;
     private int i;
@@ -55,11 +53,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Bundle extras = getIntent().getExtras();
-        String email = extras.getString("email");
-        String password = extras.getString("password");
-      //  String username = extras.getString("username");
+        Storage storage = (Storage)extras.getSerializable("storage");
+
         al = new ArrayList<>();
-        //al.add(username);
         al.add("Таня");
         al.add("Саша");
         al.add("Герман");
@@ -68,9 +64,35 @@ public class MainActivity extends AppCompatActivity {
         MongoClient mongoClient = user.getMongoClient("mongodb-atlas");
         MongoDatabase mongoDatabase = mongoClient.getDatabase("RepetinderData");
         MongoCollection<Document> mongoCollection = mongoDatabase.getCollection("UserData");
-        RealmResultTask<MongoCursor<Document>> iterator = mongoCollection.find().iterator();
+        Document emailFilter = new Document().append("email", storage.email);
+        RealmResultTask<MongoCursor<Document>> iteratorCurrenntUser = mongoCollection.find(emailFilter).iterator();
+        iteratorCurrenntUser.getAsync(task -> {
+            if (task.isSuccess()) {
+                MongoCursor<Document> results = task.get();
+                if (results.hasNext()) {
+                    Log.v("FindFunction","Found Something");
+                    Document result = results.next();
+                    String userRole = result.get("userRole").toString();
+                    String fullname = result.get("fullname").toString();
+                    String username = result.get("username").toString();
+                    String subject = result.get("userRole").toString();
+                    int userId = Integer.parseInt(result.get("userId").toString());
+                    int groupSize = Integer.parseInt(result.get("groupSize").toString());
+                    storage.userRole = userRole;
+                    if (userRole.equals("Tutor")) {
+                        storage.currentUser = new Tutor(userId, fullname, username, UserRepetinder.Subject.valueOf(subject));
+                    } else {
+                        storage.currentUser = new Student(userId, fullname, username, UserRepetinder.Subject.valueOf(subject));
+                    }
 
-        iterator.getAsync(task -> {
+                }
+            } else {
+                Log.v("Error",task.getError().toString());
+            }
+        });
+
+        RealmResultTask<MongoCursor<Document>> iteratorAllUsers = mongoCollection.find().iterator();
+        iteratorAllUsers.getAsync(task -> {
             if (task.isSuccess()) {
                 MongoCursor<Document> results = task.get();
                 while (results.hasNext()) {
@@ -84,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.v("Error",task.getError().toString());
             }
         });
-     //   al.add(boo);
+
         arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.helloText, al);
 
         SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
@@ -139,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                intent.putExtra("storage", storage);
                 startActivity(intent);
             }
         });

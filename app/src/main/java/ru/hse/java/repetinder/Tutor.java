@@ -5,8 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Tutor extends UserRepetinder {
-    public Tutor(int id, String username, String password) {
-        super(id, username, password);
+    public Tutor(int id, String fullname, String username, Subject subject) {
+        super(id, fullname, username, subject);
         approvedStudents = new LinkedList<>();
     }
 

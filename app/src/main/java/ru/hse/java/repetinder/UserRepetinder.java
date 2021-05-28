@@ -1,19 +1,19 @@
 package ru.hse.java.repetinder;
 
-import org.bson.types.ObjectId;
-
+import java.io.Serializable;
 import java.util.Date;
 
-public class UserRepetinder { //extends RealmObject {
+public class UserRepetinder implements Serializable { //extends RealmObject {
 
-    public UserRepetinder(int id, String username, String password) {
+    public UserRepetinder(int id, String fullname, String username, Subject subject) {
                 this.id = id;
+                this.fullname = fullname;
                 this.username = username;
-                this.password = password;
+                this.subject = subject;
     }
 
     public UserRepetinder() {
-        this(1, "name", "uiop");
+        this(1, "fullname", "username", Subject.MATH);
     }
 
     public enum GroupType {
@@ -61,7 +61,6 @@ public class UserRepetinder { //extends RealmObject {
         this.groupType = groupType;
     }
 
-
     public GroupType getGroupType() {
         return groupType;
     }
@@ -74,12 +73,9 @@ public class UserRepetinder { //extends RealmObject {
     public Integer getId() {
         return id;
     }
+
     public String getUsername() {
         return username;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public boolean isOnline() {
@@ -91,8 +87,8 @@ public class UserRepetinder { //extends RealmObject {
     }
 
     private final Integer id;
-    private String username;
-    private String password;
+    private final String username;
+    private final String fullname;
     private GroupType groupType;
     private boolean isOnline;
     private Subject subject;

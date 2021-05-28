@@ -26,10 +26,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Realm.init(this);
-        Init init = new Init();
-        App app = new App(new AppConfiguration.Builder(init.appId).build());
-
-       // init.app = new App(new AppConfiguration.Builder(init.appId).build());
+        Storage storage = new Storage();
+        App app = new App(new AppConfiguration.Builder(storage.appId).build());
 
         setContentView(R.layout.activity_login);
         Button buttonLogin = (Button) findViewById(R.id.login);
@@ -51,9 +49,8 @@ public class LoginActivity extends AppCompatActivity {
                             if (result.isSuccess()) {
                                 Log.v("User", "Logged in Successfully");
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                intent.putExtra("email", editEmail.getText().toString());
-                                intent.putExtra("password", editPassword.getText().toString());
-                                intent.putExtra("Init", init);
+                                storage.email = editEmail.getText().toString();
+                                intent.putExtra("storage", storage);
                                 startActivity(intent);
                                 finish();
                             } else {
@@ -73,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                intent.putExtra("Init", init);
+                intent.putExtra("Init", storage);
                 startActivity(intent);
                 finish();
             }

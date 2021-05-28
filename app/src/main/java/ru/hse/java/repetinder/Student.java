@@ -1,13 +1,12 @@
 package ru.hse.java.repetinder;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Student extends UserRepetinder {
-    public Student(int id, String username, String password) {
-        super(id, username, password);
+    public Student(int id, String fullname, String username, Subject subject) {
+        super(id, fullname, username, subject);
         approvedTutors = new LinkedList<>();
         skippedTutors = new LinkedList<>();
     }

@@ -13,9 +13,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import io.realm.mongodb.User;
-import io.realm.mongodb.mongo.MongoDatabase;
-
 public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +20,10 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         ActionBar actionBar;
         actionBar = getSupportActionBar();
+        Bundle extras = getIntent().getExtras();
+        Storage storage = (Storage)extras.getSerializable("storage");
+        TextView userEmail = (TextView) findViewById(R.id.mailProfile);
+        userEmail.setText(storage.email);
 
         // Define ColorDrawable object and parse color
         // using parseColor method
@@ -49,6 +50,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ProfileActivity.this, MatchesActivity.class);
+                intent.putExtra("storage", storage);
                 startActivity(intent);
             }
         });
