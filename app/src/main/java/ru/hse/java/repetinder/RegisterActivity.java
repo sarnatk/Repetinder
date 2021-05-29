@@ -8,12 +8,15 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.bson.Document;
+
+import java.util.Objects;
 
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
@@ -22,7 +25,7 @@ import io.realm.mongodb.mongo.MongoCollection;
 import io.realm.mongodb.mongo.MongoDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
-  //  private User user;
+    //  private User user;
     private MongoDatabase mongoDatabase;
     private MongoClient mongoClient;
     private String userRole;
@@ -30,7 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Storage storage = (Storage)getIntent().getSerializableExtra("Init");
+        Storage storage = (Storage) getIntent().getSerializableExtra("Init");
         App app = new App(new AppConfiguration.Builder(storage.appId).build());
         setContentView(R.layout.activity_register);
 
@@ -49,19 +52,29 @@ public class RegisterActivity extends AppCompatActivity {
         spinner.setAdapter(adapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                              public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                                                  userRole = parent.getItemAtPosition(pos).toString();
-                                              }
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                userRole = parent.getItemAtPosition(pos).toString();
+            }
 
-                                              @Override
-                                              public void onNothingSelected(AdapterView<?> parent) {
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
-                                              }
-                                          });
+            }
+        });
+
         buttonRegister.setOnClickListener(v -> {
+            String email = Objects.requireNonNull(editEmail.getText()).toString();
+            String password = Objects.requireNonNull(editPassword.getText()).toString();
+            String username = Objects.requireNonNull(editUsername.getText()).toString();
+            String fullname = Objects.requireNonNull(editFullname.getText()).toString();
 
-            // Add user to database
-                app.getEmailPassword().registerUserAsync(editEmail.getText().toString(), editPassword.getText().toString(), it -> {
+            if (email.isEmpty() || password.isEmpty() || username.isEmpty() || fullname.isEmpty()) {
+                Toast.makeText(RegisterActivity.this, "You need to fill in each field", Toast.LENGTH_SHORT).show();
+            } else if (password.length() < 6) {
+                Toast.makeText(RegisterActivity.this, "Password should contain at least 6 symbols", Toast.LENGTH_SHORT).show();
+            } else {
+                // Add user to database
+                app.getEmailPassword().registerUserAsync(email, password, it -> {
                     if (it.isSuccess()) {
                         Log.v("User", "User is successfully registered");
                         io.realm.mongodb.User user = app.currentUser();
@@ -87,26 +100,27 @@ public class RegisterActivity extends AppCompatActivity {
                         *стикос кота*
                          */
                         mongoCollection.insertOne(new Document("userId", user.getId())
-                                .append("email", editEmail.getText().toString())
+                                .append("email", email)
                                 .append("userRole", userRole)
-                                .append("fullname", editFullname.getText().toString())
-                                .append("username", editUsername.getText().toString())
+                                .append("fullname", fullname)
+                                .append("username", username)
                                 .append("subject", "Math")
                                 .append("groupSize", 1))
                                 .getAsync(result -> {
-                            if (result.isSuccess()) {
-                                Log.v("Data","Data Inserted Successfully");
-                            } else {
-                                Log.v("Data","Error:"+result.getError().toString());
-                            }
-                        });
+                                    if (result.isSuccess()) {
+                                        Log.v("Data", "Data Inserted Successfully");
+                                    } else {
+                                        Log.v("Data", "Error:" + result.getError().toString());
+                                    }
+                                });
                     } else {
                         Log.v("User", "Failed to register user");
                         Log.v("User", it.getError().toString());
                     }
                 });
+            }
             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-           // intent.putExtra("username", user.getUsername());
+            // intent.putExtra("username", user.getUsername());
             startActivity(intent);
             finish();
         });
