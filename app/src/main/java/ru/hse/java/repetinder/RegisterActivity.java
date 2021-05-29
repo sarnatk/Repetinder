@@ -34,15 +34,15 @@ public class RegisterActivity extends AppCompatActivity {
         App app = new App(new AppConfiguration.Builder(storage.appId).build());
         setContentView(R.layout.activity_register);
 
-        Button buttonRegister = (Button) findViewById(R.id.signUp);
-        Button buttonLogin = (Button) findViewById(R.id.backToLogin);
-        TextInputEditText editEmail = (TextInputEditText) findViewById(R.id.email);
-        TextInputEditText editFullname = (TextInputEditText) findViewById(R.id.fullname);
+        Button buttonRegister = findViewById(R.id.signUp);
+        Button buttonLogin = findViewById(R.id.backToLogin);
+        TextInputEditText editEmail = findViewById(R.id.email);
+        TextInputEditText editFullname = findViewById(R.id.fullname);
 
-        TextInputEditText editUsername = (TextInputEditText) findViewById(R.id.username);
-        TextInputEditText editPassword = (TextInputEditText) findViewById(R.id.password);
+        TextInputEditText editUsername = findViewById(R.id.username);
+        TextInputEditText editPassword = findViewById(R.id.password);
 
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        Spinner spinner = findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.user_type, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
