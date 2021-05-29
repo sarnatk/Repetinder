@@ -45,7 +45,11 @@ public class LoginActivity extends AppCompatActivity {
                     if (result.isSuccess()) {
                         Log.v("User", "Logged in Successfully");
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        storage.email = editEmail.getText().toString();
+                        storage.email = emailToLogin;
+                        // тут надо научиться получать инфу из базы по емейлу
+                        // чтобы потом пихать сконструированного юзера в storage
+                        // и это бы заполняло инфу в профиле
+                        //storage.userRole =
                         intent.putExtra("storage", storage);
                         startActivity(intent);
                         finish();

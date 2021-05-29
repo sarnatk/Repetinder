@@ -30,7 +30,7 @@ import io.realm.mongodb.mongo.MongoDatabase;
 import io.realm.mongodb.mongo.iterable.MongoCursor;
 
 public class MainActivity extends AppCompatActivity {
-    private ArrayList<String> al;
+    private ArrayList<String> possibleMatchesQueue;
     private ArrayAdapter<String> arrayAdapter;
     private int i;
 
@@ -55,59 +55,66 @@ public class MainActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         Storage storage = (Storage)extras.getSerializable("storage");
 
-        al = new ArrayList<>();
-        al.add("Таня");
-        al.add("Саша");
-        al.add("Герман");
+        possibleMatchesQueue = new ArrayList<>();
+        possibleMatchesQueue.add("Таня");
+        possibleMatchesQueue.add("Саша");
+        possibleMatchesQueue.add("Герман");
         App app = new App(new AppConfiguration.Builder("repetinder-xlfqn").build());
-        io.realm.mongodb.User user = app.currentUser();
-        MongoClient mongoClient = user.getMongoClient("mongodb-atlas");
-        MongoDatabase mongoDatabase = mongoClient.getDatabase("RepetinderData");
-        MongoCollection<Document> mongoCollection = mongoDatabase.getCollection("UserData");
-        Document emailFilter = new Document().append("email", storage.email);
-        RealmResultTask<MongoCursor<Document>> iteratorCurrenntUser = mongoCollection.find(emailFilter).iterator();
-        iteratorCurrenntUser.getAsync(task -> {
-            if (task.isSuccess()) {
-                MongoCursor<Document> results = task.get();
-                if (results.hasNext()) {
-                    Log.v("FindFunction","Found Something");
-                    Document result = results.next();
-                    String userRole = result.get("userRole").toString();
-                    String fullname = result.get("fullname").toString();
-                    String username = result.get("username").toString();
-                    String subject = result.get("userRole").toString();
-                    int userId = Integer.parseInt(result.get("userId").toString());
-                    int groupSize = Integer.parseInt(result.get("groupSize").toString());
-                    storage.userRole = userRole;
-                    if (userRole.equals("Tutor")) {
-                        storage.currentUser = new Tutor(userId, fullname, username, UserRepetinder.Subject.valueOf(subject));
-                    } else {
-                        storage.currentUser = new Student(userId, fullname, username, UserRepetinder.Subject.valueOf(subject));
+            io.realm.mongodb.User user = app.currentUser();
+            MongoClient mongoClient = user.getMongoClient("mongodb-atlas");
+            MongoDatabase mongoDatabase = mongoClient.getDatabase("RepetinderData");
+            MongoCollection<Document> mongoCollection = mongoDatabase.getCollection("UserData");
+            Document emailFilter = new Document().append("email", storage.email);
+            RealmResultTask<MongoCursor<Document>> iteratorCurrenntUser = mongoCollection.find(emailFilter).iterator();
+            iteratorCurrenntUser.getAsync(task -> {
+                if (task.isSuccess()) {
+                    MongoCursor<Document> results = task.get();
+                    if (results.hasNext()) {
+                        Log.v("FindFunction", "Found Something");
+                        Document result = results.next();
+                        String userRole = result.get("userRole").toString();
+                        String fullname = result.get("fullname").toString();
+                        String username = result.get("username").toString();
+                        String subject = result.get("userRole").toString();
+                        int userId = Integer.parseInt(result.get("userId").toString());
+                        int groupSize = Integer.parseInt(result.get("groupSize").toString());
+                        storage.userRole = userRole;
+                        if (userRole.equals("Tutor")) {
+                            storage.currentUser = new Tutor(userId, fullname, username, UserRepetinder.Subject.valueOf(subject));
+                        } else {
+                            storage.currentUser = new Student(userId, fullname, username, UserRepetinder.Subject.valueOf(subject));
+                        }
+
                     }
-
+                } else {
+                    Log.v("Error", task.getError().toString());
                 }
-            } else {
-                Log.v("Error",task.getError().toString());
-            }
-        });
+            });
 
-        RealmResultTask<MongoCursor<Document>> iteratorAllUsers = mongoCollection.find().iterator();
-        iteratorAllUsers.getAsync(task -> {
-            if (task.isSuccess()) {
-                MongoCursor<Document> results = task.get();
-                while (results.hasNext()) {
-                    Log.v("FindFunction","Found Something");
-                    Document result = results.next();
+        for (io.realm.mongodb.User device : app.allUsers().values()) {
+            // это должно было решить проблему с частичным добавлением юзеров
+            // но не решило
+            mongoClient = device.getMongoClient("mongodb-atlas");
+            mongoDatabase = mongoClient.getDatabase("RepetinderData");
+            mongoCollection = mongoDatabase.getCollection("UserData");
+            RealmResultTask<MongoCursor<Document>> iteratorAllUsers = mongoCollection.find().iterator();
+            iteratorAllUsers.getAsync(task -> {
+                if (task.isSuccess()) {
+                    MongoCursor<Document> results = task.get();
+                    while (results.hasNext()) {
+                        Log.v("FindFunction", "Found Something");
+                        Document result = results.next();
 
-                    al.add(result.get("fullname").toString());
+                        possibleMatchesQueue.add(result.get("fullname").toString());
 
+                    }
+                } else {
+                    Log.v("Error", task.getError().toString());
                 }
-            } else {
-                Log.v("Error",task.getError().toString());
-            }
-        });
+            });
+        }
 
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.helloText, al);
+        arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.helloText, possibleMatchesQueue);
 
         SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
         flingContainer.setAdapter(arrayAdapter);
@@ -115,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void removeFirstObjectInAdapter() {
                 Log.d("LIST", "removed object!");
-                al.remove(0);
+                possibleMatchesQueue.remove(0);
                 arrayAdapter.notifyDataSetChanged();
             }
 
@@ -136,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
                 arrayAdapter.notifyDataSetChanged();
                 Log.d("LIST", "notified");
                 i++;
-
                  */
             }
 

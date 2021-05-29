@@ -23,7 +23,11 @@ public class ProfileActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         Storage storage = (Storage)extras.getSerializable("storage");
         TextView userEmail = (TextView) findViewById(R.id.mailProfile);
+        TextView userFullname = (TextView) findViewById(R.id.fullnameProfile);
+        TextView userRole = (TextView) findViewById(R.id.userRoleProfile);
         userEmail.setText(storage.email);
+        userFullname.setText(storage.fullname);
+        userRole.setText(String.format("Status: %s", storage.userRole));
 
         // Define ColorDrawable object and parse color
         // using parseColor method

@@ -7,4 +7,5 @@ public class Storage implements Serializable {
     public String email;
     public UserRepetinder currentUser = new UserRepetinder();
     public String userRole;
+    public String fullname;
 }
