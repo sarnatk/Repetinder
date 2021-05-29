@@ -42,6 +42,16 @@ public class ProfileActivity extends AppCompatActivity {
 
         Button buttonToHomeFromProfile = findViewById(R.id.toHomeFromProfile);
         Button buttonToMatchesFromProfile = findViewById(R.id.toMatchesFromProfile);
+        Button logOutButton = findViewById(R.id.logOut);
+
+        logOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         buttonToHomeFromProfile.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -17,6 +17,7 @@
     <string name="user_type">Status: Student</string>
     <string name="profile_email">xyz@mail.ru</string>
     <string name="waiting_text">Wait until you are chosen</string>
+    <string name="logout">log out</string>
     <string-array name="user_type">
         <item>Student</item>
         <item>Tutor</item>
