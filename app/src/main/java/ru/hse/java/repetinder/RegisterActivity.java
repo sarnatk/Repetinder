@@ -118,11 +118,15 @@ public class RegisterActivity extends AppCompatActivity {
                         Log.v("User", it.getError().toString());
                     }
                 });
+                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                // intent.putExtra("username", user.getUsername());
+                storage.email = email;
+                storage.fullname = fullname;
+                storage.userRole = userRole;
+                intent.putExtra("storage", storage);
+                startActivity(intent);
+                finish();
             }
-            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-            // intent.putExtra("username", user.getUsername());
-            startActivity(intent);
-            finish();
         });
 
         buttonLogin.setOnClickListener(v -> {
