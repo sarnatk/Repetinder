@@ -1,4 +1,4 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -118,16 +118,28 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Spinner
-            android:id="@+id/spinner"
+            android:id="@+id/userType"
             android:layout_width="match_parent"
-            android:layout_height="49dp"
+            android:layout_height="55dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:background="@color/light_white"
             android:entries="@array/user_type"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword"
             tools:ignore="MissingConstraints"
+
             />
+
+        <Spinner
+            android:id="@+id/subject"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@color/light_white"
+            android:entries="@array/subjects"
+            app:layout_constraintTop_toBottomOf="@+id/userType"
+            tools:ignore="MissingConstraints" />
 
         <ProgressBar
             android:id="@+id/progress"
@@ -142,7 +154,7 @@
             android:id="@+id/signUp"
             android:layout_width="100dp"
             android:layout_height="49dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="120dp"
             android:background="@drawable/default_button"
             android:backgroundTintMode="multiply"
             android:text="@string/sing_up"
@@ -156,7 +168,7 @@
             android:id="@+id/backToLogin"
             android:layout_width="200dp"
             android:layout_height="39dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:background="@color/transparent"
             android:fontFamily="@font/poppinsmedium"
             android:text="@string/login"
@@ -168,4 +180,4 @@
             app:layout_constraintTop_toBottomOf="@+id/signUp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

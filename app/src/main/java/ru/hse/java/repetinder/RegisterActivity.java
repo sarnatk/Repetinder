@@ -29,6 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
     private MongoDatabase mongoDatabase;
     private MongoClient mongoClient;
     private String userRole;
+    private String subject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,15 +46,32 @@ public class RegisterActivity extends AppCompatActivity {
         TextInputEditText editUsername = findViewById(R.id.username);
         TextInputEditText editPassword = findViewById(R.id.password);
 
-        Spinner spinner = findViewById(R.id.spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+        Spinner spinnerUserType = findViewById(R.id.userType);
+        ArrayAdapter<CharSequence> adapterUserType = ArrayAdapter.createFromResource(this,
                 R.array.user_type, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        adapterUserType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerUserType.setAdapter(adapterUserType);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerUserType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 userRole = parent.getItemAtPosition(pos).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        Spinner spinnerSubject = findViewById(R.id.subject);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.subjects, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerSubject.setAdapter(adapter);
+
+        spinnerSubject.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                subject = parent.getItemAtPosition(pos).toString();
             }
 
             @Override
@@ -104,7 +122,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 .append("userRole", userRole)
                                 .append("fullname", fullname)
                                 .append("username", username)
-                                .append("subject", "Math")
+                                .append("subject", subject)
                                 .append("groupSize", 1))
                                 .getAsync(result -> {
                                     if (result.isSuccess()) {

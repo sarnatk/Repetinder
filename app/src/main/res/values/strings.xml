@@ -22,4 +22,24 @@
         <item>Student</item>
         <item>Tutor</item>
     </string-array>
+
+    <string-array name="subjects">
+        <item>Math</item>
+        <item>Computer Science</item>
+        <item>Physics</item>
+        <item>Chemistry</item>
+        <item>Biology</item>
+        <item>Psychology</item>
+        <item>English</item>
+        <item>French</item>
+        <item>German</item>
+        <item>Spanish</item>
+        <item>Russian</item>
+        <item>Literature</item>
+        <item>Design</item>
+        <item>Economics</item>
+        <item>Law</item>
+        <item>Music</item>
+        <item>History</item>
+    </string-array>
 </resources>
