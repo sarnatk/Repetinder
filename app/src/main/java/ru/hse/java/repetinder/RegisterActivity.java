@@ -100,23 +100,6 @@ public class RegisterActivity extends AppCompatActivity {
                         mongoDatabase = mongoClient.getDatabase("RepetinderData");
                         MongoCollection<Document> mongoCollection = mongoDatabase.getCollection("UserData");
 
-                        /* TODO: (написано, чтобы не забыть, а еще выговориться хочется)
-                        1. убрать username, ибо он не нужен, видимо
-                        2. вместо него добавить выбор предмета (сейчас по стандарту математика), но список предметов какой-то длинный, поэтому возможно для него нужна отдельная страница?
-                        но тогда вопрос в том: можно ли связать два ***.xml файла с одним ***Activity.java.
-                        3. Сейчас по стандарту выбирается группа из 1 человека, но потом в настройках эту оптию можно будет поменять. Так точно удобнее
-                        и вроде правильно
-                        4. Наверное, стоит тут создать все же класс user, но с этим json он как-то и не нужен особо ы
-                        5. Я вот сделала Init класс, предполагая, что в нем можно хранить важные штуки, которые нужны всем. Видимо, текущего юзера, например
-                        пока непонятно, можно ли это как-то улучшить, а еще его передавать между activity разными больно, если в нем хранить свои кастомные классы,
-                        а не библиотечные
-
-                        вроде выговорилась
-
-                        Саша, надо выговариваться в гуглдоке
-                        https://docs.google.com/document/d/1RdkUbMPiBuivK4qnpHG56w1fy9gCEodbRnx8VBJtqLo/edit
-                        *стикос кота*
-                         */
                         mongoCollection.insertOne(new Document("userId", user.getId())
                                 .append("email", email)
                                 .append("userRole", userRole)

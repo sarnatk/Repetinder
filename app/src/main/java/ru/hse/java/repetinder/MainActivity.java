@@ -60,43 +60,31 @@ public class MainActivity extends AppCompatActivity {
         possibleMatchesQueue.add("Саша");
         possibleMatchesQueue.add("Герман");
         App app = new App(new AppConfiguration.Builder("repetinder-xlfqn").build());
-            io.realm.mongodb.User user = app.currentUser();
+      /*      io.realm.mongodb.User user = app.currentUser();
             MongoClient mongoClient = user.getMongoClient("mongodb-atlas");
             MongoDatabase mongoDatabase = mongoClient.getDatabase("RepetinderData");
             MongoCollection<Document> mongoCollection = mongoDatabase.getCollection("UserData");
-            Document emailFilter = new Document().append("email", storage.email);
-            RealmResultTask<MongoCursor<Document>> iteratorCurrenntUser = mongoCollection.find(emailFilter).iterator();
-            iteratorCurrenntUser.getAsync(task -> {
+         //   Document emailFilter = new Document().append("email", storage.email);
+            RealmResultTask<MongoCursor<Document>> iteratorCurrentUser = mongoCollection.find().iterator();
+            iteratorCurrentUser.getAsync(task -> {
                 if (task.isSuccess()) {
                     MongoCursor<Document> results = task.get();
-                    if (results.hasNext()) {
+                    while (results.hasNext()) {
                         Log.v("FindFunction", "Found Something");
                         Document result = results.next();
-                        String userRole = result.get("userRole").toString();
-                        String fullname = result.get("fullname").toString();
-                        String username = result.get("username").toString();
-                        String subject = result.get("userRole").toString();
-                        int userId = Integer.parseInt(result.get("userId").toString());
-                        int groupSize = Integer.parseInt(result.get("groupSize").toString());
-                        storage.userRole = userRole;
-                        if (userRole.equals("Tutor")) {
-                            storage.currentUser = new Tutor(userId, fullname, username, UserRepetinder.Subject.valueOf(subject));
-                        } else {
-                            storage.currentUser = new Student(userId, fullname, username, UserRepetinder.Subject.valueOf(subject));
-                        }
 
                     }
                 } else {
                     Log.v("Error", task.getError().toString());
                 }
             });
-
+*/
         for (io.realm.mongodb.User device : app.allUsers().values()) {
             // это должно было решить проблему с частичным добавлением юзеров
             // но не решило
-            mongoClient = device.getMongoClient("mongodb-atlas");
-            mongoDatabase = mongoClient.getDatabase("RepetinderData");
-            mongoCollection = mongoDatabase.getCollection("UserData");
+            MongoClient mongoClient = device.getMongoClient("mongodb-atlas");
+            MongoDatabase mongoDatabase = mongoClient.getDatabase("RepetinderData");
+            MongoCollection<Document> mongoCollection = mongoDatabase.getCollection("UserData");
             RealmResultTask<MongoCursor<Document>> iteratorAllUsers = mongoCollection.find().iterator();
             iteratorAllUsers.getAsync(task -> {
                 if (task.isSuccess()) {
@@ -104,9 +92,23 @@ public class MainActivity extends AppCompatActivity {
                     while (results.hasNext()) {
                         Log.v("FindFunction", "Found Something");
                         Document result = results.next();
-
-                        possibleMatchesQueue.add(result.get("fullname").toString());
-
+                        String email = result.get("email").toString();
+                        if (email.equals(storage.email)) {
+                            String userRole = result.get("userRole").toString();
+                            String fullname = result.get("fullname").toString();
+                            String username = result.get("username").toString();
+                            String subject = result.get("subject").toString();
+                            String userId = result.get("userId").toString();
+                            int groupSize = Integer.parseInt(result.get("groupSize").toString());
+                            storage.userRole = userRole;
+                            if (userRole.equals("Tutor")) {
+                                storage.currentUser = new Tutor(userId, fullname, username, email, UserRepetinder.Subject.valueOf(subject.toUpperCase()));
+                            } else {
+                                storage.currentUser = new Student(userId, fullname, username, email, UserRepetinder.Subject.valueOf(subject.toUpperCase()));
+                            }
+                        } else {
+                            possibleMatchesQueue.add(result.get("fullname").toString());
+                        }
                     }
                 } else {
                     Log.v("Error", task.getError().toString());

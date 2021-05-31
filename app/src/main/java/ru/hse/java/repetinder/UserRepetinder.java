@@ -5,15 +5,24 @@ import java.util.Date;
 
 public class UserRepetinder implements Serializable { //extends RealmObject {
 
-    public UserRepetinder(int id, String fullname, String username, Subject subject) {
-                this.id = id;
-                this.fullname = fullname;
-                this.username = username;
-                this.subject = subject;
+    public UserRepetinder(String id, String fullname, String username, String email, Subject subject) {
+        this.id = id;
+        this.fullname = fullname;
+        this.username = username;
+        this.email = email;
+        this.subject = subject;
     }
 
     public UserRepetinder() {
-        this(1, "fullname", "username", Subject.MATH);
+        this("1", "fullname", "username", "mail.ru", Subject.MATH);
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public enum GroupType {
@@ -70,7 +79,7 @@ public class UserRepetinder implements Serializable { //extends RealmObject {
     }
 
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
@@ -86,12 +95,13 @@ public class UserRepetinder implements Serializable { //extends RealmObject {
         isOnline = !isOnline;
     }
 
-    private final Integer id;
+    private final String id;
     private final String username;
     private final String fullname;
     private GroupType groupType;
     private boolean isOnline;
     private Subject subject;
+    private final String email;
 
     private Date lastOnlineTime = new Date(System.currentTimeMillis());
 }
