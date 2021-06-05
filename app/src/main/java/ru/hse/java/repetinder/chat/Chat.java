@@ -1,10 +1,9 @@
-package ru.hse.java.repetinder;
+package ru.hse.java.repetinder.chat;
 
 import org.bson.types.ObjectId;
 
 import java.util.List;
 
-import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 

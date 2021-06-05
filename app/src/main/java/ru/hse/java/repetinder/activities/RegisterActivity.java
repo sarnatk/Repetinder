@@ -1,4 +1,4 @@
-package ru.hse.java.repetinder;
+package ru.hse.java.repetinder.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,6 +23,8 @@ import io.realm.mongodb.AppConfiguration;
 import io.realm.mongodb.mongo.MongoClient;
 import io.realm.mongodb.mongo.MongoCollection;
 import io.realm.mongodb.mongo.MongoDatabase;
+import ru.hse.java.repetinder.R;
+import ru.hse.java.repetinder.user.Storage;
 
 public class RegisterActivity extends AppCompatActivity {
     //  private User user;

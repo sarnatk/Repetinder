@@ -1,4 +1,4 @@
-package ru.hse.java.repetinder;
+package ru.hse.java.repetinder.user;
 
 import java.io.Serializable;
 

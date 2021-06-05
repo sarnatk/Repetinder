@@ -1,4 +1,4 @@
-package ru.hse.java.repetinder;
+package ru.hse.java.repetinder.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import ru.hse.java.repetinder.R;
+import ru.hse.java.repetinder.user.Storage;
 
 public class ProfileActivity extends AppCompatActivity {
     @Override

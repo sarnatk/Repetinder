@@ -1,4 +1,4 @@
-package ru.hse.java.repetinder;
+package ru.hse.java.repetinder.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -28,6 +28,11 @@ import io.realm.mongodb.mongo.MongoClient;
 import io.realm.mongodb.mongo.MongoCollection;
 import io.realm.mongodb.mongo.MongoDatabase;
 import io.realm.mongodb.mongo.iterable.MongoCursor;
+import ru.hse.java.repetinder.R;
+import ru.hse.java.repetinder.user.Storage;
+import ru.hse.java.repetinder.user.Student;
+import ru.hse.java.repetinder.user.Tutor;
+import ru.hse.java.repetinder.user.UserRepetinder;
 
 public class MainActivity extends AppCompatActivity {
     private ArrayList<String> possibleMatchesQueue;
@@ -178,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, MatchesActivity.class);
+                intent.putExtra("storage", storage);
                 startActivity(intent);
             }
         });

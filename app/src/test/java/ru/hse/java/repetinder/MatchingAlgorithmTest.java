@@ -4,28 +4,31 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import ru.hse.java.repetinder.matchingAlgorithm.MatchingAlgorithm;
 import ru.hse.java.repetinder.exception.MatchingAlgorithmException;
+import ru.hse.java.repetinder.user.Student;
+import ru.hse.java.repetinder.user.Tutor;
+import ru.hse.java.repetinder.user.UserRepetinder;
 
 public class MatchingAlgorithmTest {
 
     private Student getOneStudent() {
-        return new Student(0, "German", "German");
+        return new Student("0", "German", "German", "geh4@gmail.com", UserRepetinder.Subject.CHEMISTRY);
     }
 
     private Tutor getOneTutor() {
-        return new Tutor(0, "Lady Gaga", "Lady Gaga");
+        return new Tutor("0", "Lady Gaga", "Lady Gaga", "artpop@gmail.com", UserRepetinder.Subject.MUSIC);
     }
 
     private List<Tutor> getManyTutors(int n) {
         List<Tutor> tutors = new LinkedList<>();
         for (int i = 0; i < n; i++) {
-            tutors.add(new Tutor(n, "Britney Spears #" + n, "Toxic"));
+            tutors.add(new Tutor(Integer.toString(n), "Britney Spears #" + n, "Toxic", "oopsididitagain@gmail.com", UserRepetinder.Subject.BIOLOGY));
         }
         return tutors;
     }

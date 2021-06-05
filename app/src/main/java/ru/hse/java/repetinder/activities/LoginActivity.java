@@ -1,9 +1,8 @@
-package ru.hse.java.repetinder;
+package ru.hse.java.repetinder.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -17,6 +16,8 @@ import io.realm.Realm;
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
 import io.realm.mongodb.Credentials;
+import ru.hse.java.repetinder.R;
+import ru.hse.java.repetinder.user.Storage;
 
 public class LoginActivity extends AppCompatActivity {
     private final String appId = "repetinder-xlfqn";

@@ -1,4 +1,4 @@
-package ru.hse.java.repetinder;
+package ru.hse.java.repetinder.matchingAlgorithm;
 
 import android.os.Build;
 
@@ -8,6 +8,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import ru.hse.java.repetinder.exception.MatchingAlgorithmException;
+import ru.hse.java.repetinder.user.Student;
+import ru.hse.java.repetinder.user.Tutor;
 
 /**
  * This is a class which find tutors for students
@@ -17,7 +19,7 @@ public class MatchingAlgorithm {
     private final List<Tutor> tutors;
     //private final List<Student> students;
 
-    MatchingAlgorithm(List<Tutor> tutors) { // List<Student> students) {
+    public MatchingAlgorithm(List<Tutor> tutors) { // List<Student> students) {
         this.tutors = tutors;
         //this.students = students;
     }

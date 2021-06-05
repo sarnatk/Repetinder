@@ -1,4 +1,4 @@
-package ru.hse.java.repetinder;
+package ru.hse.java.repetinder.user;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -42,7 +42,7 @@ public class UserRepetinder implements Serializable { //extends RealmObject {
         }
     }
 
-    public enum Subject {
+    public enum Subject implements Serializable {
         MATH,
         CS,
         PHYSICS,

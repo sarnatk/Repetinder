@@ -1,4 +1,4 @@
-package ru.hse.java.repetinder;
+package ru.hse.java.repetinder.user;
 
 public enum UserStatus {
     Open("Open"),

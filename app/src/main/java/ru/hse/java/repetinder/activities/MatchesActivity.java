@@ -1,4 +1,4 @@
-package ru.hse.java.repetinder;
+package ru.hse.java.repetinder.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,9 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import ru.hse.java.repetinder.R;
+import ru.hse.java.repetinder.user.Storage;
 
 public class MatchesActivity extends AppCompatActivity {
     @Override
@@ -21,6 +24,7 @@ public class MatchesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MatchesActivity.this, ProfileActivity.class);
+                intent.putExtra("storage", storage);
                 startActivity(intent);
             }
         });
