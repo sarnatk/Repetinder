@@ -1,17 +1,22 @@
 package ru.hse.java.repetinder.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import ru.hse.java.repetinder.R;
 import ru.hse.java.repetinder.user.Storage;
@@ -49,6 +54,7 @@ public class ProfileActivity extends AppCompatActivity {
         Button buttonToHomeFromProfile = findViewById(R.id.toHomeFromProfile);
         Button buttonToMatchesFromProfile = findViewById(R.id.toMatchesFromProfile);
         Button logOutButton = findViewById(R.id.logOut);
+        ImageView profileView = (ImageView) findViewById(R.id.profileImage);
 
         logOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +82,13 @@ public class ProfileActivity extends AppCompatActivity {
                 intent.putExtra(MatchesActivity.TEXT, storage);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+        profileView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                profileView.setImageResource(R.drawable.janet);
             }
         });
     }
