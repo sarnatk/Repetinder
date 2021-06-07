@@ -5,8 +5,7 @@ import java.util.Date;
 
 public class UserRepetinder implements Serializable { //extends RealmObject {
 
-    public UserRepetinder(String id, String fullname, String username, String email, Subject subject) {
-        this.id = id;
+    public UserRepetinder(String fullname, String username, String email, Subject subject) {
         this.fullname = fullname;
         this.username = username;
         this.email = email;
@@ -14,7 +13,7 @@ public class UserRepetinder implements Serializable { //extends RealmObject {
     }
 
     public UserRepetinder() {
-        this("1", "fullname", "username", "mail.ru", Subject.MATH);
+        this("fullname", "username", "mail.ru", Subject.MATH);
     }
 
     public String getFullname() {
@@ -78,11 +77,6 @@ public class UserRepetinder implements Serializable { //extends RealmObject {
         return subject;
     }
 
-
-    public String getId() {
-        return id;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -95,7 +89,6 @@ public class UserRepetinder implements Serializable { //extends RealmObject {
         isOnline = !isOnline;
     }
 
-    private final String id;
     private final String username;
     private final String fullname;
     private GroupType groupType;
