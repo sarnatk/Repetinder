@@ -17,6 +17,9 @@ import ru.hse.java.repetinder.R;
 import ru.hse.java.repetinder.user.Storage;
 
 public class ProfileActivity extends AppCompatActivity {
+
+    public static final String TEXT = "for profile";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +27,7 @@ public class ProfileActivity extends AppCompatActivity {
         ActionBar actionBar;
         actionBar = getSupportActionBar();
         Bundle extras = getIntent().getExtras();
-        Storage storage = (Storage)extras.getSerializable("storage");
+        Storage storage = (Storage)extras.getSerializable(TEXT);
         TextView userEmail = (TextView) findViewById(R.id.mailProfile);
         TextView userFullname = (TextView) findViewById(R.id.fullnameProfile);
         TextView userRole = (TextView) findViewById(R.id.userRoleProfile);
@@ -59,6 +62,9 @@ public class ProfileActivity extends AppCompatActivity {
         buttonToHomeFromProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+                intent.putExtra(MainActivity.TEXT, storage);
+                startActivity(intent);
                 finish();
             }
         });
@@ -67,8 +73,9 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ProfileActivity.this, MatchesActivity.class);
-                intent.putExtra("storage", storage);
+                intent.putExtra(MatchesActivity.TEXT, storage);
                 startActivity(intent);
+                finish();
             }
         });
     }

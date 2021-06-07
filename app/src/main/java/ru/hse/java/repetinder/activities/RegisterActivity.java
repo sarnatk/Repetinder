@@ -126,7 +126,7 @@ public class RegisterActivity extends AppCompatActivity {
                 storage.email = email;
                 storage.fullname = fullname;
                 storage.userRole = userRole;
-                intent.putExtra("storage", storage);
+                intent.putExtra(MainActivity.TEXT, storage);
                 startActivity(intent);
                 finish();
             }

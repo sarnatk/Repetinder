@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
                         // чтобы потом пихать сконструированного юзера в storage
                         // и это бы заполняло инфу в профиле
                         //storage.userRole =
-                        intent.putExtra("storage", storage);
+                        intent.putExtra(MainActivity.TEXT, storage);
                         startActivity(intent);
                         finish();
                     } else {

@@ -35,6 +35,9 @@ import ru.hse.java.repetinder.user.Tutor;
 import ru.hse.java.repetinder.user.UserRepetinder;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final String TEXT = "for main";
+
     private ArrayList<String> possibleMatchesQueue;
     private ArrayAdapter<String> arrayAdapter;
     private int i;
@@ -58,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Bundle extras = getIntent().getExtras();
-        Storage storage = (Storage)extras.getSerializable("storage");
+        Storage storage = (Storage)extras.getSerializable(TEXT);
 
         possibleMatchesQueue = new ArrayList<>();
         possibleMatchesQueue.add("Таня");
@@ -174,17 +177,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-                intent.putExtra("storage", storage);
+                assert(storage != null);
+                intent.putExtra(ProfileActivity.TEXT, storage);
                 startActivity(intent);
+                finish();
             }
         });
+
 
         buttonToMatchesFromHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, MatchesActivity.class);
-                intent.putExtra("storage", storage);
+                assert(storage != null);
+                intent.putExtra(MatchesActivity.TEXT, storage);
                 startActivity(intent);
+                finish();
             }
         });
 
