@@ -8,8 +8,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,16 +26,20 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
-    private ArrayList<String> possibleMatchesQueue;
-    private ArrayAdapter<String> arrayAdapter;
+    private Card cards[];
+    private CardsArrayAdapter arrayAdapter;
     private int i;
 
     private FirebaseAuth mAuth;
     private DatabaseReference usersDb;
     private String currentUId;
+
+    ListView listView;
+    List<Card> possibleMatchesQueue;
 
     private FirebaseDatabase getDatabaseInstance() {
         return FirebaseDatabase.getInstance("https://repetinder-cb68d-default-rtdb.europe-west1.firebasedatabase.app/");
@@ -69,11 +73,8 @@ public class MainActivity extends AppCompatActivity {
      //   Storage storage = (Storage)extras.getSerializable("storage");
 
         possibleMatchesQueue = new ArrayList<>();
-        possibleMatchesQueue.add("Таня");
-        possibleMatchesQueue.add("Саша");
-        possibleMatchesQueue.add("Герман");
 
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.helloText, possibleMatchesQueue);
+        arrayAdapter = new CardsArrayAdapter(this, R.layout.item, possibleMatchesQueue);
 
         SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
         flingContainer.setAdapter(arrayAdapter);
@@ -96,19 +97,10 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onAdapterAboutToEmpty(int itemsInAdapter) {
-                /*
-                al.add("Имя ".concat(String.valueOf(i)));
-                arrayAdapter.notifyDataSetChanged();
-                Log.d("LIST", "notified");
-                i++;
-                 */
-            }
+            public void onAdapterAboutToEmpty(int itemsInAdapter) {}
 
             @Override
-            public void onScroll(float scrollProgressPercent) {
-
-            }
+            public void onScroll(float scrollProgressPercent) {}
         });
 
 
@@ -219,7 +211,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
                 if (dataSnapshot.exists()){
-                    possibleMatchesQueue.add(Objects.requireNonNull(dataSnapshot.child("fullname").getValue()).toString());
+                    Card card = new Card(dataSnapshot.getKey(), Objects.requireNonNull(dataSnapshot.child("fullname").getValue()).toString());
+                    possibleMatchesQueue.add(card);
                     arrayAdapter.notifyDataSetChanged();
                 }
             }
