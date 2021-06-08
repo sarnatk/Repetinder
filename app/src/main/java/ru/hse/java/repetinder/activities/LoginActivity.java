@@ -2,7 +2,6 @@ package ru.hse.java.repetinder.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -13,8 +12,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
+
 import ru.hse.java.repetinder.R;
-import ru.hse.java.repetinder.user.Storage;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -24,7 +23,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Storage storage = new Storage();
         setContentView(R.layout.activity_login);
         Button buttonLogin = findViewById(R.id.login);
         Button buttonRegister = findViewById(R.id.register);
@@ -64,7 +62,6 @@ public class LoginActivity extends AppCompatActivity {
 
         buttonRegister.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-            //intent.putExtra("Init", storage);
             startActivity(intent);
             finish();
         });

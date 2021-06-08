@@ -91,7 +91,7 @@ public class UserRepetinder implements Serializable { //extends RealmObject {
 
     private final String username;
     private final String fullname;
-    private GroupType groupType;
+    private GroupType groupType = GroupType.SINGLE;
     private boolean isOnline;
     private Subject subject;
     private final String email;

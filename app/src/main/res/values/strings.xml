@@ -14,8 +14,10 @@
     <string name="icon_matches">MATCHES</string>
     <string name="icon_home">HOME</string>
     <string name="profile_name">fullname</string>
+    <string name="subject">subject</string>
     <string name="user_type">Status: Student</string>
     <string name="profile_email">xyz@mail.ru</string>
+    <string name="profile_username">username</string>
     <string name="waiting_text">Wait until you are chosen</string>
     <string name="logout">log out</string>
     <string-array name="user_type">

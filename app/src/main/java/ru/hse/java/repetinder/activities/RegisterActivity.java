@@ -20,7 +20,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.Objects;
 
 import ru.hse.java.repetinder.R;
-import ru.hse.java.repetinder.user.Storage;
 import ru.hse.java.repetinder.user.Student;
 import ru.hse.java.repetinder.user.Tutor;
 import ru.hse.java.repetinder.user.UserRepetinder;
@@ -34,7 +33,6 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Storage storage = (Storage) getIntent().getSerializableExtra("Init");
         setContentView(R.layout.activity_register);
 
         mAuth = FirebaseAuth.getInstance();
@@ -117,12 +115,6 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 });
                 Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                /*
-                storage.email = email;
-                storage.fullname = fullname;
-                storage.userRole = userRole;
-                intent.putExtra(MainActivity.TEXT, storage);
-                 */
                 startActivity(intent);
                 finish();
             }

@@ -1,32 +1,28 @@
 package ru.hse.java.repetinder.activities;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.IOException;
 
 import ru.hse.java.repetinder.R;
 import ru.hse.java.repetinder.user.Storage;
-
-import com.google.firebase.auth.FirebaseAuth;
+import ru.hse.java.repetinder.user.UserRepetinder;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -34,22 +30,33 @@ public class ProfileActivity extends AppCompatActivity {
 
     private static final int GALLERY_REQUEST = 1;
 
+    private TextView userEmail, userFullname, userRole, userSubject, userUsername;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         ActionBar actionBar;
         actionBar = getSupportActionBar();
-        /*
+
+
         Bundle extras = getIntent().getExtras();
         Storage storage = (Storage)extras.getSerializable(TEXT);
-        TextView userEmail = (TextView) findViewById(R.id.mailProfile);
-        TextView userFullname = (TextView) findViewById(R.id.fullnameProfile);
-        TextView userRole = (TextView) findViewById(R.id.userRoleProfile);
-         */
-        //userEmail.setText(storage.currentUser.getEmail());
-       // userFullname.setText(storage.currentUser.getFullname());
-       // userRole.setText(String.format("Status: %s", storage.userRole));
+        userEmail = findViewById(R.id.mailProfile);
+        userFullname = findViewById(R.id.fullnameProfile);
+        userRole = findViewById(R.id.userRoleProfile);
+        userUsername = findViewById(R.id.usernameProfile);
+        userSubject = findViewById(R.id.subjectProfile);
+        String role = storage.userRole;
+        userRole.setText(String.format("Status: %s", role));
+
+        UserRepetinder currentUser = storage.currentUser;
+        userFullname.setText(currentUser.getFullname());
+        userUsername.setText(currentUser.getFullname());
+        userEmail.setText(currentUser.getEmail());
+        String subject = currentUser.getSubject().toString();
+        userSubject.setText(subject.substring(0, 1)  + subject.substring(1).toLowerCase());
+
 
         // Define ColorDrawable object and parse color
         // using parseColor method
@@ -65,45 +72,30 @@ public class ProfileActivity extends AppCompatActivity {
         Button buttonToHomeFromProfile = findViewById(R.id.toHomeFromProfile);
         Button buttonToMatchesFromProfile = findViewById(R.id.toMatchesFromProfile);
         Button logOutButton = findViewById(R.id.logOut);
-        ImageView profileView = (ImageView) findViewById(R.id.profileImage);
+        ImageView profileView = findViewById(R.id.profileImage);
 
-        logOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        logOutButton.setOnClickListener(v -> {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
         });
 
-        buttonToHomeFromProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
-                //intent.putExtra(MainActivity.TEXT, storage);
-                startActivity(intent);
-                finish();
-            }
+        buttonToHomeFromProfile.setOnClickListener(v -> {
+            finish();
         });
 
-        buttonToMatchesFromProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ProfileActivity.this, MatchesActivity.class);
-                //intent.putExtra(MatchesActivity.TEXT, storage);
-                startActivity(intent);
-                finish();
-            }
+        buttonToMatchesFromProfile.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileActivity.this, MatchesActivity.class);
+            intent.putExtra(MatchesActivity.TEXT, storage);
+            startActivity(intent);
+            finish();
         });
 
-        profileView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-                photoPickerIntent.setType("image/*");
-                startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
-            }
+        profileView.setOnClickListener(v -> {
+            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+            photoPickerIntent.setType("image/*");
+            startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
         });
     }
 
