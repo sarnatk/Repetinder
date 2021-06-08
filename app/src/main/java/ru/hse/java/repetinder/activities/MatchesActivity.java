@@ -29,8 +29,10 @@ public class MatchesActivity extends AppCompatActivity {
         } else {
             Log.v("Extras", "Extras isn't null!");
         }
+        /*
         Bundle extras = getIntent().getExtras();
         Storage storage = (Storage) extras.getSerializable(TEXT);
+         */
         Button buttonToProfileFromMatches = findViewById(R.id.toProfilefromMatches);
         Button buttonToHomeFromMatches = findViewById(R.id.toHomeFromMatches);
 
@@ -38,7 +40,7 @@ public class MatchesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MatchesActivity.this, ProfileActivity.class);
-                intent.putExtra(ProfileActivity.TEXT, storage);
+                //intent.putExtra(ProfileActivity.TEXT, storage);
                 startActivity(intent);
                 finish();
             }
@@ -48,7 +50,7 @@ public class MatchesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MatchesActivity.this, MainActivity.class);
-                intent.putExtra(MainActivity.TEXT, storage);
+                //intent.putExtra(MainActivity.TEXT, storage);
                 startActivity(intent);
                 finish();
             }

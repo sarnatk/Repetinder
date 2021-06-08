@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "979670709387",
+    "project_id": "repetinder-cb68d",
+    "storage_bucket": "repetinder-cb68d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:979670709387:android:8cafeeaa166622bfd5108e",
+        "android_client_info": {
+          "package_name": "ru.hse.java.repetinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "979670709387-ea3s9hun3bj0sqt4cn9u4ks4ejl40bhd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ru.hse.java.repetinder",
+            "certificate_hash": "1f8199d47a1425a7f2cd01017354633e7d4ae47a"
+          }
+        },
+        {
+          "client_id": "979670709387-2msrd32a5kaq05qajpbhf1gd4arg7dmt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSQWBx2D3HgyMz2syvg-ohQ28tQ2cV980"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "979670709387-2msrd32a5kaq05qajpbhf1gd4arg7dmt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

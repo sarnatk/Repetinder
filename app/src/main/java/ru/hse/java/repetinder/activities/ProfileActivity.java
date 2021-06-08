@@ -26,6 +26,8 @@ import java.io.IOException;
 import ru.hse.java.repetinder.R;
 import ru.hse.java.repetinder.user.Storage;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class ProfileActivity extends AppCompatActivity {
 
     public static final String TEXT = "for profile";
@@ -38,14 +40,16 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         ActionBar actionBar;
         actionBar = getSupportActionBar();
+        /*
         Bundle extras = getIntent().getExtras();
         Storage storage = (Storage)extras.getSerializable(TEXT);
         TextView userEmail = (TextView) findViewById(R.id.mailProfile);
         TextView userFullname = (TextView) findViewById(R.id.fullnameProfile);
         TextView userRole = (TextView) findViewById(R.id.userRoleProfile);
-        userEmail.setText(storage.currentUser.getEmail());
-        userFullname.setText(storage.currentUser.getFullname());
-        userRole.setText(String.format("Status: %s", storage.userRole));
+         */
+        //userEmail.setText(storage.currentUser.getEmail());
+       // userFullname.setText(storage.currentUser.getFullname());
+       // userRole.setText(String.format("Status: %s", storage.userRole));
 
         // Define ColorDrawable object and parse color
         // using parseColor method
@@ -66,6 +70,7 @@ public class ProfileActivity extends AppCompatActivity {
         logOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
@@ -76,7 +81,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
-                intent.putExtra(MainActivity.TEXT, storage);
+                //intent.putExtra(MainActivity.TEXT, storage);
                 startActivity(intent);
                 finish();
             }
@@ -86,7 +91,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ProfileActivity.this, MatchesActivity.class);
-                intent.putExtra(MatchesActivity.TEXT, storage);
+                //intent.putExtra(MatchesActivity.TEXT, storage);
                 startActivity(intent);
                 finish();
             }

@@ -2,7 +2,6 @@ package ru.hse.java.repetinder.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,33 +12,40 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
-
-import org.bson.Document;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Objects;
 
-import io.realm.mongodb.App;
-import io.realm.mongodb.AppConfiguration;
-import io.realm.mongodb.mongo.MongoClient;
-import io.realm.mongodb.mongo.MongoCollection;
-import io.realm.mongodb.mongo.MongoDatabase;
 import ru.hse.java.repetinder.R;
 import ru.hse.java.repetinder.user.Storage;
+import ru.hse.java.repetinder.user.Student;
+import ru.hse.java.repetinder.user.Tutor;
+import ru.hse.java.repetinder.user.UserRepetinder;
 
 public class RegisterActivity extends AppCompatActivity {
-    //  private User user;
-    private MongoDatabase mongoDatabase;
-    private MongoClient mongoClient;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener firebaseAuthStateListener;
     private String userRole;
     private String subject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Storage storage = (Storage) getIntent().getSerializableExtra("Init");
-        App app = new App(new AppConfiguration.Builder(storage.appId).build());
+        //Storage storage = (Storage) getIntent().getSerializableExtra("Init");
         setContentView(R.layout.activity_register);
 
+        mAuth = FirebaseAuth.getInstance();
+        firebaseAuthStateListener = firebaseAuth -> {
+            final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if (user != null) {
+                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        };
         Button buttonRegister = findViewById(R.id.signUp);
         Button buttonLogin = findViewById(R.id.backToLogin);
         TextInputEditText editEmail = findViewById(R.id.email);
@@ -94,39 +100,29 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(RegisterActivity.this, "Password should contain at least 6 symbols", Toast.LENGTH_SHORT).show();
             } else {
                 // Add user to database
-                app.getEmailPassword().registerUserAsync(email, password, it -> {
-                    if (it.isSuccess()) {
-                        Log.v("User", "User is successfully registered");
-                        io.realm.mongodb.User user = app.currentUser();
-                        mongoClient = user.getMongoClient("mongodb-atlas");
-                        mongoDatabase = mongoClient.getDatabase("RepetinderData");
-                        MongoCollection<Document> mongoCollection = mongoDatabase.getCollection("UserData");
-
-                        mongoCollection.insertOne(new Document("userId", user.getId())
-                                .append("email", email)
-                                .append("userRole", userRole)
-                                .append("fullname", fullname)
-                                .append("username", username)
-                                .append("subject", subject)
-                                .append("groupSize", 1))
-                                .getAsync(result -> {
-                                    if (result.isSuccess()) {
-                                        Log.v("Data", "Data Inserted Successfully");
-                                    } else {
-                                        Log.v("Data", "Error:" + result.getError().toString());
-                                    }
-                                });
+                mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegisterActivity.this, task -> {
+                    if (!task.isSuccessful()) {
+                        Toast.makeText(RegisterActivity.this, "Sign up error", Toast.LENGTH_SHORT).show();
                     } else {
-                        Log.v("User", "Failed to register user");
-                        Log.v("User", it.getError().toString());
+                        String userId = mAuth.getCurrentUser().getUid();
+                        FirebaseDatabase database = FirebaseDatabase.getInstance("https://repetinder-cb68d-default-rtdb.europe-west1.firebasedatabase.app/");
+                        DatabaseReference currentUserDb = database.getReference().child("Users").child(userRole).child(userId);
+                        if (userRole.equals("Student")) {
+                            Student student = new Student(fullname, username, email, UserRepetinder.Subject.valueOf(subject.toUpperCase()));
+                            currentUserDb.setValue(student);
+                        } else {
+                            Tutor tutor = new Tutor(fullname, username, email, UserRepetinder.Subject.valueOf(subject.toUpperCase()));
+                            currentUserDb.setValue(tutor);
+                        }
                     }
                 });
                 Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                // intent.putExtra("username", user.getUsername());
+                /*
                 storage.email = email;
                 storage.fullname = fullname;
                 storage.userRole = userRole;
                 intent.putExtra(MainActivity.TEXT, storage);
+                 */
                 startActivity(intent);
                 finish();
             }
@@ -138,5 +134,17 @@ public class RegisterActivity extends AppCompatActivity {
             finish();
         });
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(firebaseAuthStateListener);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mAuth.removeAuthStateListener(firebaseAuthStateListener);
     }
 }
