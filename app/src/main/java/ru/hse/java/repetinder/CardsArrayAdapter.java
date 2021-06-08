@@ -24,10 +24,10 @@ public class CardsArrayAdapter extends ArrayAdapter<Card> {
         }
 
         TextView name = (TextView) convertView.findViewById(R.id.name);
-        ImageView image = (ImageView) convertView.findViewById(R.id.image);
+        ImageView image = (ImageView) convertView.findViewById(R.id.card_image);
 
         name.setText(card.getFullname());
-        image.setImageResource(R.mipmap.ic_launcher);
+        image.setImageResource(R.drawable.reverse_gradient);
 
         return convertView;
     }

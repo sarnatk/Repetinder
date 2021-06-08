@@ -21,12 +21,12 @@
         android:id="@+id/cardView">
 
         <FrameLayout
-            android:layout_width="250dp"
-            android:layout_height="300dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center">
 
             <ImageView
-                android:id="@+id/image"
+                android:id="@+id/card_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="TODO" />
@@ -35,7 +35,7 @@
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#FFFFFF"
+                android:background="@android:color/transparent"
                 android:gravity="center"
                 android:textColor="#883BFF"
                 android:textSize="60sp"
