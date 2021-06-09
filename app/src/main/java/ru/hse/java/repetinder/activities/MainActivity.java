@@ -29,8 +29,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import ru.hse.java.repetinder.Card;
-import ru.hse.java.repetinder.CardsArrayAdapter;
+import ru.hse.java.repetinder.card.Card;
+import ru.hse.java.repetinder.card.CardsArrayAdapter;
 import ru.hse.java.repetinder.R;
 import ru.hse.java.repetinder.user.Storage;
 import ru.hse.java.repetinder.user.Student;

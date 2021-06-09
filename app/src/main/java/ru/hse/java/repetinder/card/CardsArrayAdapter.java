@@ -1,4 +1,4 @@
-package ru.hse.java.repetinder;
+package ru.hse.java.repetinder.card;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
+
+import ru.hse.java.repetinder.R;
+import ru.hse.java.repetinder.card.Card;
 
 public class CardsArrayAdapter extends ArrayAdapter<Card> {
     Context context;

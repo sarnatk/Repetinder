@@ -7,20 +7,27 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 
 import java.io.IOException;
 
+import io.realm.mongodb.User;
 import ru.hse.java.repetinder.R;
+import ru.hse.java.repetinder.database.DatabaseWorker;
+import ru.hse.java.repetinder.photo.PhotoWorker;
+import ru.hse.java.repetinder.photo.SerializableBitmap;
 import ru.hse.java.repetinder.user.Storage;
 import ru.hse.java.repetinder.user.UserRepetinder;
 
@@ -31,6 +38,9 @@ public class ProfileActivity extends AppCompatActivity {
     private static final int GALLERY_REQUEST = 1;
 
     private TextView userEmail, userFullname, userRole, userSubject, userUsername;
+
+    private UserRepetinder currentUser;
+    private String userRoleForData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +60,8 @@ public class ProfileActivity extends AppCompatActivity {
         String role = storage.userRole;
         userRole.setText(String.format("Status: %s", role));
 
-        UserRepetinder currentUser = storage.currentUser;
+        currentUser = storage.currentUser;
+        userRoleForData = storage.userRole;
         userFullname.setText(currentUser.getFullname());
         userUsername.setText(currentUser.getFullname());
         userEmail.setText(currentUser.getEmail());
@@ -74,6 +85,15 @@ public class ProfileActivity extends AppCompatActivity {
         Button logOutButton = findViewById(R.id.logOut);
         ImageView profileView = findViewById(R.id.profileImage);
 
+        // set photo of profile
+        Bitmap profileBitmap = currentUser.getBitmap();
+        if (profileBitmap != null) {
+            profileView.setImageBitmap(profileBitmap);
+            Log.v("Bitmap", "User's bitmap isn't null");
+        } else {
+            Log.v("Bitmap", "User's bitmap is null");
+        }
+
         logOutButton.setOnClickListener(v -> {
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
@@ -87,6 +107,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         buttonToMatchesFromProfile.setOnClickListener(v -> {
             Intent intent = new Intent(ProfileActivity.this, MatchesActivity.class);
+            //storage.currentUser = currentUser;
             intent.putExtra(MatchesActivity.TEXT, storage);
             startActivity(intent);
             finish();
@@ -112,8 +133,11 @@ public class ProfileActivity extends AppCompatActivity {
                     Uri selectedImage = imageReturnedIntent.getData();
                     try {
                         bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
+                        bitmap = PhotoWorker.cropBitmap(bitmap);
+                        bitmap = PhotoWorker.createResizedBitmap(bitmap);
+                        addImageToDatabase(bitmap);
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        Toast.makeText(ProfileActivity.this, "Can't load image", Toast.LENGTH_SHORT).show();
                     }
                     profileView.setImageBitmap(bitmap);
                 }
@@ -136,5 +160,14 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void addImageToDatabase(Bitmap bitmap) {
+        Log.v("DB", "Start adding bitmap");
+        SerializableBitmap serBitmap = new SerializableBitmap(bitmap);
+        currentUser.setBitmap(bitmap);
+        DatabaseReference mDatabase = DatabaseWorker.getUserData(userRoleForData);
+        mDatabase.child("bitmap").setValue(serBitmap);
+        Log.v("DB", "End adding bitmap");
     }
 }
