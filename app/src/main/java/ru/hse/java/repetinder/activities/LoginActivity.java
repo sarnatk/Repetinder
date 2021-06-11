@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
-        buttonRegister.setOnClickListener(v -> {
+        buttonLogin.setOnClickListener(v -> {
             String email = Objects.requireNonNull(editEmail.getText()).toString();
             String password = Objects.requireNonNull(editPassword.getText()).toString();
 
@@ -52,12 +52,6 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
             }
-        });
-
-        buttonLogin.setOnClickListener(v -> {
-            Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
-            startActivity(intent);
-            finish();
         });
 
         buttonRegister.setOnClickListener(v -> {

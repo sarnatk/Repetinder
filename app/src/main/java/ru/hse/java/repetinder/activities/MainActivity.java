@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ActionBar actionBar;
         actionBar = getSupportActionBar();
-
+        usersDb = getDatabaseInstance().getReference().child("Users");
         mAuth = FirebaseAuth.getInstance();
         checkUserRole();
 
@@ -93,11 +93,19 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onLeftCardExit(Object dataObject) {
+                // TODO: сейчас connections есть у tutor и у student. Так как tutor выбирать не сможет потом, то connections может создаватть только
+                // student у tutorа
+                Card card = (Card) dataObject;
+                String userId = card.getUserId();
+                usersDb.child(oppositeUserRole).child(userId).child("Connections").child("No").child(currentUId).setValue(true);
                 Toast.makeText(MainActivity.this, "no...", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
+                Card card = (Card) dataObject;
+                String userId = card.getUserId();
+                usersDb.child(oppositeUserRole).child(userId).child("Connections").child("Yes").child(currentUId).setValue(true);
                 Toast.makeText(MainActivity.this, "yes!!", Toast.LENGTH_SHORT).show();
             }
 
@@ -219,7 +227,8 @@ public class MainActivity extends AppCompatActivity {
         oppositeSexDb.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
-                if (dataSnapshot.exists()){
+                if (dataSnapshot.exists() // ) {
+                    && !dataSnapshot.child("Connections").child("No").hasChild(currentUId) && !dataSnapshot.child("Connections").child("Yes").hasChild(currentUId)) {
                     Card card = new Card(dataSnapshot.getKey(), Objects.requireNonNull(dataSnapshot.child("fullname").getValue()).toString());
                     possibleMatchesQueue.add(card);
                     arrayAdapter.notifyDataSetChanged();
