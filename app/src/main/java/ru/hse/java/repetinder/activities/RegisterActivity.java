@@ -107,9 +107,11 @@ public class RegisterActivity extends AppCompatActivity {
                         DatabaseReference currentUserDb = database.getReference().child("Users").child(userRole).child(userId);
                         if (userRole.equals("Student")) {
                             Student student = new Student(fullname, username, email, UserRepetinder.Subject.valueOf(subject.toUpperCase()));
+                            student.setProfileImageUrl("default");
                             currentUserDb.setValue(student);
                         } else {
                             Tutor tutor = new Tutor(fullname, username, email, UserRepetinder.Subject.valueOf(subject.toUpperCase()));
+                            tutor.setProfileImageUrl("default");
                             currentUserDb.setValue(tutor);
                         }
                     }

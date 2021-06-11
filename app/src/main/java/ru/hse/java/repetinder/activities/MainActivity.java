@@ -229,7 +229,12 @@ public class MainActivity extends AppCompatActivity {
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
                 if (dataSnapshot.exists() // ) {
                     && !dataSnapshot.child("Connections").child("No").hasChild(currentUId) && !dataSnapshot.child("Connections").child("Yes").hasChild(currentUId)) {
-                    Card card = new Card(dataSnapshot.getKey(), Objects.requireNonNull(dataSnapshot.child("fullname").getValue()).toString());
+                    String profileImageUrl = "default";
+                    if (!dataSnapshot.child("profileImageUrl").getValue().equals("default")) {
+                        profileImageUrl = Objects.requireNonNull(dataSnapshot.child("profileImageUrl").getValue()).toString();
+                    }
+                    Card card = new Card(dataSnapshot.getKey(), Objects.requireNonNull(dataSnapshot.child("fullname").getValue()).toString(),
+                            profileImageUrl);
                     possibleMatchesQueue.add(card);
                     arrayAdapter.notifyDataSetChanged();
                 }

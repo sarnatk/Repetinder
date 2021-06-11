@@ -1,11 +1,7 @@
 package ru.hse.java.repetinder.user;
 
-import android.graphics.Bitmap;
-
 import java.io.Serializable;
 import java.util.Date;
-
-import ru.hse.java.repetinder.photo.SerializableBitmap;
 
 public class UserRepetinder implements Serializable { //extends RealmObject {
 
@@ -93,7 +89,7 @@ public class UserRepetinder implements Serializable { //extends RealmObject {
         isOnline = !isOnline;
     }
 
-    public Bitmap getBitmap() {
+   /* public Bitmap getBitmap() {
         if (bitmap == null) {
             return null;
         }
@@ -102,6 +98,14 @@ public class UserRepetinder implements Serializable { //extends RealmObject {
 
     public void setBitmap(Bitmap newBitmap) {
         bitmap = new SerializableBitmap(newBitmap);
+    }*/
+
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
     }
 
     private final String username;
@@ -110,7 +114,8 @@ public class UserRepetinder implements Serializable { //extends RealmObject {
     private boolean isOnline;
     private Subject subject;
     private final String email;
-    private SerializableBitmap bitmap = null;
+   // private SerializableBitmap bitmap = null;
+    private String profileImageUrl;
 
     private Date lastOnlineTime = new Date(System.currentTimeMillis());
 }

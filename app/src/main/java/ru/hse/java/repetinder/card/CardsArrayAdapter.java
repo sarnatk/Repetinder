@@ -8,10 +8,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import ru.hse.java.repetinder.R;
-import ru.hse.java.repetinder.card.Card;
 
 public class CardsArrayAdapter extends ArrayAdapter<Card> {
     Context context;
@@ -26,11 +27,18 @@ public class CardsArrayAdapter extends ArrayAdapter<Card> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item, parent, false);
         }
 
-        TextView name = (TextView) convertView.findViewById(R.id.name);
-        ImageView image = (ImageView) convertView.findViewById(R.id.card_image);
+        TextView name = convertView.findViewById(R.id.name);
+        ImageView image = convertView.findViewById(R.id.card_image);
 
         name.setText(card.getFullname());
-        image.setImageResource(R.drawable.reverse_gradient);
+        String profileImageUrl = card.getProfileImageUrl();
+        if (profileImageUrl.equals("default")) {
+            Glide.with(convertView.getContext()).load(R.drawable.janet).into(image);
+        } else {
+            Glide.clear(image);
+            Glide.with(convertView.getContext()).load(card.getProfileImageUrl()).into(image);
+        }
+
 
         return convertView;
     }

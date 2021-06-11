@@ -143,7 +143,9 @@ public class ProfileActivity extends AppCompatActivity {
                     Map<String, Object> map = (Map<String, Object>) snapshot.getValue();
                     if (Objects.requireNonNull(map).get("profileImageUrl") != null) {
                         profileImageUrl = Objects.requireNonNull(map.get("profileImageUrl")).toString();
-                        Glide.with(getApplication()).load(profileImageUrl).into(profileView);
+                        if (!profileImageUrl.equals("default")) {
+                            Glide.with(getApplication()).load(profileImageUrl).into(profileView);
+                        }
                     }
                 }
             }
