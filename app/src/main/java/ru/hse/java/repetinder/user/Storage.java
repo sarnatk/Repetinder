@@ -5,4 +5,5 @@ import java.io.Serializable;
 public class Storage implements Serializable {
     public UserRepetinder currentUser = new UserRepetinder();
     public String userRole = "1";
+    public String userId;
 }

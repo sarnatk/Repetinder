@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private CardsArrayAdapter arrayAdapter;
 
     private FirebaseAuth mAuth;
-    private DatabaseReference usersDb,  mCustomerDatabase;
+    private DatabaseReference usersDb, mCustomerDatabase;
     private String currentUId;
     private Storage storage = new Storage();
 
@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
                     storage.userRole = userRole;
                     oppositeUserRole = "Student";
                     currentUId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
-                    mCustomerDatabase = MainActivity.getDatabaseInstance().getReference().child("Users").child(storage.userRole).child(currentUId);
+                    mCustomerDatabase = getDatabaseInstance().getReference().child("Users").child(storage.userRole).child(currentUId);
                     getUserInfo();
                     getOppositeRoleUsers();
                 }
@@ -203,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
                     storage.userRole = userRole;
                     oppositeUserRole = "Tutor";
                     currentUId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
-                    mCustomerDatabase = MainActivity.getDatabaseInstance().getReference().child("Users").child(storage.userRole).child(currentUId);
+                    mCustomerDatabase = getDatabaseInstance().getReference().child("Users").child(storage.userRole).child(currentUId);
                     getUserInfo();
                     getOppositeRoleUsers();
                 }
@@ -275,6 +275,7 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         storage.currentUser = new Tutor(fullname, username, email, UserRepetinder.Subject.valueOf(subject));
                     }
+                    storage.userId = currentUId;
                 }
 
             }
