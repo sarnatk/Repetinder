@@ -6,14 +6,30 @@
     android:padding="20sp">
 
     <ImageView
-        android:layout_width="100sp"
-        android:layout_height="100sp"
-        android:src="@drawable/janet"/>
-    <TextView
+        android:layout_width="75sp"
+        android:layout_height="75sp"
+        android:src="@drawable/janet"
+        android:id="@+id/matchImage"/>
+    <LinearLayout
+        android:paddingLeft="20sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ID"
-        android:layout_gravity="center"
-        android:id="@+id/matchText"/>
+        android:orientation="vertical"
+        android:layout_gravity="center">
+        <TextView
+            android:paddingBottom="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="fullname"
+            android:textColor="@color/colorAccent"
+            android:id="@+id/matchFullname"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:text="Email"
+            android:layout_gravity="center"
+            android:id="@+id/matchEmail"/>
+    </LinearLayout>
 
 </LinearLayout>

@@ -60,7 +60,6 @@ public class ProfileActivity extends AppCompatActivity {
         ActionBar actionBar;
         actionBar = getSupportActionBar();
 
-
         Bundle extras = getIntent().getExtras();
         storage = (Storage)extras.getSerializable(TEXT);
         TextView userEmail = findViewById(R.id.mailProfile);

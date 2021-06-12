@@ -95,17 +95,22 @@ public class MainActivity extends AppCompatActivity {
             public void onLeftCardExit(Object dataObject) {
                 // TODO: сейчас connections есть у tutor и у student. Так как tutor выбирать не сможет потом, то connections может создаватть только
                 // student у tutorа
-                Card card = (Card) dataObject;
-                String userId = card.getUserId();
-                usersDb.child(oppositeUserRole).child(userId).child("Connections").child("No").child(currentUId).setValue(true);
+                if (userRole.equals("Student")) {
+                    Card card = (Card) dataObject;
+                    String userId = card.getUserId();
+                    usersDb.child(oppositeUserRole).child(userId).child("Connections").child("No").child(currentUId).setValue(true);
+                }
                 Toast.makeText(MainActivity.this, "no...", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
-                Card card = (Card) dataObject;
-                String userId = card.getUserId();
-                usersDb.child(oppositeUserRole).child(userId).child("Connections").child("Yes").child(currentUId).setValue(true);
+                if (userRole.equals("Student")) {
+                    Card card = (Card) dataObject;
+                    String userId = card.getUserId();
+                    usersDb.child(oppositeUserRole).child(userId).child("Connections").child("Yes").child(currentUId).setValue(true);
+                    usersDb.child(userRole).child(currentUId).child("Connections").child("Yes").child(userId).setValue(true);
+                }
                 Toast.makeText(MainActivity.this, "yes!!", Toast.LENGTH_SHORT).show();
             }
 
@@ -170,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
         tutorDb.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
-                if (Objects.equals(dataSnapshot.getKey(), Objects.requireNonNull(user).getUid())){
+                if (Objects.equals(dataSnapshot.getKey(), Objects.requireNonNull(user).getUid())) {
                     userRole = "Tutor";
                     storage.userRole = userRole;
                     oppositeUserRole = "Student";
