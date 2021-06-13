@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -50,6 +52,8 @@ public class SwipesFragment extends Fragment {
     private String userRole;
     private String oppositeUserRole;
     private UserRepetinder userRepetinder;
+    private ProgressBar progressBar;
+    private TextView textView;
 
     public SwipesFragment() {
     }
@@ -61,7 +65,9 @@ public class SwipesFragment extends Fragment {
         usersDb = getDatabaseInstance().getReference().child("Users");
         mAuth = FirebaseAuth.getInstance();
         checkUserRole();
-
+        textView = view.findViewById(R.id.textView4);
+        textView.setVisibility(View.GONE);
+        progressBar = view.findViewById(R.id.progressBar);
         possibleMatchesQueue = new ArrayList<>();
 
         arrayAdapter = new CardsArrayAdapter(getActivity(), R.layout.item, possibleMatchesQueue);
@@ -206,6 +212,17 @@ public class SwipesFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
 
+        oppositeSexDb.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void getUserInfo() {
@@ -235,7 +252,6 @@ public class SwipesFragment extends Fragment {
                     }
                     storage.userId = currentUId;
                 }
-
             }
 
             @Override
