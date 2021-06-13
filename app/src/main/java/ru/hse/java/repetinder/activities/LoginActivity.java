@@ -27,13 +27,11 @@ public class LoginActivity extends AppCompatActivity {
         Button buttonRegister = findViewById(R.id.register);
         TextInputEditText editEmail = findViewById(R.id.email);
         TextInputEditText editPassword = findViewById(R.id.password);
-    //    FirebaseAuth.getInstance().signOut();
         mAuth = FirebaseAuth.getInstance();
         firebaseAuthStateListener = firebaseAuth -> {
             final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             if (user != null) {
-            //    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                Intent intent = new Intent(LoginActivity.this, TabsActivity.class);
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }

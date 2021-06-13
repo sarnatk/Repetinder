@@ -21,8 +21,6 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,16 +38,16 @@ import java.util.Objects;
 
 import ru.hse.java.repetinder.R;
 import ru.hse.java.repetinder.photo.PhotoWorker;
+import ru.hse.java.repetinder.user.Storage;
+import ru.hse.java.repetinder.user.UserRepetinder;
 
 public class ProfileFragment extends Fragment {
     private static final int GALLERY_REQUEST = 1;
+
     private View view;
-    private FirebaseAuth mAuth;
     private DatabaseReference mCustomerDatabase;
     private String currentUId;
     private String userRole;
-    private String oppositeUserRole;
-    private TextView userEmail, userFullname, userRoleView, userUsername, userSubject;
     private String profileImageUrl;
     private ImageView profileView;
 
@@ -63,19 +61,31 @@ public class ProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.profile_fragment, container, false);
-        mAuth = FirebaseAuth.getInstance();
-        checkUserRole();
-        userEmail = view.findViewById(R.id.mailProfile);
-        userFullname = view.findViewById(R.id.fullnameProfile);
-        userRoleView = view.findViewById(R.id.userRoleProfile);
-        userUsername = view.findViewById(R.id.usernameProfile);
-        userSubject = view.findViewById(R.id.subjectProfile);
+        view = inflater.inflate(R.layout.fragment_profile, container, false);
+        Storage storage = (Storage) this.getArguments().getSerializable(MainActivity.TEXT);
+        userRole = storage.userRole;
+        currentUId = storage.userId;
+
+        TextView userEmail = view.findViewById(R.id.mailProfile);
+        TextView userFullname = view.findViewById(R.id.fullnameProfile);
+        TextView userRoleView = view.findViewById(R.id.userRoleProfile);
+        TextView userUsername = view.findViewById(R.id.usernameProfile);
+        TextView userSubject = view.findViewById(R.id.subjectProfile);
+
+        userRoleView.setText(String.format("Status: %s", userRole));
+
+        UserRepetinder currentUser = storage.currentUser;
+        userFullname.setText(currentUser.getFullname());
+        userUsername.setText(currentUser.getUsername());
+        userEmail.setText(currentUser.getEmail());
+        String subject = currentUser.getSubject().toString();
+        userSubject.setText(subject.substring(0, 1)  + subject.substring(1).toLowerCase());
+
 
         Button logOutButton = view.findViewById(R.id.logOut);
         profileView = view.findViewById(R.id.profileImage);
 
-      //  setProfilePhoto();
+        setProfilePhoto();
 
         logOutButton.setOnClickListener(v -> {
             FirebaseAuth.getInstance().signOut();
@@ -91,99 +101,6 @@ public class ProfileFragment extends Fragment {
         });
 
         return view;
-    }
-
-    private void checkUserRole() {
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        DatabaseReference tutorDb = getDatabaseInstance().getReference().child("Users").child("Tutor");
-        tutorDb.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
-                if (Objects.equals(dataSnapshot.getKey(), Objects.requireNonNull(user).getUid())) {
-                    userRole = "Tutor";
-                    oppositeUserRole = "Student";
-                    userRoleView.setText(String.format("Status: %s", userRole));
-                    currentUId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
-                    mCustomerDatabase = getDatabaseInstance().getReference().child("Users").child(userRole).child(currentUId);
-                    getUserInfo();
-                    setProfilePhoto();
-                }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) {}
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {}
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, String s) {}
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {}
-        });
-
-        DatabaseReference studentDb = getDatabaseInstance().getReference().child("Users").child("Student");
-        studentDb.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
-                if (Objects.equals(dataSnapshot.getKey(), Objects.requireNonNull(user).getUid())){
-                    userRole = "Student";
-                    oppositeUserRole = "Tutor";
-                    userRoleView.setText(String.format("Status: %s", userRole));
-                    currentUId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
-                    mCustomerDatabase = getDatabaseInstance().getReference().child("Users").child(userRole).child(currentUId);
-                    getUserInfo();
-                    setProfilePhoto();
-                }
-            }
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) {}
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {}
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, String s) {}
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {}
-        });
-    }
-
-    private void getUserInfo() {
-        mCustomerDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String fullname = null, username = null, email = null, subject = null;
-                if (snapshot.exists() && snapshot.getChildrenCount() > 0) {
-                    Map<String, Object> map = (Map<String, Object>) snapshot.getValue();
-                    if (Objects.requireNonNull(map).get("fullname") != null) {
-                        fullname = Objects.requireNonNull(map.get("fullname")).toString();
-                        userFullname.setText(fullname);
-                    }
-                    if (Objects.requireNonNull(map).get("username") != null) {
-                        username = Objects.requireNonNull(map.get("username")).toString();
-                        userUsername.setText(username);
-                    }
-                    if (Objects.requireNonNull(map).get("email") != null) {
-                        email = Objects.requireNonNull(map.get("email")).toString();
-                        userEmail.setText(email);
-                    }
-                    if (Objects.requireNonNull(map).get("subject") != null) {
-                        subject = Objects.requireNonNull(map.get("subject")).toString();
-                        userSubject.setText(subject.substring(0, 1)  + subject.substring(1).toLowerCase());
-                    }
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
 
     private void setProfilePhoto() {

@@ -8,6 +8,7 @@
     android:paddingStart="40sp"
     android:paddingEnd="40sp"
     android:paddingTop="20sp"
+    android:background="@drawable/gradient"
     android:paddingBottom="20sp"
     android:outlineProvider="bounds"
     android:clipToPadding="false">

@@ -11,9 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,17 +24,15 @@ import java.util.Objects;
 import ru.hse.java.repetinder.R;
 import ru.hse.java.repetinder.match.Match;
 import ru.hse.java.repetinder.match.MatchesAdapter;
+import ru.hse.java.repetinder.user.Storage;
 
 public class MatchesFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<Match> resultsMatches = new ArrayList<Match>();
-    private FirebaseAuth mAuth;
-    private DatabaseReference mCustomerDatabase;
     private String currentUId;
-    private String userRole;
-    private String oppositeUserRole;
+    private String userRole, oppositeUserRole;
     private View view;
 
     public MatchesFragment() {
@@ -46,9 +41,12 @@ public class MatchesFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.matches_fragment, container, false);
-        mAuth = FirebaseAuth.getInstance();
-        checkUserRole();
+        view = inflater.inflate(R.layout.fragment_matches, container, false);
+        Storage storage = (Storage) this.getArguments().getSerializable(MainActivity.TEXT);
+        userRole = storage.userRole;
+        oppositeUserRole = storage.oppositeUserRole;
+        currentUId = storage.userId;
+
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setHasFixedSize(true);
@@ -58,6 +56,8 @@ public class MatchesFragment extends Fragment {
         adapter = new MatchesAdapter(getDataSetMatches(), getActivity());
         recyclerView.setAdapter(adapter);
 
+        adapter.notifyDataSetChanged();
+        getMatchesInfoFromDb();
         return view;
     }
 
@@ -65,66 +65,9 @@ public class MatchesFragment extends Fragment {
         return FirebaseDatabase.getInstance("https://repetinder-cb68d-default-rtdb.europe-west1.firebasedatabase.app/");
     }
 
-    private void checkUserRole() {
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        DatabaseReference tutorDb = getDatabaseInstance().getReference().child("Users").child("Tutor");
-        tutorDb.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
-                if (Objects.equals(dataSnapshot.getKey(), Objects.requireNonNull(user).getUid())) {
-                    userRole = "Tutor";
-                    oppositeUserRole = "Student";
-                    currentUId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
-                    mCustomerDatabase = getDatabaseInstance().getReference().child("Users").child(userRole).child(currentUId);
-                    getMatchesInfoFromDb();
-                    adapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) {}
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {}
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, String s) {}
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {}
-        });
-
-        DatabaseReference studentDb = getDatabaseInstance().getReference().child("Users").child("Student");
-        studentDb.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
-                if (Objects.equals(dataSnapshot.getKey(), Objects.requireNonNull(user).getUid())){
-                    userRole = "Student";
-                    oppositeUserRole = "Tutor";
-                    currentUId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
-                    mCustomerDatabase = getDatabaseInstance().getReference().child("Users").child(userRole).child(currentUId);
-                    getMatchesInfoFromDb();
-                    adapter.notifyDataSetChanged();
-                }
-            }
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) {}
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {}
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, String s) {}
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {}
-        });
-    }
-
 
     private void getMatchesInfoFromDb() {
-        DatabaseReference matchDb = MainActivity.getDatabaseInstance().getReference()
+        DatabaseReference matchDb = getDatabaseInstance().getReference()
                 .child("Users").child(userRole).child(currentUId).child("Connections").child("Yes");
         matchDb.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -144,7 +87,7 @@ public class MatchesFragment extends Fragment {
     }
 
     private void getMatchInfo(String matchId) {
-        DatabaseReference userDb = MainActivity.getDatabaseInstance().getReference()
+        DatabaseReference userDb = getDatabaseInstance().getReference()
                 .child("Users").child(oppositeUserRole).child(matchId);
         userDb.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

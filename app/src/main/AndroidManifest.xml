@@ -12,9 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Repetinder">
         <activity android:name=".activities.MainActivity" />
-        <activity android:name=".activities.ProfileActivity" />
-        <activity android:name=".activities.MatchesActivity" />
-        <activity android:name=".activities.TabsActivity" />
         <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
