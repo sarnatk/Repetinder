@@ -74,7 +74,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         UserRepetinder currentUser = storage.currentUser;
         userFullname.setText(currentUser.getFullname());
-        userUsername.setText(currentUser.getFullname());
+        userUsername.setText(currentUser.getUsername());
         userEmail.setText(currentUser.getEmail());
         String subject = currentUser.getSubject().toString();
         userSubject.setText(subject.substring(0, 1)  + subject.substring(1).toLowerCase());
@@ -96,14 +96,7 @@ public class ProfileActivity extends AppCompatActivity {
         profileView = findViewById(R.id.profileImage);
 
         // set photo of profile
-      /*  Bitmap profileBitmap = currentUser.getBitmap();
-        if (profileBitmap != null) {
-            profileView.setImageBitmap(profileBitmap);
 
-            Log.v("Bitmap", "User's bitmap isn't null");
-        } else {
-            Log.v("Bitmap", "User's bitmap is null");
-        }*/
         setProfilePhoto();
 
         logOutButton.setOnClickListener(v -> {

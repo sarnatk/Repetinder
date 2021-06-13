@@ -4,6 +4,6 @@ import java.io.Serializable;
 
 public class Storage implements Serializable {
     public UserRepetinder currentUser = new UserRepetinder();
-    public String userRole = "1";
+    public String userRole = "1", oppositeUserRole = "2";
     public String userId;
 }
