@@ -1,23 +1,27 @@
 package ru.hse.java.repetinder.chat;
 
-import org.bson.types.ObjectId;
+public class Chat {
+    private String message;
+    private boolean isCurrentUser;
 
-import java.util.List;
+    public Chat(String message, boolean isCurrentUser) {
+        this.message = message;
+        this.isCurrentUser = isCurrentUser;
+    }
 
-import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.Required;
+    public String getMessage() {
+        return message;
+    }
 
-public class Chat { // extends RealmObject {
-    @PrimaryKey
-    private final ObjectId chatId = new ObjectId();
-    @Required
-    private ObjectId tutorId;
-    @Required
-    private List<ObjectId> studentsId;
-    @Required
-    private boolean tutorOnline;
-    @Required
-    private List<Boolean> studentsOnline;
-    @Required
-    private List<ChatMessage> messages;
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public boolean isCurrentUser() {
+        return isCurrentUser;
+    }
+
+    public void setCurrentUser(boolean currentUser) {
+        isCurrentUser = currentUser;
+    }
 }

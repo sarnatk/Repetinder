@@ -30,7 +30,7 @@ public class MatchesFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    private ArrayList<Match> resultsMatches = new ArrayList<Match>();
+    private ArrayList<Match> resultsMatches = new ArrayList<>();
     private String currentUId;
     private String userRole, oppositeUserRole;
     private View view;
@@ -94,7 +94,7 @@ public class MatchesFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     String fullname = null, profileImageUrl = null, email = null;
-                    //  String userId = snapshot.getKey();
+                      String userId = snapshot.getKey();
                     if (snapshot.child("fullname").getValue() != null) {
                         fullname = Objects.requireNonNull(snapshot.child("fullname").getValue()).toString();
                     }
@@ -107,7 +107,7 @@ public class MatchesFragment extends Fragment {
                         profileImageUrl = Objects.requireNonNull(snapshot.child("profileImageUrl").getValue()).toString();
                     }
 
-                    Match match = new Match(/*userId, */fullname, email, profileImageUrl);
+                    Match match = new Match(userId, fullname, email, profileImageUrl, oppositeUserRole);
                     resultsMatches.add(match);
                     adapter.notifyDataSetChanged();
                 }

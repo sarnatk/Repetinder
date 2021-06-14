@@ -90,8 +90,11 @@ public class SwipesFragment extends Fragment {
                 if (userRole.equals("Student")) {
                     Card card = (Card) dataObject;
                     String userId = card.getUserId();
-                    usersDb.child(oppositeUserRole).child(userId).child("Connections").child("Yes").child(currentUId).setValue(true);
-                    usersDb.child(userRole).child(currentUId).child("Connections").child("Yes").child(userId).setValue(true);
+               //     usersDb.child(oppositeUserRole).child(userId).child("Connections").child("Yes").child(currentUId).setValue(true);
+                 //   usersDb.child(userRole).child(currentUId).child("Connections").child("Yes").child(userId).setValue(true);
+                    String key = getDatabaseInstance().getReference().child("Chats").push().getKey();
+                    usersDb.child(oppositeUserRole).child(userId).child("Connections").child("Yes").child(currentUId).child("ChatId").setValue(key);
+                    usersDb.child(userRole).child(currentUId).child("Connections").child("Yes").child(userId).child("ChatId").setValue(key);
                 }
                 Toast.makeText(getActivity(), "yes!!", Toast.LENGTH_SHORT).show();
             }
