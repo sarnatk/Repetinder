@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient">
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_anchor="@+id/scrollView2"
+        app:layout_anchorGravity="center"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/slots"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/header_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/poppinsbold"
+                android:gravity="center"
+                android:text="Settings"
+                android:textColor="@color/colorAccent"
+                android:textSize="35sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@id/slots"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0"
+                tools:targetApi="jelly_bean" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/name_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:hint="Name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/header_title">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/light_white"
+                    android:fontFamily="@font/poppinsmedium"
+                    tools:targetApi="jelly_bean" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <Button
+                android:id="@+id/save_button"
+                android:layout_width="92dp"
+                android:layout_height="49dp"
+                android:background="@drawable/default_button"
+                android:backgroundTintMode="multiply"
+                android:text="save"
+                app:iconTint="#FFFFFF"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seekBar" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/description_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:hint="About me"
+                app:layout_constraintTop_toBottomOf="@+id/name_et"
+                tools:layout_editor_absoluteX="0dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/light_white"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:inputType="textPassword"
+                    tools:targetApi="jelly_bean" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/birthday_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                app:layout_constraintTop_toBottomOf="@+id/description_et"
+                tools:layout_editor_absoluteX="0dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/birthday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/light_white"
+                    android:drawableStart="@drawable/ic_calendar"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:inputType="textPassword"
+                    tools:targetApi="jelly_bean" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:fontFamily="@font/poppinsmedium"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:text="Optimal price (per hour): "
+                app:layout_constraintTop_toBottomOf="@id/birthday_tv"
+                android:layout_marginTop="8dp"/>
+
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:fontFamily="@font/poppinsmedium"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toRightOf="@id/textView"
+                tools:text="0"
+                app:layout_constraintTop_toBottomOf="@id/birthday_tv"
+                android:layout_marginTop="8dp"/>
+
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="0dp"
+                android:max="3000"
+                android:progress="1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                tools:layout_editor_absoluteY="401dp" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

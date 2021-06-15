@@ -83,6 +83,7 @@ public class ProfileFragment extends Fragment {
 
 
         Button logOutButton = view.findViewById(R.id.logOut);
+        Button settingsButton = view.findViewById(R.id.settings);
         profileView = view.findViewById(R.id.profileImage);
 
         setProfilePhoto();
@@ -90,6 +91,11 @@ public class ProfileFragment extends Fragment {
         logOutButton.setOnClickListener(v -> {
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+        });
+
+        settingsButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), SettingsActivity.class);
             startActivity(intent);
         });
 
