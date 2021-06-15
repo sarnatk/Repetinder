@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -92,14 +93,14 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
         databaseUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                boolean isFree = true;
+                boolean isSeen = true;
                 if (snapshot.exists() && snapshot.getChildrenCount() > 0) {
                     Map<String, Object> map = (Map<String, Object>) snapshot.getValue();
-                    if (userRole.equals("Tutor") && Objects.requireNonNull(map).get("isFree") != null) {
-                        isFree = (boolean) map.get("isFree");
+                    if (userRole.equals("Tutor") && Objects.requireNonNull(map).get("isSeen") != null) {
+                        isSeen = (boolean) map.get("isSeen");
                         showOnAppSwitch.setVisibility(View.VISIBLE);
                     }
-                    showOnAppSwitch.setChecked(isFree);
+                    showOnAppSwitch.setChecked(isSeen);
                     progressBar.setVisibility(View.GONE);
 
                 }
@@ -139,9 +140,10 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
     private void sendData() {
         if (userRole.equals("Tutor")) {
             Map userInfo = new HashMap();
-            userInfo.put("isFree", isSwitchChecked);
+            userInfo.put("isSeen", isSwitchChecked);
             databaseUser.updateChildren(userInfo);
         }
+        Toast.makeText(SettingsActivity.this, "Successfully saved", Toast.LENGTH_SHORT).show();
     }
 
     @Override
