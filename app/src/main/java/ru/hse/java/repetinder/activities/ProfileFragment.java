@@ -96,6 +96,9 @@ public class ProfileFragment extends Fragment {
 
         settingsButton.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), SettingsActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString(SettingsActivity.TAG, userRole);
+            intent.putExtras(bundle);
             startActivity(intent);
         });
 

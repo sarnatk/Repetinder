@@ -7,6 +7,18 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ProgressBar
+            android:id="@+id/progressBarSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:visibility="visible"/>
+    </RelativeLayout>
+
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
@@ -15,6 +27,7 @@
         app:layout_anchorGravity="center"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp">
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/slots"
@@ -60,7 +73,6 @@
                     tools:targetApi="jelly_bean" />
             </com.google.android.material.textfield.TextInputLayout>
 
-
             <Button
                 android:id="@+id/save_button"
                 android:layout_width="92dp"
@@ -71,7 +83,7 @@
                 app:iconTint="#FFFFFF"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/seekBar" />
+                app:layout_constraintTop_toBottomOf="@+id/switch_showOnApp" />
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -138,6 +150,22 @@
                 app:layout_constraintTop_toBottomOf="@id/birthday_tv"
                 android:layout_marginTop="8dp"/>
 
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switch_showOnApp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Show me on Repetinder"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                app:layout_constraintTop_toBottomOf="@id/seekBar"
+                android:textSize="16sp"
+                android:fontFamily="@font/poppinsmedium"
+                android:textColor="@color/purple_500"
+                >
+
+            </androidx.appcompat.widget.SwitchCompat>
+
             <SeekBar
                 android:id="@+id/seekBar"
                 android:layout_width="300dp"
@@ -158,6 +186,8 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </ScrollView>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
