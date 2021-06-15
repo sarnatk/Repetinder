@@ -30,6 +30,7 @@ import ru.hse.java.repetinder.R;
 import ru.hse.java.repetinder.card.Card;
 import ru.hse.java.repetinder.card.CardsArrayAdapter;
 import ru.hse.java.repetinder.user.Storage;
+import ru.hse.java.repetinder.user.UserRepetinder;
 
 public class SwipesFragment extends Fragment {
     private CardsArrayAdapter arrayAdapter;
@@ -41,6 +42,8 @@ public class SwipesFragment extends Fragment {
     private String userRole;
     private String oppositeUserRole;
     private ProgressBar progressBar;
+    private UserRepetinder currentUser;
+
     public SwipesFragment() {
     }
 
@@ -52,7 +55,7 @@ public class SwipesFragment extends Fragment {
         userRole = storage.userRole;
         oppositeUserRole = storage.oppositeUserRole;
         currentUId = storage.userId;
-
+        currentUser = storage.currentUser;
         usersDb = getDatabaseInstance().getReference().child("Users");
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         getOppositeRoleUsers();
@@ -75,27 +78,19 @@ public class SwipesFragment extends Fragment {
 
             @Override
             public void onLeftCardExit(Object dataObject) {
-                // TODO: сейчас connections есть у tutor и у student. Так как tutor выбирать не сможет потом, то connections может создаватть только
-                // student у tutorа
-                if (userRole.equals("Student")) {
-                    Card card = (Card) dataObject;
-                    String userId = card.getUserId();
-                    usersDb.child(oppositeUserRole).child(userId).child("Connections").child("No").child(currentUId).setValue(true);
-                }
+                Card card = (Card) dataObject;
+                String userId = card.getUserId();
+                usersDb.child(oppositeUserRole).child(userId).child("Connections").child("No").child(currentUId).setValue(true);
                 Toast.makeText(getActivity(), "no...", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
-                if (userRole.equals("Student")) {
-                    Card card = (Card) dataObject;
-                    String userId = card.getUserId();
-               //     usersDb.child(oppositeUserRole).child(userId).child("Connections").child("Yes").child(currentUId).setValue(true);
-                 //   usersDb.child(userRole).child(currentUId).child("Connections").child("Yes").child(userId).setValue(true);
-                    String key = getDatabaseInstance().getReference().child("Chats").push().getKey();
-                    usersDb.child(oppositeUserRole).child(userId).child("Connections").child("Yes").child(currentUId).child("ChatId").setValue(key);
-                    usersDb.child(userRole).child(currentUId).child("Connections").child("Yes").child(userId).child("ChatId").setValue(key);
-                }
+                Card card = (Card) dataObject;
+                String userId = card.getUserId();
+                String key = getDatabaseInstance().getReference().child("Chats").push().getKey();
+                usersDb.child(oppositeUserRole).child(userId).child("Connections").child("Yes").child(currentUId).child("ChatId").setValue(key);
+                usersDb.child(userRole).child(currentUId).child("Connections").child("Yes").child(userId).child("ChatId").setValue(key);
                 Toast.makeText(getActivity(), "yes!!", Toast.LENGTH_SHORT).show();
             }
 
@@ -123,16 +118,20 @@ public class SwipesFragment extends Fragment {
         oppositeSexDb.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
-                if (dataSnapshot.exists() // ) {
-                        && !dataSnapshot.child("Connections").child("No").hasChild(currentUId) && !dataSnapshot.child("Connections").child("Yes").hasChild(currentUId)) {
-                    String profileImageUrl = "default";
-                    if (!Objects.equals(dataSnapshot.child("profileImageUrl").getValue(), "default")) {
-                        profileImageUrl = Objects.requireNonNull(dataSnapshot.child("profileImageUrl").getValue()).toString();
+                if (dataSnapshot.exists() && !dataSnapshot.child("Connections").child("No").hasChild(currentUId)
+                        && !dataSnapshot.child("Connections").child("Yes").hasChild(currentUId)) {
+                    UserRepetinder.Subject matchSubject = UserRepetinder.Subject.valueOf(Objects.requireNonNull(dataSnapshot.child("subject").getValue()).toString());
+                    boolean isSeen = (boolean) dataSnapshot.child("isSeen").getValue();
+                    if (isSeen && matchSubject.equals(currentUser.getSubject())) {
+                        String profileImageUrl = "default";
+                        if (!Objects.equals(dataSnapshot.child("profileImageUrl").getValue(), "default")) {
+                            profileImageUrl = Objects.requireNonNull(dataSnapshot.child("profileImageUrl").getValue()).toString();
+                        }
+                        Card card = new Card(dataSnapshot.getKey(), Objects.requireNonNull(dataSnapshot.child("fullname").getValue()).toString(),
+                                profileImageUrl);
+                        possibleMatchesQueue.add(card);
+                        arrayAdapter.notifyDataSetChanged();
                     }
-                    Card card = new Card(dataSnapshot.getKey(), Objects.requireNonNull(dataSnapshot.child("fullname").getValue()).toString(),
-                            profileImageUrl);
-                    possibleMatchesQueue.add(card);
-                    arrayAdapter.notifyDataSetChanged();
                 }
             }
 

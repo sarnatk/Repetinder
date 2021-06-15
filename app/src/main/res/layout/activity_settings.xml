@@ -52,7 +52,7 @@
                 app:layout_constraintTop_toBottomOf="@id/header_title">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/name"
+                    android:id="@+id/name_settings"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/light_white"
@@ -85,26 +85,7 @@
                 tools:layout_editor_absoluteX="0dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/light_white"
-                    android:fontFamily="@font/poppinsmedium"
-                    tools:targetApi="jelly_bean" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/city_et"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:hint="City"
-                app:layout_constraintTop_toBottomOf="@+id/description_et"
-                tools:layout_editor_absoluteX="0dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/city"
+                    android:id="@+id/description_settings"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/light_white"
@@ -118,54 +99,55 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                app:layout_constraintTop_toBottomOf="@+id/city_et"
+                app:layout_constraintTop_toBottomOf="@+id/description_et"
                 tools:layout_editor_absoluteX="0dp">
 
-                <TextView
-                    android:id="@+id/birthday"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/birthday_settings"
                     android:layout_width="match_parent"
-                    android:layout_height="62dp"
-                    android:layout_marginTop="-20dp"
+                    android:layout_height="wrap_content"
                     android:background="@color/light_white"
+                    android:drawableStart="@drawable/ic_calendar"
                     android:fontFamily="@font/poppinsmedium"
-                    android:textSize="16sp"
-                    android:text="\n    Date of birth"
-                    app:drawableEndCompat="@drawable/ic_calendar" />
+                    tools:targetApi="jelly_bean" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
+                android:id="@+id/optimal_price_text"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
                 android:fontFamily="@font/poppinsmedium"
-                android:gravity="center"
-                android:text="Optimal price (per hour): "
                 android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:text="Optimal price (per hour): "
                 app:layout_constraintTop_toBottomOf="@id/birthday_tv"
-                tools:layout_editor_absoluteX="40dp" />
+                android:layout_marginTop="8dp"/>
 
             <TextView
                 android:id="@+id/price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:fontFamily="@font/poppinsmedium"
                 android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@+id/seekBar"
-                app:layout_constraintTop_toBottomOf="@id/textView"
-                tools:text="0" />
+                app:layout_constraintLeft_toRightOf="@id/optimal_price_text"
+                tools:text="0"
+                app:layout_constraintTop_toBottomOf="@id/birthday_tv"
+                android:layout_marginTop="8dp"/>
 
             <SeekBar
                 android:id="@+id/seekBar"
                 android:layout_width="300dp"
                 android:layout_height="40dp"
+                android:layout_marginTop="0dp"
                 android:max="3000"
                 android:progress="1"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
+                app:layout_constraintTop_toBottomOf="@+id/optimal_price_text" />
 
             <androidx.constraintlayout.widget.Barrier
                 android:id="@+id/barrier5"

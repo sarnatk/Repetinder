@@ -39,6 +39,7 @@ public class Tutor extends UserRepetinder {
     }
 
     private int minPrice;
+    private final boolean isSeen = true;
     private int rang;
     private final List<Student> approvedStudents;
 }

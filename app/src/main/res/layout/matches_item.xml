@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/rounded"
         android:orientation="vertical"
+        android:layout_marginLeft="10dp"
         android:layout_gravity="center">
         <TextView
             android:paddingBottom="20sp"
