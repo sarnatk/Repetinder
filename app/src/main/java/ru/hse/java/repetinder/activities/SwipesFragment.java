@@ -19,11 +19,14 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import ru.hse.java.repetinder.R;
@@ -43,6 +46,16 @@ public class SwipesFragment extends Fragment {
     private String oppositeUserRole;
     private ProgressBar progressBar;
     private UserRepetinder currentUser;
+
+    private enum RangChange {
+        INCREASE(-1),
+        DECREASE(1);
+
+        private int add;
+        RangChange(int delta) {
+            add = delta;
+        }
+    }
 
     public SwipesFragment() {
     }
@@ -81,6 +94,7 @@ public class SwipesFragment extends Fragment {
                 Card card = (Card) dataObject;
                 String userId = card.getUserId();
                 usersDb.child(oppositeUserRole).child(userId).child("Connections").child("No").child(currentUId).setValue(true);
+                changeRang(RangChange.DECREASE, userId);
                 Toast.makeText(getActivity(), "no...", Toast.LENGTH_SHORT).show();
             }
 
@@ -91,6 +105,7 @@ public class SwipesFragment extends Fragment {
                 String key = getDatabaseInstance().getReference().child("Chats").push().getKey();
                 usersDb.child(oppositeUserRole).child(userId).child("Connections").child("Yes").child(currentUId).child("ChatId").setValue(key);
                 usersDb.child(userRole).child(currentUId).child("Connections").child("Yes").child(userId).child("ChatId").setValue(key);
+                changeRang(RangChange.INCREASE, userId);
                 Toast.makeText(getActivity(), "yes!!", Toast.LENGTH_SHORT).show();
             }
 
@@ -109,40 +124,61 @@ public class SwipesFragment extends Fragment {
         return view;
     }
 
+    private void changeRang(RangChange rangChange, String userId) {
+        usersDb.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                long rang = 0;
+                DataSnapshot currentSnap = snapshot.child(oppositeUserRole).child(userId);
+                if (currentSnap.exists() && currentSnap.getChildrenCount() > 0) {
+                    Map<String, Object> map = (Map<String, Object>) currentSnap.getValue();
+                    if (oppositeUserRole.equals("Tutor") && Objects.requireNonNull(map).get("rang") != null) {
+                        rang = (long) map.get("rang");
+                    }
+                }
+                if (oppositeUserRole.equals("Tutor")) {
+                    Map userInfo = new HashMap();
+                    userInfo.put("rang", rang + rangChange.add);
+                    Log.v("RANG", "Rang was: " + rang + ", become: " + (rang + rangChange.add));
+                    usersDb.child(oppositeUserRole).child(userId).updateChildren(userInfo);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     private FirebaseDatabase getDatabaseInstance() {
         return FirebaseDatabase.getInstance("https://repetinder-cb68d-default-rtdb.europe-west1.firebasedatabase.app/");
     }
 
     private void getOppositeRoleUsers(){
         DatabaseReference oppositeSexDb = getDatabaseInstance().getReference().child("Users").child(oppositeUserRole);
-        oppositeSexDb.addChildEventListener(new ChildEventListener() {
+        Query query = oppositeSexDb.orderByChild("rang");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
-                if (dataSnapshot.exists() && !dataSnapshot.child("Connections").child("No").hasChild(currentUId)
-                        && !dataSnapshot.child("Connections").child("Yes").hasChild(currentUId)) {
-                    UserRepetinder.Subject matchSubject = UserRepetinder.Subject.valueOf(Objects.requireNonNull(dataSnapshot.child("subject").getValue()).toString());
-                    boolean isSeen = (boolean) dataSnapshot.child("seen").getValue();
-                    if (isSeen && matchSubject.equals(currentUser.getSubject())) {
-                        String profileImageUrl = "default";
-                        if (!Objects.equals(dataSnapshot.child("profileImageUrl").getValue(), "default")) {
-                            profileImageUrl = Objects.requireNonNull(dataSnapshot.child("profileImageUrl").getValue()).toString();
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    if (ds.exists() && !ds.child("Connections").child("No").hasChild(currentUId)
+                            && !ds.child("Connections").child("Yes").hasChild(currentUId)) {
+                        UserRepetinder.Subject matchSubject = UserRepetinder.Subject.valueOf(Objects.requireNonNull(ds.child("subject").getValue()).toString());
+                        boolean isSeen = (boolean) ds.child("seen").getValue();
+                        if (isSeen && matchSubject.equals(currentUser.getSubject())) {
+                            String profileImageUrl = "default";
+                            if (!Objects.equals(ds.child("profileImageUrl").getValue(), "default")) {
+                                profileImageUrl = Objects.requireNonNull(ds.child("profileImageUrl").getValue()).toString();
+                            }
+                            Card card = new Card(ds.getKey(), Objects.requireNonNull(ds.child("fullname").getValue()).toString(),
+                                    profileImageUrl);
+                            possibleMatchesQueue.add(card);
+                            arrayAdapter.notifyDataSetChanged();
                         }
-                        Card card = new Card(dataSnapshot.getKey(), Objects.requireNonNull(dataSnapshot.child("fullname").getValue()).toString(),
-                                profileImageUrl);
-                        possibleMatchesQueue.add(card);
-                        arrayAdapter.notifyDataSetChanged();
                     }
                 }
             }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) {}
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {}
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, String s) {}
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {}
