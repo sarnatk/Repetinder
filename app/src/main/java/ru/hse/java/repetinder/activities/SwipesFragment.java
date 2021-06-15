@@ -121,7 +121,7 @@ public class SwipesFragment extends Fragment {
                 if (dataSnapshot.exists() && !dataSnapshot.child("Connections").child("No").hasChild(currentUId)
                         && !dataSnapshot.child("Connections").child("Yes").hasChild(currentUId)) {
                     UserRepetinder.Subject matchSubject = UserRepetinder.Subject.valueOf(Objects.requireNonNull(dataSnapshot.child("subject").getValue()).toString());
-                    boolean isSeen = (boolean) dataSnapshot.child("isSeen").getValue();
+                    boolean isSeen = (boolean) dataSnapshot.child("seen").getValue();
                     if (isSeen && matchSubject.equals(currentUser.getSubject())) {
                         String profileImageUrl = "default";
                         if (!Objects.equals(dataSnapshot.child("profileImageUrl").getValue(), "default")) {

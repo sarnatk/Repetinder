@@ -38,8 +38,18 @@ public class Tutor extends UserRepetinder {
         approvedStudents.addAll(students);
     }
 
+    public boolean isSeen() {
+        return isSeen;
+    }
+
+    public void setSeen(boolean isSeen) {
+        this.isSeen = isSeen;
+    }
+
     private int minPrice;
-    private final boolean isSeen = true;
+    private boolean isSeen = true;
     private int rang;
     private final List<Student> approvedStudents;
+
+
 }
