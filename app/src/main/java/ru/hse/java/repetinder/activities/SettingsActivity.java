@@ -157,7 +157,7 @@ public class SettingsActivity extends AppCompatActivity
     private void sendData() {
         if (userRole.equals("Tutor")) {
             Map userInfo = new HashMap();
-            userInfo.put("isSeen", isSwitchChecked);
+            userInfo.put("seen", isSwitchChecked);
             databaseUser.updateChildren(userInfo);
         }
         Toast.makeText(SettingsActivity.this, "Successfully saved", Toast.LENGTH_SHORT).show();
