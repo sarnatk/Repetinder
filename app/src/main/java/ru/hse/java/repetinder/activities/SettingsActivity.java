@@ -11,14 +11,12 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Calendar;
-import java.util.Objects;
 
 import ru.hse.java.repetinder.R;
 
@@ -41,9 +39,9 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
         setTitle("Edit profile - Salle Tinder");
         //Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        nameET = findViewById(R.id.name_et);
-        descriptionET = findViewById(R.id.description_et);
-        birthdayTV = findViewById(R.id.birthday_tv);
+        nameET = findViewById(R.id.name_settings);
+        descriptionET = findViewById(R.id.description_settings);
+        birthdayTV = findViewById(R.id.birthday_settings);
         saveButton = findViewById(R.id.save_button);
 
         saveButton.setOnClickListener(v -> sendData());

@@ -70,7 +70,9 @@ public class MainActivity extends AppCompatActivity {
         profileFragment.setArguments(bundle);
         matchesFragment.setArguments(bundle);
 
+        List<String> tabTitles = new ArrayList<>();
         if (storage.userRole.equals("Student")) {
+            tabTitles.add("Swipes");
             Fragment swipeFragment = new SwipesFragment();
             swipeFragment.setArguments(bundle);
             viewPagerAdapter.addFragment(swipeFragment);
@@ -79,8 +81,8 @@ public class MainActivity extends AppCompatActivity {
         viewPagerAdapter.addFragment(matchesFragment);
 
         viewPager2.setAdapter(viewPagerAdapter);
-        List<String> tabTitles = new ArrayList<>();
-        tabTitles.add("Swipes");
+
+
         tabTitles.add("Profile");
         tabTitles.add("Matches");
         new TabLayoutMediator(tabLayout, viewPager2,
