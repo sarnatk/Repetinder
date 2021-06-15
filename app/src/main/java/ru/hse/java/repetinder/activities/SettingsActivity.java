@@ -10,26 +10,28 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 import java.util.Calendar;
-import java.util.Objects;
 
 import ru.hse.java.repetinder.R;
 
-public class SettingsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class SettingsActivity extends AppCompatActivity
+        implements AdapterView.OnItemSelectedListener, SeekBar.OnSeekBarChangeListener {
     private static final String TAG = "SettingsActivity";
 
-    private EditText nameET;
-    private EditText descriptionET;
+    private TextInputLayout nameET;
+    private TextInputLayout descriptionET;
     private TextView birthdayTV;
     private Button saveButton;
     private Spinner genderSpinner;
+    private TextView mTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +45,31 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
 
         nameET = findViewById(R.id.name_et);
         descriptionET = findViewById(R.id.description_et);
-        birthdayTV = findViewById(R.id.birthday_tv);
+        birthdayTV = findViewById(R.id.birthday);
         saveButton = findViewById(R.id.save_button);
 
         saveButton.setOnClickListener(v -> sendData());
         birthdayTV.setOnClickListener(v -> setBirth());
 
+        final SeekBar seekBar = findViewById(R.id.seekBar);
+        seekBar.setOnSeekBarChangeListener(this);
+
+        mTextView = findViewById(R.id.price);
+        mTextView.setText("0");
+
+    }
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+        mTextView.setText(String.valueOf(seekBar.getProgress()));
     }
 
     private void logout() {
@@ -71,21 +92,18 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
         if (true) {
             c.add(Calendar.YEAR, -18);
         }
-        new DatePickerDialog(this, (view, year, month, dayOfMonth) -> birthdayTV.setText(String.format("%02d/%02d/%02d", dayOfMonth, month + 1, year)), c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
+        new DatePickerDialog(this, (view, year, month, dayOfMonth) -> birthdayTV.setText(String.format("\n   %02d.%02d.%02d", dayOfMonth, month + 1, year)), c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
     }
 
     private void sendData() {
-
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
     }
 
     @Override
