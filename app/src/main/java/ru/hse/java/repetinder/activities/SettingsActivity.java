@@ -10,24 +10,29 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 import java.util.Calendar;
 
 import ru.hse.java.repetinder.R;
 
-public class SettingsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class SettingsActivity extends AppCompatActivity
+        implements AdapterView.OnItemSelectedListener, SeekBar.OnSeekBarChangeListener {
     private static final String TAG = "SettingsActivity";
 
-    private EditText nameET;
-    private EditText descriptionET;
-    private TextView birthdayTV;
+    private TextInputLayout name;
+    private TextInputLayout description;
+    private TextInputLayout city;
+    private TextView birthday;
     private Button saveButton;
     private Spinner genderSpinner;
+    private TextView price;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +44,34 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
         setTitle("Edit profile - Salle Tinder");
         //Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        nameET = findViewById(R.id.name_settings);
-        descriptionET = findViewById(R.id.description_settings);
-        birthdayTV = findViewById(R.id.birthday_settings);
+        name = findViewById(R.id.name_settings);
+        description = findViewById(R.id.description_settings);
+        birthday = findViewById(R.id.birthday_settings);
+        city = findViewById(R.id.city_settings);
         saveButton = findViewById(R.id.save_button);
 
         saveButton.setOnClickListener(v -> sendData());
-        birthdayTV.setOnClickListener(v -> setBirth());
+        birthday.setOnClickListener(v -> setBirth());
 
+        final SeekBar seekBar = findViewById(R.id.seekBar);
+        seekBar.setOnSeekBarChangeListener(this);
+
+        price = findViewById(R.id.price);
+        price.setText("0");
+
+    }
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+        price.setText(String.valueOf(seekBar.getProgress()));
     }
 
     private void logout() {
@@ -69,21 +94,18 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
         if (true) {
             c.add(Calendar.YEAR, -18);
         }
-        new DatePickerDialog(this, (view, year, month, dayOfMonth) -> birthdayTV.setText(String.format("%02d/%02d/%02d", dayOfMonth, month + 1, year)), c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
+        new DatePickerDialog(this, (view, year, month, dayOfMonth) -> birthday.setText(String.format("\n   %02d.%02d.%02d", dayOfMonth, month + 1, year)), c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
     }
 
     private void sendData() {
-
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
     }
 
     @Override
