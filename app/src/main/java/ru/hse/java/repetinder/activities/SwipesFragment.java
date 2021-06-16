@@ -103,8 +103,16 @@ public class SwipesFragment extends Fragment {
                 Card card = (Card) dataObject;
                 String userId = card.getUserId();
                 String key = getDatabaseInstance().getReference().child("Chats").push().getKey();
-                usersDb.child(oppositeUserRole).child(userId).child("Connections").child("Yes").child(currentUId).child("ChatId").setValue(key);
-                usersDb.child(userRole).child(currentUId).child("Connections").child("Yes").child(userId).child("ChatId").setValue(key);
+                // add users to chat
+                DatabaseReference chatDB = getDatabaseInstance().getReference().child("Chats");
+                chatDB.child(key).child("ChatUsers").child(    userId).setValue(    userId);
+                chatDB.child(key).child("ChatUsers").child(currentUId).setValue(currentUId);
+                usersDb.child(oppositeUserRole).child(    userId)
+                        .child("Connections").child("Yes")
+                        .child(currentUId).child("ChatId").setValue(key);
+                usersDb.child(        userRole).child(currentUId)
+                        .child("Connections").child("Yes")
+                        .child(    userId).child("ChatId").setValue(key);
                 changeRang(RangChange.INCREASE, userId);
                 Toast.makeText(getActivity(), "yes!!", Toast.LENGTH_SHORT).show();
             }

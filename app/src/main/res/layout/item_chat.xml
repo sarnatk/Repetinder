@@ -9,15 +9,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded"
-        android:padding="20sp">
+        android:padding="20sp"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/messageText"
-            android:fontFamily="@font/poppinsmedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/poppinsbold"
+            android:textSize="20sp"
             android:paddingBottom="20sp"
             android:text="Message..." />
 
+        <TextView
+            android:id="@+id/timeMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppinsmedium"
+            android:textSize="15sp"
+            android:text="time" />
     </LinearLayout>
+
 </LinearLayout>
