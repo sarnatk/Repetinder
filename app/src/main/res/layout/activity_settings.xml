@@ -10,13 +10,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <ProgressBar
             android:id="@+id/progressBarSettings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:visibility="visible"/>
+            android:visibility="visible" />
     </RelativeLayout>
 
     <ScrollView
@@ -97,7 +98,7 @@
                 tools:layout_editor_absoluteX="0dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/password"
+                    android:id="@+id/description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/light_white"
@@ -140,8 +141,8 @@
                     android:layout_marginTop="-20dp"
                     android:background="@color/light_white"
                     android:fontFamily="@font/poppinsmedium"
-                    android:textSize="16sp"
                     android:text="\n    Date of birth"
+                    android:textSize="16sp"
                     app:drawableEndCompat="@drawable/ic_calendar" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -173,15 +174,14 @@
                 android:id="@+id/switch_showOnApp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="Show me on Repetinder"
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
-                app:layout_constraintTop_toBottomOf="@id/seekBar"
-                android:textSize="16sp"
+                android:checked="true"
                 android:fontFamily="@font/poppinsmedium"
+                android:text="Show me on Repetinder"
                 android:textColor="@color/purple_500"
-                >
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@id/seekBar">
 
             </androidx.appcompat.widget.SwitchCompat>
 

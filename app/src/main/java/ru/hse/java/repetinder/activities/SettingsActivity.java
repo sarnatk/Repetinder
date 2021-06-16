@@ -20,7 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
-import com.google.android.material.textfield.TextInputLayout;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,9 +39,12 @@ public class SettingsActivity extends AppCompatActivity
         implements AdapterView.OnItemSelectedListener, SeekBar.OnSeekBarChangeListener {
     public static final String TAG = "SettingsActivity";
 
-    private TextInputLayout name;
-    private TextInputLayout description;
-    private TextInputLayout city;
+    private TextInputEditText name;
+    // private TextView nameText;
+    private TextInputEditText description;
+    //private TextView descriptionText;
+    private TextInputEditText city;
+    //private TextView cityText;
     private TextView birthday;
     private Button saveButton;
     private Spinner genderSpinner;
@@ -51,12 +54,23 @@ public class SettingsActivity extends AppCompatActivity
     private boolean isSwitchChecked = true;
     private DatabaseReference databaseUser;
     private String userRole;
+    private String newDate;
+    private String newName;
+    private String newPrice;
+    private String newDescr;
+    private String newCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         userRole = getIntent().getExtras().getString(TAG);
+        newDate = getIntent().getExtras().getString("date");
+        newPrice = getIntent().getExtras().getString("price");
+        newCity = getIntent().getExtras().getString("city");
+        newName = getIntent().getExtras().getString("name");
+        newDescr = getIntent().getExtras().getString("descr");
+
         String currentUId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
         databaseUser = getDatabaseInstance().getReference().child("Users").child(userRole).child(currentUId);
         getUserInfo();
@@ -65,10 +79,12 @@ public class SettingsActivity extends AppCompatActivity
         setTitle("Edit profile - Salle Tinder");
         //Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        name = findViewById(R.id.name_settings);
-        description = findViewById(R.id.description_settings);
+        name = findViewById(R.id.name);
+        //nameText = findViewById(R.id.name);
+        description = findViewById(R.id.description);
+        //descriptionText = findViewById(R.id.description);
         birthday = findViewById(R.id.birthday);
-        city = findViewById(R.id.city_settings);
+        city = findViewById(R.id.city);
         saveButton = findViewById(R.id.save_button);
         progressBar = findViewById(R.id.progressBarSettings);
         progressBar.setVisibility(View.VISIBLE);
@@ -154,11 +170,31 @@ public class SettingsActivity extends AppCompatActivity
     }
 
     private void sendData() {
-        if (userRole.equals("Tutor")) {
-            Map userInfo = new HashMap();
-            userInfo.put("seen", isSwitchChecked);
-            databaseUser.updateChildren(userInfo);
+        if (!birthday.getText().toString().isEmpty()) {
+            newDate = birthday.getText().toString().substring(4);
         }
+        if (!name.getText().toString().isEmpty()) {
+            newName = name.getText().toString();
+        }
+        if (!price.getText().toString().isEmpty()) {
+            newPrice = price.getText().toString();
+        }
+        if (!description.getText().toString().isEmpty()) {
+            newDescr = description.getText().toString();
+        }
+        if (!city.getText().toString().isEmpty()) {
+            newCity = city.getText().toString();
+        }
+
+        Map userInfo = new HashMap();
+        userInfo.put("seen", isSwitchChecked);
+        userInfo.put("name", newName);
+        userInfo.put("dateOfBirth", newDate);
+        userInfo.put("aboutMe", newDescr);
+        userInfo.put("city", newCity);
+        userInfo.put("price", newPrice);
+        databaseUser.updateChildren(userInfo);
+
         Toast.makeText(SettingsActivity.this, "Successfully saved", Toast.LENGTH_SHORT).show();
     }
 

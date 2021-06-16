@@ -81,6 +81,18 @@ public class UserRepetinder implements Serializable { //extends RealmObject {
         return username;
     }
 
+    public String getDate() {
+        return dateOfBirth;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getDescription() {
+        return aboutMe;
+    }
+
     public boolean isOnline() {
         return isOnline;
     }
@@ -108,11 +120,11 @@ public class UserRepetinder implements Serializable { //extends RealmObject {
         this.profileImageUrl = profileImageUrl;
     }
 
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
@@ -124,7 +136,10 @@ public class UserRepetinder implements Serializable { //extends RealmObject {
     private final String email;
     private String profileImageUrl;
 
-    private int price;
+    private String dateOfBirth;
+    private String aboutMe;
+    private String city;
+    private Integer price = 0;
 
     private Date lastOnlineTime = new Date(System.currentTimeMillis());
 }

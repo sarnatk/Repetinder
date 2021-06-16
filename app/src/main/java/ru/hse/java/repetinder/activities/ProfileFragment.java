@@ -99,6 +99,11 @@ public class ProfileFragment extends Fragment {
             Intent intent = new Intent(getActivity(), SettingsActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString(SettingsActivity.TAG, userRole);
+            bundle.putString("name", currentUser.getFullname());
+            bundle.putString("date", currentUser.getDate());
+            bundle.putString("price", currentUser.getPrice().toString());
+            bundle.putString("descr", currentUser.getDescription());
+            bundle.putString("city", currentUser.getCity());
             intent.putExtras(bundle);
             startActivity(intent);
         });
