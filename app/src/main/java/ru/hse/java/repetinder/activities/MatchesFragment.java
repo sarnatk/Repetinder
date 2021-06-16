@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -69,14 +70,27 @@ public class MatchesFragment extends Fragment {
     private void getMatchesInfoFromDb() {
         DatabaseReference matchDb = getDatabaseInstance().getReference()
                 .child("Users").child(userRole).child(currentUId).child("Connections").child("Yes");
-        matchDb.addListenerForSingleValueEvent(new ValueEventListener() {
+        matchDb.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 if (snapshot.exists()) {
-                    for(DataSnapshot match : snapshot.getChildren()) {
-                        getMatchInfo(match.getKey());
-                    }
+                    getMatchInfo(snapshot.getKey());
                 }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
             }
 
             @Override
