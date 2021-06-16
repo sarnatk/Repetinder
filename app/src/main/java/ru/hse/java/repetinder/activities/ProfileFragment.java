@@ -79,7 +79,8 @@ public class ProfileFragment extends Fragment {
         userUsername.setText(currentUser.getUsername());
         userEmail.setText(currentUser.getEmail());
         String subject = currentUser.getSubject().toString();
-        userSubject.setText(subject.substring(0, 1)  + subject.substring(1).toLowerCase());
+        String tmp = subject.substring(0, 1) + subject.substring(1).toLowerCase();
+        userSubject.setText(tmp);
 
 
         Button logOutButton = view.findViewById(R.id.logOut);
@@ -122,7 +123,7 @@ public class ProfileFragment extends Fragment {
                     if (Objects.requireNonNull(map).get("profileImageUrl") != null) {
                         profileImageUrl = Objects.requireNonNull(map.get("profileImageUrl")).toString();
                         if (!profileImageUrl.equals("default")) {
-                            Glide.with(getActivity().getApplication()).load(profileImageUrl).into(profileView);
+                            Glide.with(Objects.requireNonNull(getActivity()).getApplication()).load(profileImageUrl).into(profileView);
                         }
                     }
                 }

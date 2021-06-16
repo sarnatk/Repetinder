@@ -49,7 +49,6 @@ public class SettingsActivity extends AppCompatActivity
     private ProgressBar progressBar;
     private SwitchCompat showOnAppSwitch;
     private boolean isSwitchChecked = true;
-    private String currentUId;
     private DatabaseReference databaseUser;
     private String userRole;
 
@@ -58,7 +57,7 @@ public class SettingsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         userRole = getIntent().getExtras().getString(TAG);
-        currentUId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String currentUId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
         databaseUser = getDatabaseInstance().getReference().child("Users").child(userRole).child(currentUId);
         getUserInfo();
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);

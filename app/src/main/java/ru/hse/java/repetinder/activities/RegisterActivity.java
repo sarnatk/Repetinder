@@ -102,7 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
                     if (!task.isSuccessful()) {
                         Toast.makeText(RegisterActivity.this, "Sign up error", Toast.LENGTH_SHORT).show();
                     } else {
-                        String userId = mAuth.getCurrentUser().getUid();
+                        String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
                         FirebaseDatabase database = FirebaseDatabase.getInstance("https://repetinder-cb68d-default-rtdb.europe-west1.firebasedatabase.app/");
                         DatabaseReference currentUserDb = database.getReference().child("Users").child(userRole).child(userId);
                         if (userRole.equals("Student")) {
