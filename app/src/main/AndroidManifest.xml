@@ -13,6 +13,7 @@
         android:theme="@style/Theme.Repetinder">
         <activity android:name=".activities.ChatActivity" />
         <activity android:name=".activities.SettingsActivity" />
+        <activity android:name=".activities.MatchProfileActivity" />
         <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.LoginActivity">
             <intent-filter>

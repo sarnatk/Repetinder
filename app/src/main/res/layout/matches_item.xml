@@ -10,6 +10,13 @@
         android:layout_height="75sp"
         android:src="@drawable/janet"
         android:id="@+id/matchImage"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:weightSum="2">
     <LinearLayout
         android:paddingLeft="20sp"
         android:layout_width="match_parent"
@@ -18,6 +25,7 @@
         android:orientation="vertical"
         android:layout_marginLeft="10dp"
         android:layout_gravity="center">
+
         <TextView
             android:paddingBottom="20sp"
             android:layout_width="match_parent"
@@ -33,5 +41,19 @@
             android:layout_gravity="center"
             android:id="@+id/matchEmail"/>
     </LinearLayout>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/match_sendbutton"
+                android:layout_marginRight="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="15dp"
+                android:background="@color/transparent"
+                android:src="@drawable/ic_message">
+
+            </ImageButton>
+
+
+    </RelativeLayout>
 
 </LinearLayout>

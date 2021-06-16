@@ -123,7 +123,7 @@ public class ProfileFragment extends Fragment {
                     if (Objects.requireNonNull(map).get("profileImageUrl") != null) {
                         profileImageUrl = Objects.requireNonNull(map.get("profileImageUrl")).toString();
                         if (!profileImageUrl.equals("default")) {
-                            Glide.with(Objects.requireNonNull(getActivity()).getApplication()).load(profileImageUrl).into(profileView);
+                            Glide.with(getActivity().getApplication()).load(profileImageUrl).into(profileView);
                         }
                     }
                 }

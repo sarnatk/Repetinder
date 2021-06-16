@@ -10,14 +10,6 @@ public class Tutor extends UserRepetinder {
         approvedStudents = new LinkedList<>();
     }
 
-    public void setMinPrice(int minPrice) {
-        this.minPrice = minPrice;
-    }
-
-    public int getMinPrice() {
-        return minPrice;
-    }
-
     public int getRang() {
         return rang;
     }
@@ -46,7 +38,6 @@ public class Tutor extends UserRepetinder {
         this.isSeen = isSeen;
     }
 
-    private int minPrice;
     private boolean isSeen = true;
     private int rang;
     private final List<Student> approvedStudents;

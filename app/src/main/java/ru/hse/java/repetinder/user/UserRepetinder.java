@@ -108,14 +108,23 @@ public class UserRepetinder implements Serializable { //extends RealmObject {
         this.profileImageUrl = profileImageUrl;
     }
 
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
     private final String username;
     private final String fullname;
     private GroupType groupType = GroupType.SINGLE;
     private boolean isOnline;
     private Subject subject;
     private final String email;
-   // private SerializableBitmap bitmap = null;
     private String profileImageUrl;
+
+    private int price;
 
     private Date lastOnlineTime = new Date(System.currentTimeMillis());
 }

@@ -11,14 +11,6 @@ public class Student extends UserRepetinder {
         skippedTutors = new LinkedList<>();
     }
 
-    public void setMaxPrice(int maxPrice) {
-        this.maxPrice = maxPrice;
-    }
-
-    public int getMaxPrice() {
-        return maxPrice;
-    }
-
     public void addTutorToApproved(Tutor tutor) {
         approvedTutors.add(tutor);
     }
@@ -51,7 +43,6 @@ public class Student extends UserRepetinder {
         return skippedTutors;
     }
 
-    private int maxPrice;
     private final List<Tutor> approvedTutors;
     private final List<Tutor> skippedTutors;
 }

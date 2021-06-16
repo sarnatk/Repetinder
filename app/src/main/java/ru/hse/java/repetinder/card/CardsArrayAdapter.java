@@ -29,7 +29,6 @@ public class CardsArrayAdapter extends ArrayAdapter<Card> {
 
         TextView name = convertView.findViewById(R.id.name);
         ImageView image = convertView.findViewById(R.id.card_image);
-
         name.setText(card.getFullname());
         String profileImageUrl = card.getProfileImageUrl();
         if (profileImageUrl.equals("default")) {

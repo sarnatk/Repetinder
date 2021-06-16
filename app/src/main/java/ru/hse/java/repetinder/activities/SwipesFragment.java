@@ -1,5 +1,6 @@
 package ru.hse.java.repetinder.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,7 +15,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -118,9 +118,16 @@ public class SwipesFragment extends Fragment {
             public void onScroll(float scrollProgressPercent) {}
         });
 
-
-        flingContainer.setOnItemClickListener((itemPosition, dataObject) ->
-                Toast.makeText(getActivity(), "click", Toast.LENGTH_SHORT).show());
+        flingContainer.setOnItemClickListener((itemPosition, dataObject) -> {
+            Card card = (Card) dataObject;
+            String matchId = card.getUserId();
+            Intent intent = new Intent(getActivity(), MatchProfileActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString(MatchProfileActivity.TEXT1, matchId);
+            bundle.putString(MatchProfileActivity.TEXT2, oppositeUserRole);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        });
         return view;
     }
 
@@ -155,7 +162,7 @@ public class SwipesFragment extends Fragment {
         return FirebaseDatabase.getInstance("https://repetinder-cb68d-default-rtdb.europe-west1.firebasedatabase.app/");
     }
 
-    private void getOppositeRoleUsers(){
+    private void getOppositeRoleUsers() {
         DatabaseReference oppositeSexDb = getDatabaseInstance().getReference().child("Users").child(oppositeUserRole);
         Query query = oppositeSexDb.orderByChild("rang");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -164,9 +171,10 @@ public class SwipesFragment extends Fragment {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     if (ds.exists() && !ds.child("Connections").child("No").hasChild(currentUId)
                             && !ds.child("Connections").child("Yes").hasChild(currentUId)) {
+                        //int price = (int) ds.child("minPrice").getValue();
                         UserRepetinder.Subject matchSubject = UserRepetinder.Subject.valueOf(Objects.requireNonNull(ds.child("subject").getValue()).toString());
                         boolean isSeen = (boolean) ds.child("seen").getValue();
-                        if (isSeen && matchSubject.equals(currentUser.getSubject())) {
+                        if (isSeen && matchSubject.equals(currentUser.getSubject()) /*&& price <= currentUser.getPrice() */) {
                             String profileImageUrl = "default";
                             if (!Objects.equals(ds.child("profileImageUrl").getValue(), "default")) {
                                 profileImageUrl = Objects.requireNonNull(ds.child("profileImageUrl").getValue()).toString();
