@@ -8,7 +8,7 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="75sp"
         android:layout_height="75sp"
-        android:src="@drawable/janet"
+        android:src="@drawable/default_icon"
         android:id="@+id/matchImage"/>
 
     <RelativeLayout
