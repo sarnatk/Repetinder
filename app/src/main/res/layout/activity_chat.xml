@@ -44,28 +44,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/chatLayout"
-        android:layout_width="match_parent"
-        android:layout_height="600dp"
-        android:layout_above="@+id/sendLayout"
-        android:layout_below="@+id/menuLayout"
-        android:layout_marginBottom="0dp"
-        android:orientation="vertical">
-
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="597dp">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="vertical"></androidx.recyclerview.widget.RecyclerView>
-        </androidx.core.widget.NestedScrollView>
-
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/sendLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -73,21 +51,6 @@
         android:alpha="1.0"
         android:background="@drawable/border"
         android:orientation="horizontal">
-
-        <!-- TODO: так красивее, но почему-то текст обрезан сверху
-     <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/message_layout"
-            android:layout_weight="0.8"
-            android:layout_width="0dp"
-            android:layout_height="match_parent">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/message"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/light_white"
-                android:fontFamily="@font/poppinsmedium" />
-        </com.google.android.material.textfield.TextInputLayout>-->
 
         <EditText
             android:id="@+id/message"
@@ -107,6 +70,27 @@
             android:background="@color/light_white"
             app:srcCompat="@drawable/ic_send" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/chatLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/sendLayout"
+        android:layout_below="@+id/menuLayout"
+        android:layout_marginBottom="0dp"
+        android:orientation="vertical">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical"></androidx.recyclerview.widget.RecyclerView>
+        </androidx.core.widget.NestedScrollView>
 
     </LinearLayout>
 
