@@ -141,7 +141,7 @@
                     android:layout_marginTop="-20dp"
                     android:background="@color/light_white"
                     android:fontFamily="@font/poppinsmedium"
-                    android:text="\n    Date of birth"
+                    android:hint="\n    Date of birth"
                     android:textSize="16sp"
                     app:drawableEndCompat="@drawable/ic_calendar" />
             </com.google.android.material.textfield.TextInputLayout>
