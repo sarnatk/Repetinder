@@ -81,7 +81,7 @@ public class UserRepetinder implements Serializable {
         return username;
     }
 
-    public String getDate() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
@@ -89,7 +89,7 @@ public class UserRepetinder implements Serializable {
         return city;
     }
 
-    public String getDescription() {
+    public String getAboutMe() {
         return aboutMe;
     }
 

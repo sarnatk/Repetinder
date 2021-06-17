@@ -95,7 +95,7 @@ public class MatchProfileActivity extends AppCompatActivity {
                     }
 
                     if (map.get("price") != null) {
-                        int price = (int) map.get("price");
+                        int price = ((Long) map.get("price")).intValue();
                         matchPrice.setText(String.format("Price: %s", price));
                     }
 
