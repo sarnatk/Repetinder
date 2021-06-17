@@ -10,45 +10,50 @@
     tools:context=".activities.ChatActivity">
 
     <LinearLayout
+        android:id="@+id/menuLayout"
         android:layout_width="match_parent"
-        android:layout_height="672dp"
+        android:layout_height="84dp"
+        android:background="@drawable/border_upper"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/chatAvatar"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            tools:srcCompat="@drawable/janet" />
+
+        <TextView
+            android:id="@+id/chatName"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/poppinsbold"
+            android:gravity="center"
+            android:text="TextView" />
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            app:srcCompat="@android:drawable/ic_menu_revert" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/chatLayout"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:layout_above="@+id/sendLayout"
+        android:layout_below="@+id/menuLayout"
+        android:layout_marginBottom="0dp"
         android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="84dp"
-            android:background="@drawable/border_upper"
-            android:orientation="horizontal">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/chatAvatar"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                tools:srcCompat="@drawable/janet" />
-
-            <TextView
-                android:id="@+id/chatName"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:fontFamily="@font/poppinsbold"
-                android:gravity="center"
-                android:text="TextView" />
-
-            <ImageButton
-                android:id="@+id/backButton"
-                android:layout_width="2dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/light_white"
-                app:srcCompat="@android:drawable/ic_menu_revert" />
-
-        </LinearLayout>
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="575dp">
+            android:layout_height="597dp">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
@@ -60,13 +65,15 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/sendLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:id="@+id/sendLayout">
+        android:alpha="1.0"
+        android:background="@drawable/border"
+        android:orientation="horizontal">
 
-<!-- TODO: так красивее, но почему-то текст обрезан сверху
+        <!-- TODO: так красивее, но почему-то текст обрезан сверху
      <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/message_layout"
             android:layout_weight="0.8"
@@ -82,20 +89,20 @@
         </com.google.android.material.textfield.TextInputLayout>-->
 
         <EditText
+            android:id="@+id/message"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.75"
             android:background="@color/light_white"
             android:fontFamily="@font/poppinsmedium"
-            android:id="@+id/message"
             android:hint="Message" />
 
         <ImageButton
-            android:layout_weight="0.2"
-            android:layout_marginStart="10dp"
             android:id="@+id/send"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_weight="0.2"
             android:background="@color/light_white"
             app:srcCompat="@drawable/ic_send" />
 
