@@ -4,16 +4,15 @@ import java.io.Serializable;
 
 public class UserRepetinder implements Serializable {
 
-    public UserRepetinder(String fullname, String username, String email, Subject subject, Integer price) {
+    public UserRepetinder(String fullname, String email, Subject subject, Integer price) {
         this.fullname = fullname;
-        this.username = username;
         this.email = email;
         this.subject = subject;
         this.price = price;
     }
 
     public UserRepetinder() {
-        this("fullname", "username", "mail.ru", Subject.MATH, 0);
+        this("fullname", "mail.ru", Subject.MATH, 0);
     }
 
     public String getFullname() {
@@ -77,10 +76,6 @@ public class UserRepetinder implements Serializable {
         return subject;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
     public String getDateOfBirth() {
         return dateOfBirth;
     }
@@ -109,7 +104,6 @@ public class UserRepetinder implements Serializable {
         this.price = price;
     }
 
-    private final String username;
     private final String fullname;
     private GroupType groupType = GroupType.SINGLE;
     private Subject subject;

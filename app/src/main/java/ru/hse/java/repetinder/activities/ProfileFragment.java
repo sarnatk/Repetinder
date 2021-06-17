@@ -69,14 +69,12 @@ public class ProfileFragment extends Fragment {
         TextView userEmail = view.findViewById(R.id.mailProfile);
         TextView userFullname = view.findViewById(R.id.fullnameProfile);
         TextView userRoleView = view.findViewById(R.id.userRoleProfile);
-        TextView userUsername = view.findViewById(R.id.usernameProfile);
         TextView userSubject = view.findViewById(R.id.subjectProfile);
 
         userRoleView.setText(String.format("Status: %s", userRole));
 
         UserRepetinder currentUser = storage.currentUser;
         userFullname.setText(currentUser.getFullname());
-        userUsername.setText(currentUser.getUsername());
         userEmail.setText(currentUser.getEmail());
         String subject = currentUser.getSubject().toString();
         String tmp = subject.substring(0, 1) + subject.substring(1).toLowerCase();
