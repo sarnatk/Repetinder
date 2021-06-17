@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -173,31 +174,46 @@ public class SwipesFragment extends Fragment {
     private void getOppositeRoleUsers() {
         DatabaseReference oppositeSexDb = getDatabaseInstance().getReference().child("Users").child(oppositeUserRole);
         Query query = oppositeSexDb.orderByChild("rang");
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        query.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    if (ds.exists() && !ds.child("Connections").child("No").hasChild(currentUId)
-                            && !ds.child("Connections").child("Yes").hasChild(currentUId)) {
-                        int price = ((Long) ds.child("price").getValue()).intValue();
-                        UserRepetinder.Subject matchSubject = UserRepetinder.Subject.valueOf(Objects.requireNonNull(ds.child("subject").getValue()).toString());
-                        boolean isSeen = (boolean) ds.child("seen").getValue();
-                        if (isSeen && matchSubject.equals(currentUser.getSubject()) && price <= currentUser.getPrice() + 500) {
-                            String profileImageUrl = "default";
-                            if (!Objects.equals(ds.child("profileImageUrl").getValue(), "default")) {
-                                profileImageUrl = Objects.requireNonNull(ds.child("profileImageUrl").getValue()).toString();
-                            }
-                            Card card = new Card(ds.getKey(), Objects.requireNonNull(ds.child("fullname").getValue()).toString(),
-                                    profileImageUrl);
-                            possibleMatchesQueue.add(card);
-                            arrayAdapter.notifyDataSetChanged();
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if (snapshot.exists() && !snapshot.child("Connections").child("No").hasChild(currentUId)
+                        && !snapshot.child("Connections").child("Yes").hasChild(currentUId)) {
+                    int price = ((Long) snapshot.child("price").getValue()).intValue();
+                    UserRepetinder.Subject matchSubject = UserRepetinder.Subject.valueOf(Objects.requireNonNull(snapshot.child("subject").getValue()).toString());
+                    boolean isSeen = (boolean) snapshot.child("seen").getValue();
+                    if (isSeen && matchSubject.equals(currentUser.getSubject()) && price <= currentUser.getPrice() + 500) {
+                        String profileImageUrl = "default";
+                        if (!Objects.equals(snapshot.child("profileImageUrl").getValue(), "default")) {
+                            profileImageUrl = Objects.requireNonNull(snapshot.child("profileImageUrl").getValue()).toString();
                         }
+                        Card card = new Card(snapshot.getKey(), Objects.requireNonNull(snapshot.child("fullname").getValue()).toString(),
+                                profileImageUrl);
+                        possibleMatchesQueue.add(card);
+                        arrayAdapter.notifyDataSetChanged();
                     }
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {}
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
         });
 
         oppositeSexDb.addListenerForSingleValueEvent(new ValueEventListener() {

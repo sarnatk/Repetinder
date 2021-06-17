@@ -32,6 +32,7 @@ public class CardsArrayAdapter extends ArrayAdapter<Card> {
         name.setText(card.getFullname());
         String profileImageUrl = card.getProfileImageUrl();
         if (profileImageUrl.equals("default")) {
+            Glide.clear(image);
             Glide.with(convertView.getContext()).load(R.drawable.janet).into(image);
         } else {
             Glide.clear(image);
