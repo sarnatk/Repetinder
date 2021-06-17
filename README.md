@@ -20,7 +20,7 @@
 
 ## Текущая версия
 
-Текущая версия приложения находится [здесь](https://github.com/sarnatk/Repetinder/apk/app-debug.apk). Для работы нужно скачать и запустить этот файл
+Текущая версия приложения находится [здесь](https://github.com/sarnatk/Repetinder/blob/master/apk/app-debug.apk). Для работы нужно скачать и запустить этот файл
 
 ## Разработчики
 
