@@ -5,7 +5,7 @@
     android:orientation="horizontal"
     android:padding="20sp">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="75sp"
         android:layout_height="75sp"
         android:src="@drawable/janet"

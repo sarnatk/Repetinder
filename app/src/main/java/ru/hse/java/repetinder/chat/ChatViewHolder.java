@@ -11,6 +11,7 @@ import ru.hse.java.repetinder.R;
 
 public class ChatViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     public TextView message;
+    public TextView time;
     public LinearLayout container;
 
     public ChatViewHolder(@NonNull View itemView) {
@@ -18,6 +19,7 @@ public class ChatViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         itemView.setOnClickListener(this);
 
         message = itemView.findViewById(R.id.messageText);
+        time = itemView.findViewById(R.id.timeMessage);
         container = itemView.findViewById(R.id.container);
     }
 
