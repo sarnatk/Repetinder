@@ -129,7 +129,7 @@ public class ChatActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 UserRepetinder user = dataSnapshot.getValue(UserRepetinder.class);
                 if (notify) {
-                    sendNotifiaction(receiver, user.getUsername(), msg);
+                    sendNotifiaction(receiver, user.getFullname(), msg);
                 }
                 notify = false;
             }
@@ -141,7 +141,7 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-    private void sendNotifiaction(String receiver, final String username, final String message) {
+    private void sendNotifiaction(String receiver, final String fullname, final String message) {
         DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
         Query query = tokens.orderByKey().equalTo(receiver);
         query.addValueEventListener(new ValueEventListener() {
@@ -149,7 +149,7 @@ public class ChatActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Token token = snapshot.getValue(Token.class);
-                    Data data = new Data(currentUId, R.mipmap.ic_launcher, username + ": " + message, "New Message", userid);
+                    Data data = new Data(currentUId, R.mipmap.ic_launcher, fullname + ": " + message, "New Message", userid);
 
                     Sender sender = new Sender(data, token.getToken());
 

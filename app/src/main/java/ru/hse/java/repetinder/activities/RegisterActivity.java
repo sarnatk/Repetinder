@@ -49,7 +49,6 @@ public class RegisterActivity extends AppCompatActivity {
         TextInputEditText editEmail = findViewById(R.id.email);
         TextInputEditText editFullname = findViewById(R.id.fullname);
 
-        TextInputEditText editUsername = findViewById(R.id.username);
         TextInputEditText editPassword = findViewById(R.id.password);
 
         Spinner spinnerUserType = findViewById(R.id.userType);
@@ -89,10 +88,9 @@ public class RegisterActivity extends AppCompatActivity {
         buttonRegister.setOnClickListener(v -> {
             String email = Objects.requireNonNull(editEmail.getText()).toString();
             String password = Objects.requireNonNull(editPassword.getText()).toString();
-            String username = Objects.requireNonNull(editUsername.getText()).toString();
             String fullname = Objects.requireNonNull(editFullname.getText()).toString();
 
-            if (email.isEmpty() || password.isEmpty() || username.isEmpty() || fullname.isEmpty()) {
+            if (email.isEmpty() || password.isEmpty() || fullname.isEmpty()) {
                 Toast.makeText(RegisterActivity.this, "You need to fill in each field", Toast.LENGTH_SHORT).show();
             } else if (password.length() < 6) {
                 Toast.makeText(RegisterActivity.this, "Password should contain at least 6 symbols", Toast.LENGTH_SHORT).show();
@@ -106,11 +104,11 @@ public class RegisterActivity extends AppCompatActivity {
                         FirebaseDatabase database = FirebaseDatabase.getInstance("https://repetinder-cb68d-default-rtdb.europe-west1.firebasedatabase.app/");
                         DatabaseReference currentUserDb = database.getReference().child("Users").child(userRole).child(userId);
                         if (userRole.equals("Student")) {
-                            Student student = new Student(fullname, username, email, UserRepetinder.Subject.valueOf(subject.toUpperCase()), 3000);
+                            Student student = new Student(fullname, email, UserRepetinder.Subject.valueOf(subject.toUpperCase()), 3000);
                             student.setProfileImageUrl("default");
                             currentUserDb.setValue(student);
                         } else {
-                            Tutor tutor = new Tutor(fullname, username, email, UserRepetinder.Subject.valueOf(subject.toUpperCase()), 0);
+                            Tutor tutor = new Tutor(fullname, email, UserRepetinder.Subject.valueOf(subject.toUpperCase()), 0);
                             tutor.setProfileImageUrl("default");
                             currentUserDb.setValue(tutor);
                         }

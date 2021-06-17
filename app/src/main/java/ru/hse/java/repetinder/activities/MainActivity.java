@@ -157,15 +157,12 @@ public class MainActivity extends AppCompatActivity {
         mCustomerDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String fullname = null, username = null, email = null, subject = null;
+                String fullname = null, email = null, subject = null;
                 int price = 0;
                 if (snapshot.exists() && snapshot.getChildrenCount() > 0) {
                     Map<String, Object> map = (Map<String, Object>) snapshot.getValue();
                     if (Objects.requireNonNull(map).get("fullname") != null) {
                         fullname = Objects.requireNonNull(map.get("fullname")).toString();
-                    }
-                    if (Objects.requireNonNull(map).get("username") != null) {
-                        username = Objects.requireNonNull(map.get("username")).toString();
                     }
                     if (Objects.requireNonNull(map).get("email") != null) {
                         email = Objects.requireNonNull(map.get("email")).toString();
@@ -179,9 +176,9 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     if (userRole.equals("Student")) {
-                        storage.currentUser = new Student(fullname, username, email, UserRepetinder.Subject.valueOf(subject), price);
+                        storage.currentUser = new Student(fullname, email, UserRepetinder.Subject.valueOf(subject), price);
                     } else {
-                        storage.currentUser = new Tutor(fullname, username, email, UserRepetinder.Subject.valueOf(subject), price);
+                        storage.currentUser = new Tutor(fullname, email, UserRepetinder.Subject.valueOf(subject), price);
                     }
                     storage.userId = currentUId;
                     makeTabs();

@@ -5,8 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Student extends UserRepetinder {
-    public Student(String fullname, String username, String email, Subject subject, Integer price) {
-        super(fullname, username, email, subject, price);
+    public Student(String fullname, String email, Subject subject, Integer price) {
+        super(fullname, email, subject, price);
         approvedTutors = new LinkedList<>();
         skippedTutors = new LinkedList<>();
     }
