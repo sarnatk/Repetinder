@@ -1,19 +1,19 @@
 package ru.hse.java.repetinder.user;
 
 import java.io.Serializable;
-import java.util.Date;
 
-public class UserRepetinder implements Serializable { //extends RealmObject {
+public class UserRepetinder implements Serializable {
 
-    public UserRepetinder(String fullname, String username, String email, Subject subject) {
+    public UserRepetinder(String fullname, String username, String email, Subject subject, Integer price) {
         this.fullname = fullname;
         this.username = username;
         this.email = email;
         this.subject = subject;
+        this.price = price;
     }
 
     public UserRepetinder() {
-        this("fullname", "username", "mail.ru", Subject.MATH);
+        this("fullname", "username", "mail.ru", Subject.MATH, 0);
     }
 
     public String getFullname() {
@@ -93,25 +93,6 @@ public class UserRepetinder implements Serializable { //extends RealmObject {
         return aboutMe;
     }
 
-    public boolean isOnline() {
-        return isOnline;
-    }
-
-    public void changeOnlineStatus() {
-        isOnline = !isOnline;
-    }
-
-   /* public Bitmap getBitmap() {
-        if (bitmap == null) {
-            return null;
-        }
-        return bitmap.getBitmap();
-    }
-
-    public void setBitmap(Bitmap newBitmap) {
-        bitmap = new SerializableBitmap(newBitmap);
-    }*/
-
     public String getProfileImageUrl() {
         return profileImageUrl;
     }
@@ -131,15 +112,12 @@ public class UserRepetinder implements Serializable { //extends RealmObject {
     private final String username;
     private final String fullname;
     private GroupType groupType = GroupType.SINGLE;
-    private boolean isOnline;
     private Subject subject;
     private final String email;
     private String profileImageUrl;
 
-    private String dateOfBirth;
-    private String aboutMe;
-    private String city;
-    private Integer price = 0;
-
-    private Date lastOnlineTime = new Date(System.currentTimeMillis());
+    private String dateOfBirth = "default";
+    private String aboutMe = "default";
+    private String city = "default";
+    private Integer price;
 }

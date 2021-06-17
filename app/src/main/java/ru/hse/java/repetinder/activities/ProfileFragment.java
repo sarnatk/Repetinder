@@ -101,7 +101,7 @@ public class ProfileFragment extends Fragment {
             bundle.putString(SettingsActivity.TAG, userRole);
             bundle.putString("name", currentUser.getFullname());
             bundle.putString("date", currentUser.getDate());
-            bundle.putString("price", currentUser.getPrice().toString());
+            bundle.putInt("price", currentUser.getPrice());
             bundle.putString("descr", currentUser.getDescription());
             bundle.putString("city", currentUser.getCity());
             intent.putExtras(bundle);
@@ -111,7 +111,6 @@ public class ProfileFragment extends Fragment {
         profileView.setOnClickListener(v -> {
             Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
             photoPickerIntent.setType("image/*");
-            // TODO: fix deprecated
             startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
         });
 

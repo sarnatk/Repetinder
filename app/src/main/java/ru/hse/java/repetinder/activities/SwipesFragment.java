@@ -179,10 +179,10 @@ public class SwipesFragment extends Fragment {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     if (ds.exists() && !ds.child("Connections").child("No").hasChild(currentUId)
                             && !ds.child("Connections").child("Yes").hasChild(currentUId)) {
-                        //int price = (int) ds.child("minPrice").getValue();
+                        int price = ((Long) ds.child("price").getValue()).intValue();
                         UserRepetinder.Subject matchSubject = UserRepetinder.Subject.valueOf(Objects.requireNonNull(ds.child("subject").getValue()).toString());
                         boolean isSeen = (boolean) ds.child("seen").getValue();
-                        if (isSeen && matchSubject.equals(currentUser.getSubject()) /*&& price <= currentUser.getPrice() */) {
+                        if (isSeen && matchSubject.equals(currentUser.getSubject()) && price <= currentUser.getPrice() + 500) {
                             String profileImageUrl = "default";
                             if (!Objects.equals(ds.child("profileImageUrl").getValue(), "default")) {
                                 profileImageUrl = Objects.requireNonNull(ds.child("profileImageUrl").getValue()).toString();

@@ -106,11 +106,11 @@ public class RegisterActivity extends AppCompatActivity {
                         FirebaseDatabase database = FirebaseDatabase.getInstance("https://repetinder-cb68d-default-rtdb.europe-west1.firebasedatabase.app/");
                         DatabaseReference currentUserDb = database.getReference().child("Users").child(userRole).child(userId);
                         if (userRole.equals("Student")) {
-                            Student student = new Student(fullname, username, email, UserRepetinder.Subject.valueOf(subject.toUpperCase()));
+                            Student student = new Student(fullname, username, email, UserRepetinder.Subject.valueOf(subject.toUpperCase()), 3000);
                             student.setProfileImageUrl("default");
                             currentUserDb.setValue(student);
                         } else {
-                            Tutor tutor = new Tutor(fullname, username, email, UserRepetinder.Subject.valueOf(subject.toUpperCase()));
+                            Tutor tutor = new Tutor(fullname, username, email, UserRepetinder.Subject.valueOf(subject.toUpperCase()), 0);
                             tutor.setProfileImageUrl("default");
                             currentUserDb.setValue(tutor);
                         }

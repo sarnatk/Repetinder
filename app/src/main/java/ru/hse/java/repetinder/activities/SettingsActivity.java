@@ -56,7 +56,7 @@ public class SettingsActivity extends AppCompatActivity
     private String userRole;
     private String newDate;
     private String newName;
-    private String newPrice;
+    private int newPrice;
     private String newDescr;
     private String newCity;
 
@@ -66,7 +66,7 @@ public class SettingsActivity extends AppCompatActivity
         setContentView(R.layout.activity_settings);
         userRole = getIntent().getExtras().getString(TAG);
         newDate = getIntent().getExtras().getString("date");
-        newPrice = getIntent().getExtras().getString("price");
+        newPrice = getIntent().getExtras().getInt("price");
         newCity = getIntent().getExtras().getString("city");
         newName = getIntent().getExtras().getString("name");
         newDescr = getIntent().getExtras().getString("descr");
@@ -80,9 +80,7 @@ public class SettingsActivity extends AppCompatActivity
         //Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         name = findViewById(R.id.name);
-        //nameText = findViewById(R.id.name);
         description = findViewById(R.id.description);
-        //descriptionText = findViewById(R.id.description);
         birthday = findViewById(R.id.birthday);
         city = findViewById(R.id.city);
         saveButton = findViewById(R.id.save_button);
@@ -177,7 +175,7 @@ public class SettingsActivity extends AppCompatActivity
             newName = name.getText().toString();
         }
         if (!price.getText().toString().isEmpty()) {
-            newPrice = price.getText().toString();
+            newPrice = Integer.parseInt(price.getText().toString());
         }
         if (!description.getText().toString().isEmpty()) {
             newDescr = description.getText().toString();
