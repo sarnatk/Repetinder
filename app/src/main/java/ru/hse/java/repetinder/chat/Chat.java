@@ -23,6 +23,13 @@ public class Chat {
         this.message = message;
     }
 
+    private String returnLongWithZero(long number) {
+        if (number >= 10) {
+            return Long.toString(number);
+        }
+        return "0" + number;
+    }
+
     public String getTimeString() {
         Date today = Calendar.getInstance().getTime();
         String returningString = "";
@@ -33,13 +40,15 @@ public class Chat {
             } else if (today.getDate() == time.get("date") + 1) {
                 returningString += "yesterday, ";
             } else {
-                returningString += time.get("date") + "." + time.get("month") + ", ";
+                returningString += returnLongWithZero(time.get("date")) + "." +
+                        returnLongWithZero(time.get("month")) + ", ";
             }
         } else {
             long year = 1900 + time.get("year");
-            returningString += time.get("date") + "." + time.get("month") + "." + year + ", ";
+            returningString += returnLongWithZero(time.get("date")) + "."
+                    + returnLongWithZero(time.get("month")) + "." + year + ", ";
         }
-        returningString += time.get("hours") + ":" + time.get("minutes");
+        returningString += returnLongWithZero(time.get("hours")) + ":" + returnLongWithZero(time.get("minutes"));
         return returningString;
     }
 
