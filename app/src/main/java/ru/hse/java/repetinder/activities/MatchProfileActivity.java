@@ -1,6 +1,7 @@
 package ru.hse.java.repetinder.activities;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,7 +27,7 @@ public class MatchProfileActivity extends AppCompatActivity {
 
     private String profileImageUrl;
     private ImageView matchImage;
-    TextView matchFullname, matchSubject, matchRole, matchEmail, matchPrice, matchCity, matchAbout;
+    TextView matchFullname, matchSubject, matchRole, matchEmail, matchPrice, matchCity, matchAbout, matchBirthday;
     private DatabaseReference databaseUser;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class MatchProfileActivity extends AppCompatActivity {
         matchEmail = findViewById(R.id.mail_match);
         matchPrice = findViewById(R.id.price_match);
         matchCity = findViewById(R.id.city_match);
+        matchBirthday = findViewById(R.id.birthday_match);
         matchImage = findViewById(R.id.image_match);
         matchRole.setText(String.format("Status: %s", matchUserRole));
     }
@@ -74,22 +76,34 @@ public class MatchProfileActivity extends AppCompatActivity {
                         String tmp = subject.substring(0, 1) + subject.substring(1).toLowerCase();
                         matchSubject.setText(tmp);
                     }
-                    /*if (map.get("aboutMe") != null) {
-                        matchAbout.setText(map.get("aboutMe").toString());
+                    if (map.get("aboutMe") != null) {
+                        String aboutMe = map.get("aboutMe").toString();
+                        matchAbout.setText(aboutMe);
+                        if (aboutMe.equals("default")) {
+                            matchAbout.setVisibility(View.GONE);
+                        }
                     }
                     if (map.get("city") != null) {
-                        matchCity.setText(map.get("city").toString());
-                    }*/
+                        String city = map.get("city").toString();
+                        matchCity.setText(city);
+                        if (city.equals("default")) {
+                            matchCity.setVisibility(View.GONE);
+                        }
+                    }
                     if (map.get("email") != null) {
                         matchEmail.setText(map.get("email").toString());
                     }
-                    if (matchRole.equals("Tutor")) {
-                        if (map.get("minPrice") != null) {
-                            matchPrice.setText(map.get("minPrice").toString());
-                        }
-                    } else {
-                        if (map.get("maxPrice") != null) {
-                            matchPrice.setText(map.get("maxPrice").toString());
+
+                    if (map.get("price") != null) {
+                        int price = ((Long) map.get("price")).intValue();
+                        matchPrice.setText(String.format("Price: %s", price));
+                    }
+
+                    if (map.get("dateOfBirth") != null) {
+                        String birth = map.get("dateOfBirth").toString();
+                        matchBirthday.setText(birth);
+                        if (birth.equals("default")) {
+                            matchBirthday.setVisibility(View.GONE);
                         }
                     }
                 }

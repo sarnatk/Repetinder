@@ -158,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String fullname = null, username = null, email = null, subject = null;
+                int price = 0;
                 if (snapshot.exists() && snapshot.getChildrenCount() > 0) {
                     Map<String, Object> map = (Map<String, Object>) snapshot.getValue();
                     if (Objects.requireNonNull(map).get("fullname") != null) {
@@ -173,10 +174,14 @@ public class MainActivity extends AppCompatActivity {
                         subject = Objects.requireNonNull(map.get("subject")).toString();
                     }
 
+                    if (Objects.requireNonNull(map).get("price") != null) {
+                        price = ((Long) map.get("price")).intValue();
+                    }
+
                     if (userRole.equals("Student")) {
-                        storage.currentUser = new Student(fullname, username, email, UserRepetinder.Subject.valueOf(subject));
+                        storage.currentUser = new Student(fullname, username, email, UserRepetinder.Subject.valueOf(subject), price);
                     } else {
-                        storage.currentUser = new Tutor(fullname, username, email, UserRepetinder.Subject.valueOf(subject));
+                        storage.currentUser = new Tutor(fullname, username, email, UserRepetinder.Subject.valueOf(subject), price);
                     }
                     storage.userId = currentUId;
                     makeTabs();
