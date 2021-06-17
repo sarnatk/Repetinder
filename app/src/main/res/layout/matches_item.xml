@@ -27,19 +27,23 @@
         android:layout_gravity="center">
 
         <TextView
-            android:paddingBottom="20sp"
+            android:id="@+id/matchFullname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="8sp"
+            android:paddingTop="10sp"
+            android:fontFamily="@font/poppinsmedium"
             android:text="fullname"
-            android:textColor="@color/colorAccent"
-            android:id="@+id/matchFullname"/>
+            android:textColor="@color/colorAccent" />
+
         <TextView
+            android:id="@+id/matchEmail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorAccent"
-            android:text="Email"
+            android:layout_height="36dp"
             android:layout_gravity="center"
-            android:id="@+id/matchEmail"/>
+            android:fontFamily="@font/poppinsmedium"
+            android:text="Email"
+            android:textColor="@color/colorAccent" />
     </LinearLayout>
             <ImageButton
                 android:layout_width="wrap_content"
