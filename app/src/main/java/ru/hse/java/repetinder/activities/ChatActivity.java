@@ -1,13 +1,11 @@
 package ru.hse.java.repetinder.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,21 +22,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Calendar;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import de.hdodenhof.circleimageview.CircleImageView;
-
 import ru.hse.java.repetinder.R;
 import ru.hse.java.repetinder.chat.Chat;
 import ru.hse.java.repetinder.chat.ChatAdapter;
@@ -305,7 +300,7 @@ public class ChatActivity extends AppCompatActivity {
                     CircleImageView avatar = chatView.findViewById(R.id.chatAvatar);
 
                     if (profileImageUrl.equals("default")) {
-                        Glide.with(getApplication()).load(R.drawable.janet).into(avatar);
+                        Glide.with(getApplication()).load(R.drawable.default_icon).into(avatar);
                     } else {
                         Glide.clear(avatar);
                         Glide.with(getApplication()).load(profileImageUrl).into(avatar);
