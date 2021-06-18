@@ -30,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -164,7 +165,9 @@ public class SettingsActivity extends AppCompatActivity
         if (true) {
             c.add(Calendar.YEAR, -18);
         }
-        new DatePickerDialog(this, (view, year, month, dayOfMonth) -> birthday.setText(String.format("\n   %02d.%02d.%02d", dayOfMonth, month + 1, year)), c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
+        new DatePickerDialog(this, (view, year, month, dayOfMonth) ->
+                birthday.setText(String.format(Locale.ENGLISH ,"\n   %02d.%02d.%02d", dayOfMonth, month + 1, year)),
+                c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
     }
 
     private void sendData() {
@@ -184,7 +187,7 @@ public class SettingsActivity extends AppCompatActivity
             newCity = city.getText().toString();
         }
 
-        Map userInfo = new HashMap();
+        Map<String, Object> userInfo = new HashMap<>();
         userInfo.put("seen", isSwitchChecked);
         userInfo.put("name", newName);
         userInfo.put("dateOfBirth", newDate);
