@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="SpinnerTheme">
+        <item name="android:textColor">#555555</item>
+        <item name="android:fontFamily">@font/poppinsmedium"</item>
+    </style>
+</resources>

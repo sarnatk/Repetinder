@@ -103,6 +103,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:background="@color/light_white"
+            android:theme="@style/SpinnerTheme"
             android:entries="@array/user_type"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword"
             tools:ignore="MissingConstraints"
@@ -117,6 +118,7 @@
             android:layout_marginRight="30dp"
             android:background="@color/light_white"
             android:entries="@array/subjects"
+            android:theme="@style/SpinnerTheme"
             app:layout_constraintTop_toBottomOf="@+id/userType"
             tools:ignore="MissingConstraints" />
 
