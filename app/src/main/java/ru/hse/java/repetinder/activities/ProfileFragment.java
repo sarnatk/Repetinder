@@ -102,6 +102,7 @@ public class ProfileFragment extends Fragment {
             bundle.putInt("price", currentUser.getPrice());
             bundle.putString("descr", currentUser.getAboutMe());
             bundle.putString("city", currentUser.getCity());
+            bundle.putString("subject", currentUser.getSubject().toString());
             intent.putExtras(bundle);
             startActivity(intent);
         });

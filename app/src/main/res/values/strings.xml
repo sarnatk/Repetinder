@@ -26,6 +26,7 @@
     </string-array>
 
     <string-array name="subjects">
+        <item>Select subject</item>
         <item>Math</item>
         <item>Computer Science</item>
         <item>Physics</item>

@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
@@ -35,6 +36,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import ru.hse.java.repetinder.R;
+import ru.hse.java.repetinder.user.UserRepetinder;
 
 public class SettingsActivity extends AppCompatActivity
         implements AdapterView.OnItemSelectedListener, SeekBar.OnSeekBarChangeListener {
@@ -48,7 +50,7 @@ public class SettingsActivity extends AppCompatActivity
     //private TextView cityText;
     private TextView birthday;
     private Button saveButton;
-    private Spinner genderSpinner;
+    private Spinner spinnerSubject;
     private TextView price;
     private ProgressBar progressBar;
     private SwitchCompat showOnAppSwitch;
@@ -60,6 +62,7 @@ public class SettingsActivity extends AppCompatActivity
     private int newPrice;
     private String newDescr;
     private String newCity;
+    private String newSubject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +74,7 @@ public class SettingsActivity extends AppCompatActivity
         newCity = getIntent().getExtras().getString("city");
         newName = getIntent().getExtras().getString("name");
         newDescr = getIntent().getExtras().getString("descr");
+        newSubject = getIntent().getExtras().getString("subject");
 
         String currentUId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
         databaseUser = getDatabaseInstance().getReference().child("Users").child(userRole).child(currentUId);
@@ -86,6 +90,7 @@ public class SettingsActivity extends AppCompatActivity
         city = findViewById(R.id.city);
         saveButton = findViewById(R.id.save_button);
         progressBar = findViewById(R.id.progressBarSettings);
+        spinnerSubject = findViewById(R.id.subject_settings);
         progressBar.setVisibility(View.VISIBLE);
         showOnAppSwitch = findViewById(R.id.switch_showOnApp);
         showOnAppSwitch.setVisibility(View.GONE);
@@ -100,6 +105,21 @@ public class SettingsActivity extends AppCompatActivity
         price.setText("0");
         showOnAppSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             isSwitchChecked = isChecked;
+        });
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.subjects, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerSubject.setAdapter(adapter);
+
+        spinnerSubject.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                newSubject = parent.getItemAtPosition(pos).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
     }
@@ -166,7 +186,7 @@ public class SettingsActivity extends AppCompatActivity
             c.add(Calendar.YEAR, -18);
         }
         new DatePickerDialog(this, (view, year, month, dayOfMonth) ->
-                birthday.setText(String.format(Locale.ENGLISH ,"\n   %02d.%02d.%02d", dayOfMonth, month + 1, year)),
+                birthday.setText(String.format(Locale.ENGLISH, "\n   %02d.%02d.%02d", dayOfMonth, month + 1, year)),
                 c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
     }
 
@@ -186,6 +206,9 @@ public class SettingsActivity extends AppCompatActivity
         if (!city.getText().toString().isEmpty()) {
             newCity = city.getText().toString();
         }
+        if (newSubject.equals("Select subject")) {
+            newSubject = getIntent().getExtras().getString("subject");
+        }
 
         Map<String, Object> userInfo = new HashMap<>();
         userInfo.put("seen", isSwitchChecked);
@@ -194,6 +217,7 @@ public class SettingsActivity extends AppCompatActivity
         userInfo.put("aboutMe", newDescr);
         userInfo.put("city", newCity);
         userInfo.put("price", newPrice);
+        userInfo.put("subject", newSubject.toUpperCase());
         databaseUser.updateChildren(userInfo);
 
         Toast.makeText(SettingsActivity.this, "Successfully saved", Toast.LENGTH_SHORT).show();
