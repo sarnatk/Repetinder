@@ -90,7 +90,10 @@ public class RegisterActivity extends AppCompatActivity {
             String password = Objects.requireNonNull(editPassword.getText()).toString();
             String fullname = Objects.requireNonNull(editFullname.getText()).toString();
 
-            if (validate(fullname, email, password)) {
+            String result = UserRepetinder.validate(fullname, email, password);
+            if (!result.equals("Success")) {
+                Toast.makeText(RegisterActivity.this, result, Toast.LENGTH_SHORT).show();
+            } else {
                 // Add user to database
                 mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegisterActivity.this, task -> {
                     if (!task.isSuccessful()) {
@@ -119,17 +122,6 @@ public class RegisterActivity extends AppCompatActivity {
             finish();
         });
 
-    }
-
-    private boolean validate(String fullname, String email, String password) {
-        if (email.isEmpty() || password.isEmpty() || fullname.isEmpty()) {
-            Toast.makeText(RegisterActivity.this, "You need to fill in each field", Toast.LENGTH_SHORT).show();
-        } else if (!email.contains("@")) {
-            Toast.makeText(RegisterActivity.this, "Email should contain '@' symbol", Toast.LENGTH_SHORT).show();
-        } else if (password.length() < 6) {
-            Toast.makeText(RegisterActivity.this, "Password should contain at least 6 symbols", Toast.LENGTH_SHORT).show();
-        }
-        return true;
     }
 
     @Override

@@ -1,6 +1,10 @@
 package ru.hse.java.repetinder.user;
 
+import android.widget.Toast;
+
 import java.io.Serializable;
+
+import ru.hse.java.repetinder.activities.RegisterActivity;
 
 public class UserRepetinder implements Serializable {
 
@@ -102,6 +106,17 @@ public class UserRepetinder implements Serializable {
 
     public void setPrice(Integer price) {
         this.price = price;
+    }
+
+    public static String validate(String fullname, String email, String password) {
+        if (email.isEmpty() || password.isEmpty() || fullname.isEmpty()) {
+            return "You need to fill in each field";
+        } else if (!email.contains("@")) {
+            return "Email should contain '@' symbol";
+        } else if (password.length() < 6) {
+            return "Password should contain at least 6 symbols";
+        }
+        return "Success";
     }
 
     private final String fullname;
