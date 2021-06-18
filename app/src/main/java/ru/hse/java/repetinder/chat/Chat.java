@@ -23,7 +23,7 @@ public class Chat {
         this.message = message;
     }
 
-    private String returnLongWithZero(long number) {
+    public String returnLongWithZero(long number) {
         if (number >= 10) {
             return Long.toString(number);
         }
@@ -32,12 +32,16 @@ public class Chat {
 
     public String getTimeString() {
         Date today = Calendar.getInstance().getTime();
+        return getTimeString(today);
+    }
+
+    public String getTimeString(Date date) {
         String returningString = "";
-        if (today.getYear() == time.get("year") &&
-        today.getMonth() == time.get("month")) {
-            if (today.getDate() == time.get("date")) {
+        if (date.getYear() == time.get("year") &&
+        date.getMonth() == time.get("month")) {
+            if (date.getDate() == time.get("date")) {
                 returningString += "today, ";
-            } else if (today.getDate() == time.get("date") + 1) {
+            } else if (date.getDate() == time.get("date") + 1) {
                 returningString += "yesterday, ";
             } else {
                 returningString += returnLongWithZero(time.get("date")) + "." +
