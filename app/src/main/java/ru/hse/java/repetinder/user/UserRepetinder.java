@@ -108,13 +108,15 @@ public class UserRepetinder implements Serializable {
         this.price = price;
     }
 
-    public static String validate(String fullname, String email, String password) {
+    public static String validate(String fullname, String email, String password, String subject) {
         if (email.isEmpty() || password.isEmpty() || fullname.isEmpty()) {
             return "You need to fill in each field";
         } else if (!email.contains("@")) {
             return "Email should contain '@' symbol";
         } else if (password.length() < 6) {
             return "Password should contain at least 6 symbols";
+        } else if (subject.equals("Select subject")) {
+            return "You have to select subject";
         }
         return "Success";
     }

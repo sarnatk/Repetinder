@@ -12,7 +12,8 @@ public class RegistrationUnitTest {
         String fullname = "Help";
         String email = "help@help.help";
         String password = "helpme";
-        assertEquals("Success", UserRepetinder.validate(fullname, email, password));
+        String subject = "Math";
+        assertEquals("Success", UserRepetinder.validate(fullname, email, password, subject));
     }
 
     @Test
@@ -20,7 +21,8 @@ public class RegistrationUnitTest {
         String fullname = "Help";
         String email = "help.help";
         String password = "helpme";
-        assertEquals("Email should contain '@' symbol", UserRepetinder.validate(fullname, email, password));
+        String subject = "Math";
+        assertEquals("Email should contain '@' symbol", UserRepetinder.validate(fullname, email, password, subject));
     }
 
     @Test
@@ -28,7 +30,8 @@ public class RegistrationUnitTest {
         String fullname = "Help";
         String email = "help@help.help";
         String password = "help";
-        assertEquals("Password should contain at least 6 symbols", UserRepetinder.validate(fullname, email, password));
+        String subject = "Math";
+        assertEquals("Password should contain at least 6 symbols", UserRepetinder.validate(fullname, email, password, subject));
     }
 
     @Test
@@ -36,7 +39,17 @@ public class RegistrationUnitTest {
         String fullname = "";
         String email = "help@help.help";
         String password = "helpme";
-        assertEquals("You need to fill in each field", UserRepetinder.validate(fullname, email, password));
+        String subject = "Math";
+        assertEquals("You need to fill in each field", UserRepetinder.validate(fullname, email, password, subject));
+    }
+
+    @Test
+    public void testValidationBadSubject() {
+        String fullname = "Help";
+        String email = "help@help.help";
+        String password = "helpme";
+        String subject = "Select subject";
+        assertEquals("You have to select subject", UserRepetinder.validate(fullname, email, password, subject));
     }
 
     @Test
@@ -44,6 +57,7 @@ public class RegistrationUnitTest {
         String fullname = "";
         String email = "help.help";
         String password = "help";
-        assertEquals("You need to fill in each field", UserRepetinder.validate(fullname, email, password));
+        String subject = "Select subject";
+        assertEquals("You need to fill in each field", UserRepetinder.validate(fullname, email, password, subject));
     }
 }

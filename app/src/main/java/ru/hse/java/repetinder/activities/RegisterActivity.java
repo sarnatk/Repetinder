@@ -90,7 +90,7 @@ public class RegisterActivity extends AppCompatActivity {
             String password = Objects.requireNonNull(editPassword.getText()).toString();
             String fullname = Objects.requireNonNull(editFullname.getText()).toString();
 
-            String result = UserRepetinder.validate(fullname, email, password);
+            String result = UserRepetinder.validate(fullname, email, password, subject);
             if (!result.equals("Success")) {
                 Toast.makeText(RegisterActivity.this, result, Toast.LENGTH_SHORT).show();
             } else {
